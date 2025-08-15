@@ -1,0 +1,8 @@
+<aspectj>
+    <aspects>
+        <aspect name="ru.origami.testit_allure.test_it.testit.aspects.StepAspect"/>
+        <aspect name="ru.origami.testit_allure.allure.java_commons.aspects.StepsAspects"/>
+        <aspect name="ru.origami.testit_allure.allure.java_commons.aspects.AttachmentsAspects"/>
+    </aspects>
+    <weaver options="-Xlint:ignore -warn:none"/>
+</aspectj>

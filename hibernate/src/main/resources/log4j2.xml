@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Routing name="MyRoutingAppender">
+            <Routes pattern="${ctx:logFileName}">
+                <Route>
+                    <File
+                            fileName="target/logs/hibernate-query-${ctx:logFileName}.txt"
+                            name="appender-Hibernate-${ctx:logFileName}">
+                        <PatternLayout>
+                            <Pattern>%d{HH:mm:ss.SSS} [%t] %level - %m%n%ex%n</Pattern>
+                        </PatternLayout>
+                    </File>
+                </Route>
+            </Routes>
+        </Routing>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %level - %m%n%ex%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="log4jdbc.log4j2" level="INFO" additivity="false">
+            <AppenderRef ref="MyRoutingAppender" />
+        </Logger>
+        <Root level="OFF">
+            <AppenderRef ref="STDOUT" />
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,2 @@
+ru.origami.testit_allure.test_it.listener.Junit5PostDiscoveryFilter
+ru.origami.testit_allure.allure.junitplatform.AllurePostDiscoveryFilter
