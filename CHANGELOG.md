@@ -1,5 +1,9 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.4.2
+
+- Delpoy
+
 ### 1.4.1
 
 - Core: доработки для параметра allure.link.issue.pattern
