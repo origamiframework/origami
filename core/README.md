@@ -164,9 +164,9 @@ public class ServiceMethodTask extends Task {
 ## Environment
 
 [Environment](src/main/java/ru/origami/common/environment/Environment.java) необходим для работы с параметрами.
-<br/>Вычитывает параметры из origami.properties, из /config/{stand}.json, где stand системное свойство.
-<br/>Так же вычитывает параметры из statics/routs.json и statics/any.json(необязательные).
-<br/>Существует возможность указать пользовательские файлы конфигураций. Для этого в origami.properties необходимо
+<br/>Вычитывает параметры из **origami.properties**, из **/config/{stand}.json**, где stand - системное свойство.
+<br/>Так же вычитывает параметры из **statics/routs.json** и **statics/any.json** (необязательные).
+<br/>Существует возможность указать пользовательские файлы конфигураций. Для этого в **origami.properties** необходимо
 указать пути до таких файлов. Название параметра должно начинаться с **custom.properties.file.path**
 Если какие-либо параметры определены и в пользовательском файле и в файле stand, то возьмется значение из stand файла.
 
@@ -177,7 +177,7 @@ public class ServiceMethodTask extends Task {
 ```
 
 <br/>Существует возможность задать глобальный системный параметр для **ssl.trust.store**. Для этого необходимо
-в origami.properties указать путь и пароль от сертификата. Возможно указать как полный путь от корня проекта, так и путь
+в **origami.properties** указать путь и пароль от сертификата. Возможно указать как полный путь от корня проекта, так и путь
 конкретно в resources. В примере приведены оба варианта.
 
 ```

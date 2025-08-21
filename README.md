@@ -1,8 +1,21 @@
+<br>
+<div style="text-align: center;">
+<img src="./core/src/main/resources/img/logo.png" alt="Origami" width="200">
+
 # Origami Framework
 
-* [Описание](#описание)
-* [Подключение](#подключение)
-* [Конфигурация](#конфигурация)
+![Maven Central](https://img.shields.io/maven-central/v/ru.origamiframework/origami-framework-core.svg)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Telegram Join](https://img.shields.io/badge/Telegram-Join%20to%20channel-blue?logo=telegram)](https://t.me/origami_framework)
+</div>
+
+[Origami Framework](https://origamiframework.ru/) - это фреймворк для автоматизации тестирования на Java, созданный для того,
+чтобы упрощать построение тестовой архитектуры и ускорять процесс приемочного и регрессионного тестирования.
+
+С подробным руководством по Origami Framework на текущий момент можно ознакомиться в README.
+
+Нашли ошибку или нужна новая функциональность? Пожалуйста, [cообщайте](https://github.com/origamiframework/origami/issues?state=open) 
+о любых ошибках и предложениях.
 
 ## Описание
 
@@ -18,19 +31,19 @@
 ## Подключение
 
 Необходимо добавить родителя в pom.xml в проекте. При этом в проект автоматически подтянутся все необходимые зависимости,
-так же подтягивается origami-framework-core.
+так же подтягивается Core([origami-framework-core](core/README.md)).
 ```XML
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>${LAST_VERSION}</version>
+        <version>1.4.3</version>
         <relativePath/>
     </parent>
 ```
 
 ## Конфигурация
 
-Создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым (представленный конфиг рабочий):
+Создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым:
 
 ```PROPERTIES
     stand=dev
@@ -39,10 +52,10 @@
     test.timezone=UTC
     hibernate.excel.result.enabled=false
     kafka.test.data.package=src/main/resources/test_data/kafka
-    testit.url=https://10.21.18.5
-    testit.private.token=cEF3eXNFZW0wdFFMTjMwTmp6
-    testit.project.id=9d5382a8-c592-419f-8e7c-6d9c1ace0d01
-    testit.configuration.id=9eac5ebe-60eb-45ea-8eae-1eba128b81e4
+    testit.url=https://111.111.111.111
+    testit.private.token=token
+    testit.project.id=project-id
+    testit.configuration.id=configuration-id
     testit.adapter.mode=2
     testit.enable.result=false
     web.browser.name=chrome

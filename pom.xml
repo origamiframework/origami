@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-dependency</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>pom</packaging>
     <name>Origami</name>
     <description>Origami Test Framework</description>
-    <url>http://origamiframework.ru/</url>
+    <url>https://origamiframework.ru/</url>
 
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>manual</distribution>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -27,8 +27,16 @@
 
     <developers>
         <developer>
-            <id>christophd</id>
+            <id>mrsmile13</id>
             <name>Maksim Zhigarev</name>
+            <email>dev@origamiframework.ru</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>artem1992s</id>
+            <name>Artem Senko</name>
             <email>dev@origamiframework.ru</email>
             <roles>
                 <role>Developer</role>
@@ -295,7 +303,7 @@
                     <target>${maven.compiler.target}</target>
                     <release>${maven.compiler.release}</release>
                     <encoding>UTF-8</encoding>
-<!--                    <generatedSourcesDirectory>core/src/main/resources/cacerts</generatedSourcesDirectory>-->
+                    <!--                    <generatedSourcesDirectory>core/src/main/resources/cacerts</generatedSourcesDirectory>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -325,8 +333,8 @@
                         -Djunit.jupiter.execution.parallel.mode.classes.default=${junit.jupiter.execution.parallel.mode.classes.default}
                         -Djunit.jupiter.execution.parallel.config.strategy=${junit.jupiter.execution.parallel.config.strategy}
                         -Djunit.jupiter.execution.parallel.config.fixed.parallelism=${junit.jupiter.execution.parallel.config.fixed.parallelism}
-<!--                        -Djavax.net.ssl.trustStore=core/src/main/resources/cacerts-->
-<!--                        -Djavax.net.ssl.trustStorePassword=changeit-->
+                        <!--                        -Djavax.net.ssl.trustStore=core/src/main/resources/cacerts-->
+                        <!--                        -Djavax.net.ssl.trustStorePassword=changeit-->
                         <!--   -Djunit.jupiter.execution.timeout.default=500 ms-->
                     </argLine>
                     <!--                    <systemPropertyVariables>-->
@@ -427,17 +435,42 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+            </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release-central</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>sonatype-central</publishingServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

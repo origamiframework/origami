@@ -1,8 +1,12 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.4.3
+
+- Правки по фреймворку
+
 ### 1.4.2
 
-- Delpoy
+- Deploy to mvn repo
 
 ### 1.4.1
 

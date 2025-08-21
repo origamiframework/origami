@@ -34,27 +34,27 @@
 
 ## Properties
 
-- setBootstrapServers() - список адресов Kafka-брокеров
-- setGroupId() - имя группы консьюмеров, которые работают вместе
-- addSecurityProtocol() - протокол безопасности для подключения клиента. Опционально с указанием regexp для названия стенда.
+- **setBootstrapServers()** - список адресов Kafka-брокеров
+- **setGroupId()** - имя группы консьюмеров, которые работают вместе
+- **addSecurityProtocol()** - протокол безопасности для подключения клиента. Опционально с указанием regexp для названия стенда.
 При запуске тестов на стендах, для которых указан протокол, будет использован данный протокол,
 для запусков на остальных стендов будет использован протокол без указания regexp.
-- addSaslMechanism() - определяет, какой механизм аутентификации SASL (Simple Authentication and Security Layer) будет использоваться клиентом Kafka
-- setUsername() - имя пользователя для аутентификации
-- setPassword() - пароль пользователя для аутентификации
-- setClientId() - идентификатор приложения (client), зарегистрированного во внешней системе авторизации (например, OAuth-сервере)
-- setClientSecret() - секретный ключ (пароль), привязанный к этому clientId
-- setSaslOauthBearerTokenEndpoint() - это URL-адрес, по которому Kafka-клиент будет запрашивать OAuth 2.0 access token
+- **addSaslMechanism()** - определяет, какой механизм аутентификации SASL (Simple Authentication and Security Layer) будет использоваться клиентом Kafka
+- **setUsername()** - имя пользователя для аутентификации
+- **setPassword()** - пароль пользователя для аутентификации
+- **setClientId()** - идентификатор приложения (client), зарегистрированного во внешней системе авторизации (например, OAuth-сервере)
+- **setClientSecret()** - секретный ключ (пароль), привязанный к этому clientId
+- **setSaslOauthBearerTokenEndpoint()** - это URL-адрес, по которому Kafka-клиент будет запрашивать OAuth 2.0 access token
 у внешнего сервера авторизации, указывая свои clientId, clientSecret. Этот токен затем используется для аутентификации с Kafka-брокером
-- setSaslOauthBearerJwksEndpoint() - это URL, по которому Kafka-брокер (или клиент) получает открытые ключи для проверки подписи JWT-токенов
-- setSslTruststoreLocation() - путь к truststore-файлу, в котором хранятся сертификаты доверенных центров сертификации (CA certificates)
-- setSslTruststorePassword() - пароль для доступа к truststore-файлу
-- setSaslKerberosServiceName() - определяет имя Kerberos-сервиса, под которым зарегистрирован Kafka-брокер в Kerberos KDC (Key Distribution Center)
-- setSslKeystoreLocation() - путь к файлу keystore (обычно формата JKS или PKCS12), в котором хранятся приватный ключ и сертификат клиента (или брокера)
-- setSslKeyPassword() - пароль для доступа ко всему keystore-файлу (для его открытия)
-- setSslKeyPassword() - пароль, который защищает приватный ключ внутри keystore
-- setTopicPrefix() - префикс будет добавлен перед названием топика кафки. Необходим для обхода различий в названии топиков на разных стендах.
-- setTopicPostfix() - постфикс будет добавлен после названия топика кафки. Необходим для обхода различий в названии топиков на разных стендах
+- **setSaslOauthBearerJwksEndpoint()** - это URL, по которому Kafka-брокер (или клиент) получает открытые ключи для проверки подписи JWT-токенов
+- **setSslTruststoreLocation()** - путь к truststore-файлу, в котором хранятся сертификаты доверенных центров сертификации (CA certificates)
+- **setSslTruststorePassword()** - пароль для доступа к truststore-файлу
+- **setSaslKerberosServiceName()** - определяет имя Kerberos-сервиса, под которым зарегистрирован Kafka-брокер в Kerberos KDC (Key Distribution Center)
+- **setSslKeystoreLocation()** - путь к файлу keystore (обычно формата JKS или PKCS12), в котором хранятся приватный ключ и сертификат клиента (или брокера)
+- **setSslKeystorePassword()** - пароль для доступа ко всему keystore-файлу (для его открытия)
+- **setSslKeyPassword()** - пароль, который защищает приватный ключ внутри keystore
+- **setTopicPrefix()** - префикс будет добавлен перед названием топика кафки. Необходим для обхода различий в названии топиков на разных стендах.
+- **setTopicPostfix()** - постфикс будет добавлен после названия топика кафки. Необходим для обхода различий в названии топиков на разных стендах
 
 ## Producer
 
