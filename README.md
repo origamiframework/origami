@@ -4,7 +4,7 @@
 
 # Origami Framework
 
-![Maven Central](https://img.shields.io/maven-central/v/ru.origamiframework/origami-framework-core.svg)
+![Maven Central](https://img.shields.io/maven-central/v/ru.origamiframework/origami-framework-parent.svg)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Telegram Join](https://img.shields.io/badge/Telegram-Join%20to%20channel-blue?logo=telegram)](https://t.me/origamiframework)
 </div>
