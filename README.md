@@ -1,5 +1,5 @@
 <br>
-<div style="text-align: center;">
+<div align="center">
 <img src="./core/src/main/resources/img/logo.png" alt="Origami" width="200">
 
 # Origami Framework
