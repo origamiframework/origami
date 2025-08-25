@@ -47,14 +47,23 @@ public class ConsumerSteps extends CommonSteps {
 
     public static final Duration DURATION_SECOND = Duration.ofMillis(2000);
 
-    private static final Long DEFAULT_WAITING_TIME = 5000L;
+    private static final long RETRY_DEFAULT_WAITING_TIME = 5000L;
+
+    private static final int RETRY_DEFAULT_MAX_ATTEMPTS = 10;
+
+    private static final long RETRY_DEFAULT_READ_TIMEOUT = 500;
+
+    @Setter
+    private Long retryWaitingTime = null;
+
+    @Setter
+    private Integer retryMaxAttempts = null;
+
+    @Setter
+    private Long retryReadTimeout = null;
 
     @Setter
     private Long period = null;
-
-    private final int MAX_ATTEMPTS = 10;
-
-    private final long READ_TIMEOUT = 500;
 
     private final SubscribeTopicTask subscribeTopicTask = new SubscribeTopicTask();
 
@@ -329,11 +338,11 @@ public class ConsumerSteps extends CommonSteps {
 
         do {
             attempt++;
-            waitRecord(READ_TIMEOUT);
+            waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
 
             if (Objects.nonNull(period)) {
-                attempt = MAX_ATTEMPTS;
+                attempt = getRetryMaxAttempts();
             }
 
             List<ConsumerRecord<String, String>> records = readRecords(consumer, topic);
@@ -353,7 +362,7 @@ public class ConsumerSteps extends CommonSteps {
                     }
                 }
             }
-        } while (neededRecord == null && attempt < MAX_ATTEMPTS);
+        } while (neededRecord == null && attempt < getRetryMaxAttempts());
 
         consumer.close();
         period = null;
@@ -846,11 +855,11 @@ public class ConsumerSteps extends CommonSteps {
 
         do {
             attempt++;
-            waitRecord(READ_TIMEOUT);
+            waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
 
             if (Objects.nonNull(period)) {
-                attempt = MAX_ATTEMPTS;
+                attempt = getRetryMaxAttempts();
             }
 
             for (ConsumerRecord<String, String> record : readRecords(consumer, topic)) {
@@ -863,7 +872,7 @@ public class ConsumerSteps extends CommonSteps {
                     }
                 }
             }
-        } while (neededRecords.isEmpty() && attempt < MAX_ATTEMPTS);
+        } while (neededRecords.isEmpty() && attempt < getRetryMaxAttempts());
 
         consumer.close();
         period = null;
@@ -1126,7 +1135,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessage(Topic topic) {
-        return unsubscribeWhenGetResult(topic, null, emptyList(), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, null, emptyList(), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1138,7 +1147,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessage(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, null, singletonList(searchWord), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, null, singletonList(searchWord), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1150,7 +1159,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessage(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, null, searchWords, DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, null, searchWords, getRetryWaitingTime(), false);
     }
 
     /**
@@ -1161,7 +1170,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessage(Topic topic) {
-        return unsubscribeWhenGetResult(topic, true, emptyList(), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, true, emptyList(), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1173,7 +1182,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessage(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, true, singletonList(searchWord), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, true, singletonList(searchWord), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1185,7 +1194,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessage(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, true, searchWords, DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, true, searchWords, getRetryWaitingTime(), false);
     }
 
     /**
@@ -1196,7 +1205,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessage(Topic topic) {
-        return unsubscribeWhenGetResult(topic, false, emptyList(), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, false, emptyList(), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1208,7 +1217,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessage(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, false, singletonList(searchWord), DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, false, singletonList(searchWord), getRetryWaitingTime(), false);
     }
 
     /**
@@ -1220,7 +1229,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessage(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, false, searchWords, DEFAULT_WAITING_TIME, false);
+        return unsubscribeWhenGetResult(topic, false, searchWords, getRetryWaitingTime(), false);
     }
 
     /**
@@ -1345,7 +1354,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessageWithEmptyResult(Topic topic) {
-        return unsubscribeWhenGetResult(topic, null, emptyList(), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, null, emptyList(), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1357,7 +1366,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessageWithEmptyResult(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, null, singletonList(searchWord), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, null, singletonList(searchWord), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1369,7 +1378,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список строк List<String>
      */
     public List unsubscribeWhenGetMessageWithEmptyResult(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, null, searchWords, DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, null, searchWords, getRetryWaitingTime(), true);
     }
 
     /**
@@ -1380,7 +1389,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessageWithEmptyResult(Topic topic) {
-        return unsubscribeWhenGetResult(topic, true, emptyList(), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, true, emptyList(), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1392,7 +1401,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessageWithEmptyResult(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, true, singletonList(searchWord), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, true, singletonList(searchWord), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1404,7 +1413,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetJsonMessageWithEmptyResult(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, true, searchWords, DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, true, searchWords, getRetryWaitingTime(), true);
     }
 
     /**
@@ -1415,7 +1424,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessageWithEmptyResult(Topic topic) {
-        return unsubscribeWhenGetResult(topic, false, emptyList(), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, false, emptyList(), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1427,7 +1436,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessageWithEmptyResult(Topic topic, String searchWord) {
-        return unsubscribeWhenGetResult(topic, false, singletonList(searchWord), DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, false, singletonList(searchWord), getRetryWaitingTime(), true);
     }
 
     /**
@@ -1439,7 +1448,7 @@ public class ConsumerSteps extends CommonSteps {
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
      */
     public List unsubscribeWhenGetXmlMessageWithEmptyResult(Topic topic, List<String> searchWords) {
-        return unsubscribeWhenGetResult(topic, false, searchWords, DEFAULT_WAITING_TIME, true);
+        return unsubscribeWhenGetResult(topic, false, searchWords, getRetryWaitingTime(), true);
     }
 
     /**
@@ -1687,6 +1696,36 @@ public class ConsumerSteps extends CommonSteps {
                     .readValue(json.trim(), clazz));
         } catch (IOException e) {
             return object.setException(e);
+        }
+    }
+
+    private long getRetryWaitingTime() {
+        if (Objects.nonNull(retryWaitingTime)) {
+            return retryWaitingTime;
+        } else if (Objects.nonNull(properties.getRetryWaitingTime())) {
+            return properties.getRetryWaitingTime();
+        } else {
+            return RETRY_DEFAULT_WAITING_TIME;
+        }
+    }
+
+    private int getRetryMaxAttempts() {
+        if (Objects.nonNull(retryMaxAttempts)) {
+            return retryMaxAttempts;
+        } else if (Objects.nonNull(properties.getRetryMaxAttempts())) {
+            return properties.getRetryMaxAttempts();
+        } else {
+            return RETRY_DEFAULT_MAX_ATTEMPTS;
+        }
+    }
+
+    private long getRetryReadTimeout() {
+        if (Objects.nonNull(retryReadTimeout)) {
+            return retryReadTimeout;
+        } else if (Objects.nonNull(properties.getRetryReadTimeout())) {
+            return properties.getRetryReadTimeout();
+        } else {
+            return RETRY_DEFAULT_READ_TIMEOUT;
         }
     }
 }
