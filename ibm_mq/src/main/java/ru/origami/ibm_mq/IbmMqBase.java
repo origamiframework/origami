@@ -37,8 +37,11 @@ public abstract class IbmMqBase {
             JmsFactoryFactory ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
             JmsConnectionFactory cf = ff.createConnectionFactory();
 
+            if (Objects.nonNull(properties.getPort())) {
+                cf.setIntProperty(WMQConstants.WMQ_PORT, properties.getPort());
+            }
+
             cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, properties.getHost());
-            cf.setIntProperty(WMQConstants.WMQ_PORT, properties.getPort());
             cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, properties.getQueueManagerName());
             cf.setStringProperty(WMQConstants.WMQ_CHANNEL, properties.getChannel());
             cf.setStringProperty(WMQConstants.USERID, properties.getUsername());

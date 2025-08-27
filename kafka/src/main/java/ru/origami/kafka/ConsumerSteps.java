@@ -341,10 +341,6 @@ public class ConsumerSteps extends CommonSteps {
             waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
 
-            if (Objects.nonNull(period)) {
-                attempt = getRetryMaxAttempts();
-            }
-
             List<ConsumerRecord<String, String>> records = readRecords(consumer, topic);
             Collections.reverse(records);
 
@@ -857,10 +853,6 @@ public class ConsumerSteps extends CommonSteps {
             attempt++;
             waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
-
-            if (Objects.nonNull(period)) {
-                attempt = getRetryMaxAttempts();
-            }
 
             for (ConsumerRecord<String, String> record : readRecords(consumer, topic)) {
                 if (CollectionUtils.isEmpty(searchWords)) {

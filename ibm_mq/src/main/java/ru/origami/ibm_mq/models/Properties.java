@@ -9,7 +9,7 @@ public class Properties {
 
     private String host;
 
-    private int port;
+    private Integer port;
 
     private String queueManagerName;
 
