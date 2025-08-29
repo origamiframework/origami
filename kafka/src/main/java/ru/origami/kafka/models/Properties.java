@@ -59,6 +59,12 @@ public class Properties {
 
     private String sslKeyPassword;
 
+    private Long retryWaitingTime;
+
+    private Integer retryMaxAttempts;
+
+    private Long retryReadTimeout;
+
     public Properties(Builder builder) {
         this.bootstrapServers = builder.bootstrapServers;
         this.groupId = builder.groupId;
@@ -77,6 +83,9 @@ public class Properties {
         this.sslKeystoreLocation = builder.sslKeystoreLocation;
         this.sslKeystorePassword = builder.sslKeystorePassword;
         this.sslKeyPassword = builder.sslKeyPassword;
+        this.retryMaxAttempts = builder.retryMaxAttempts;
+        this.retryReadTimeout = builder.retryReadTimeout;
+        this.retryWaitingTime = builder.retryWaitingTime;
     }
 
     public static class Builder {
@@ -138,6 +147,15 @@ public class Properties {
 
         @Setter
         private String sslKeyPassword;
+
+        @Setter
+        private Long retryWaitingTime;
+
+        @Setter
+        private Integer retryMaxAttempts;
+
+        @Setter
+        private Long retryReadTimeout;
 
         private final String ALL_STAND_REGEXP = ".*";
 
