@@ -24,7 +24,7 @@
 * [Hibernate](hibernate/README.md)
 * [IBM MQ](ibm_mq/README.md)
 * [Kafka](kafka/README.md)
-* [Rest](rest/README.md)
+* [RestAssured](rest/README.md)
 * [WebSocket](websocket/README.md)
 * [Selenide](selenide/README.md)
 
