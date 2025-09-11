@@ -24,7 +24,7 @@
 * [Hibernate](hibernate/README.md)
 * [IBM MQ](ibm_mq/README.md)
 * [Kafka](kafka/README.md)
-* [Rest](rest/README.md)
+* [RestAssured](rest/README.md)
 * [WebSocket](websocket/README.md)
 * [Selenide](selenide/README.md)
 
@@ -36,7 +36,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.4.3</version>
+        <version>1.4.4</version>
         <relativePath/>
     </parent>
 ```
