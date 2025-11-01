@@ -79,9 +79,39 @@ public final class Environment {
         return propertyValue;
     }
 
+//    public static boolean isLocal() {
+//        return System.getProperty("is.local") == null || Boolean.parseBoolean(System.getProperty("is.local"));
+//    }
+
     public static boolean isLocal() {
-        return System.getProperty("is.local") == null || Boolean.parseBoolean(System.getProperty("is.local"));
+        String[] ciEnvVars = new String[] {
+                "CI",                    // Общая переменная, практически во всех CI/CD
+                "GITHUB_ACTIONS",        // GitHub Actions
+                "GITLAB_CI",             // GitLab CI
+                "JENKINS_URL",           // Jenkins
+                "TRAVIS",                // Travis CI
+                "CIRCLECI",              // CircleCI
+                "TEAMCITY_VERSION",      // TeamCity
+                "BUILD_NUMBER",          // Bamboo, Jenkins
+                "BITBUCKET_BUILD_NUMBER",// Bitbucket Pipelines
+                "BUILDKITE",             // Buildkite
+                "APPVEYOR",              // AppVeyor
+                "AZURE_HTTP_USER_AGENT", // Azure Pipelines
+                "BUDDY",                 // Buddy
+                "BAMBOO_BUILDNUMBER"     // Atlassian Bamboo
+        };
+
+        for (String envVar : ciEnvVars) {
+            String value = System.getenv(envVar);
+
+            if (Objects.nonNull(value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
 
     public static boolean isLoggingEnabled() {
         return getWithNullValue(LOGGING_ENABLED) != null && Boolean.parseBoolean(get(LOGGING_ENABLED));

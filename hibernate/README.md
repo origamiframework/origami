@@ -71,7 +71,7 @@ public Table getRandomCustId() {
 }
 ```
 
-Запросы INSERT, UPDATE, DELETE, etc. рекомендуется выполнять на языке sql.
+Запросы INSERT, UPDATE, DELETE и тд. рекомендуется выполнять на языке sql.
 ```JAVA
 @Step("Обновляем записи в таблице table по id: {0}")
 public void updateDayByDecisionId(Long id) {
@@ -95,7 +95,7 @@ public void updateDayByDecisionId(Long id) {
     @Table(name = "fixed_accepted_rate", schema = DYNAMIC_SCHEMA)
 ```
 
-В параметрах подключения необходимо указать схему
+В параметрах подключения в таком случае необходимо указать схему
 ```JAVA
 public class DatabaseFixtureSteps extends CommonFixtureSteps {
 
