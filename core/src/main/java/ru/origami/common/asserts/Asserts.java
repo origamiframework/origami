@@ -25,7 +25,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.true")
     public static void assertTrue(String field, boolean condition) {
-        Assertions.assertTrue(condition);
+        Assertions.assertTrue(condition, field);
     }
 
     @Step("getLangValue:asserts.step.assert.true")
@@ -35,7 +35,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.true")
     public static void assertTrue(String field, BooleanSupplier booleanSupplier) {
-        Assertions.assertTrue(booleanSupplier);
+        Assertions.assertTrue(booleanSupplier, field);
     }
 
     @Step("getLangValue:asserts.step.assert.true")
@@ -55,7 +55,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.false")
     public static void assertFalse(String field, boolean condition) {
-        Assertions.assertFalse(condition);
+        Assertions.assertFalse(condition, field);
     }
 
     @Step("getLangValue:asserts.step.assert.false")
@@ -70,7 +70,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.false")
     public static void assertFalse(String field, BooleanSupplier booleanSupplier) {
-        Assertions.assertFalse(booleanSupplier);
+        Assertions.assertFalse(booleanSupplier, field);
     }
 
     @Step("getLangValue:asserts.step.assert.false")
@@ -85,7 +85,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.null")
     public static void assertNull(String field, Object actual) {
-        Assertions.assertNull(actual);
+        Assertions.assertNull(actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.null")
@@ -100,7 +100,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.null")
     public static void assertNotNull(String field, Object actual) {
-        Assertions.assertNotNull(actual);
+        Assertions.assertNotNull(actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.null")
@@ -115,22 +115,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, short expected, short actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, short expected, Short actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Short expected, short actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Short expected, Short actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -175,22 +175,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, byte expected, byte actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, byte expected, Byte actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Byte expected, byte actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Byte expected, Byte actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -235,22 +235,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, int expected, int actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, int expected, Integer actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Integer expected, int actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Integer expected, Integer actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -295,22 +295,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, long expected, long actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, long expected, Long actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Long expected, long actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Long expected, Long actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -355,22 +355,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, float expected, float actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, float expected, Float actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Float expected, float actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Float expected, Float actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -415,7 +415,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
     public static void assertEquals(String field, float expected, float actual, float delta) {
-        Assertions.assertEquals(expected, actual, delta);
+        Assertions.assertEquals(expected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
@@ -430,22 +430,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, double expected, double actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, double expected, Double actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Double expected, double actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Double expected, Double actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -490,7 +490,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
     public static void assertEquals(String field, double expected, double actual, double delta) {
-        Assertions.assertEquals(expected, actual, delta);
+        Assertions.assertEquals(expected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
@@ -505,22 +505,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, char expected, char actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, char expected, Character actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Character expected, char actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Character expected, Character actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -565,7 +565,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertEquals(String field, Object expected, Object actual) {
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -580,7 +580,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, boolean[] expected, boolean[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -595,7 +595,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, char[] expected, char[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -610,7 +610,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, byte[] expected, byte[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -625,7 +625,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, short[] expected, short[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -640,7 +640,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, int[] expected, int[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -655,7 +655,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, long[] expected, long[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -670,7 +670,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, float[] expected, float[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -685,7 +685,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
     public static void assertArrayEquals(String field, float[] expected, float[] actual, float delta) {
-        Assertions.assertArrayEquals(expected, actual, delta);
+        Assertions.assertArrayEquals(expected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
@@ -700,7 +700,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, double[] expected, double[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -715,7 +715,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
     public static void assertArrayEquals(String field, double[] expected, double[] actual, double delta) {
-        Assertions.assertArrayEquals(expected, actual, delta);
+        Assertions.assertArrayEquals(expected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.delta")
@@ -730,7 +730,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertArrayEquals(String field, Object[] expected, Object[] actual) {
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -745,7 +745,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertIterableEquals(String field, Iterable<?> expected, Iterable<?> actual) {
-        Assertions.assertIterableEquals(expected, actual);
+        Assertions.assertIterableEquals(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -760,7 +760,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.lines.match")
     public static void assertLinesMatch(String field, List<String> expectedLines, List<String> actualLines) {
-        Assertions.assertLinesMatch(expectedLines, actualLines);
+        Assertions.assertLinesMatch(expectedLines, actualLines, field);
     }
 
     @Step("getLangValue:asserts.step.assert.lines.match")
@@ -775,7 +775,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.lines.match")
     public static void assertLinesMatch(String field, Stream<String> expectedLines, Stream<String> actualLines) {
-        Assertions.assertLinesMatch(expectedLines, actualLines);
+        Assertions.assertLinesMatch(expectedLines, actualLines, field);
     }
 
     @Step("getLangValue:asserts.step.assert.lines.match")
@@ -790,22 +790,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, byte unexpected, byte actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, byte unexpected, Byte actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Byte unexpected, byte actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Byte unexpected, Byte actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -850,22 +850,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, short unexpected, short actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, short unexpected, Short actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Short unexpected, short actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Short unexpected, Short actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -910,22 +910,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, int unexpected, int actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, int unexpected, Integer actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Integer unexpected, int actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Integer unexpected, Integer actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -970,22 +970,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, long unexpected, long actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, long unexpected, Long actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Long unexpected, long actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Long unexpected, Long actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1030,22 +1030,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, float unexpected, float actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, float unexpected, Float actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Float unexpected, float actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Float unexpected, Float actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1090,7 +1090,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.delta")
     public static void assertNotEquals(String field, float unexpected, float actual, float delta) {
-        Assertions.assertNotEquals(unexpected, actual, delta);
+        Assertions.assertNotEquals(unexpected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.delta")
@@ -1105,22 +1105,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, double unexpected, double actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, double unexpected, Double actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Double unexpected, double actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Double unexpected, Double actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1165,7 +1165,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.delta")
     public static void assertNotEquals(String field, double unexpected, double actual, double delta) {
-        Assertions.assertNotEquals(unexpected, actual, delta);
+        Assertions.assertNotEquals(unexpected, actual, delta, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.delta")
@@ -1180,22 +1180,22 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, char unexpected, char actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, char unexpected, Character actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Character unexpected, char actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Character unexpected, Character actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1240,7 +1240,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotEquals(String field, Object unexpected, Object actual) {
-        Assertions.assertNotEquals(unexpected, actual);
+        Assertions.assertNotEquals(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1255,7 +1255,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertSame(String field, Object expected, Object actual) {
-        Assertions.assertSame(expected, actual);
+        Assertions.assertSame(expected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -1270,7 +1270,7 @@ public class Asserts {
 
     @Step("getLangValue:asserts.step.assert.not.equals")
     public static void assertNotSame(String field, Object unexpected, Object actual) {
-        Assertions.assertNotSame(unexpected, actual);
+        Assertions.assertNotSame(unexpected, actual, field);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals")
@@ -1443,280 +1443,496 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.list.equals")
-    public static <T> ListAssert<T> assertListEquals(String field, List<T> expectedList, List<T> actualList) {
-        return assertThat(actualList).isEqualTo(expectedList);
+    public static <T> void assertListEquals(String field, List<T> expectedList, List<T> actualList) {
+        try {
+            assertThat(actualList).isEqualTo(expectedList);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.list.equals")
-    public static <T> ListAssert<T> assertListEqualsInAnyMatch(String field, List<T> expectedList, List<T> actualList) {
-        return assertThat(actualList).hasSameElementsAs(expectedList);
+    public static <T> void assertListEqualsInAnyMatch(String field, List<T> expectedList, List<T> actualList) {
+        try {
+            assertThat(actualList).hasSameElementsAs(expectedList);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.list.contains")
-    public static <T> ListAssert<T> assertListContains(String field, T expectedValue, List<T> actualList) {
-        return assertThat(actualList).contains(expectedValue);
+    public static <T> void assertListContains(String field, T expectedValue, List<T> actualList) {
+        try {
+            assertThat(actualList).contains(expectedValue);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.list.size")
     public static void assertListSize(String field, int size, List<?> actualList) {
-        assertThat(actualList).hasSize(size);
+        try {
+            assertThat(actualList).hasSize(size);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertTimeEquals(String field, LocalTime expected, LocalTime actual) {
-        assertThat(actual).isEqualTo(expected);
+        try {
+            assertThat(actual).isEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateEquals(String field, LocalDate expected, LocalDate actual) {
-        assertThat(actual).isEqualTo(expected);
+        try {
+            assertThat(actual).isEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateTimeEquals(String field, LocalDateTime expected, LocalDateTime actual) {
-        assertThat(actual).isEqualTo(expected);
+        try {
+            assertThat(actual).isEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateTimeEquals(String field, ZonedDateTime expected, ZonedDateTime actual) {
-        assertThat(actual).isEqualTo(expected);
+        try {
+            assertThat(actual).isEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateTimeEquals(String field, OffsetDateTime expected, OffsetDateTime actual) {
-        assertThat(actual).isEqualTo(expected);
+        try {
+            assertThat(actual).isEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertTimeIsAfter(String field, LocalTime expected, LocalTime actual) {
-        assertThat(actual).isAfter(expected);
+        try {
+            assertThat(actual).isAfter(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateIsAfter(String field, LocalDate expected, LocalDate actual) {
-        assertThat(actual).isAfter(expected);
+        try {
+            assertThat(actual).isAfter(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateTimeIsAfter(String field, LocalDateTime expected, LocalDateTime actual) {
-        assertThat(actual).isAfter(expected);
+        try {
+            assertThat(actual).isAfter(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateTimeIsAfter(String field, ZonedDateTime expected, ZonedDateTime actual) {
-        assertThat(actual).isAfter(expected);
+        try {
+            assertThat(actual).isAfter(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateTimeIsAfter(String field, OffsetDateTime expected, OffsetDateTime actual) {
-        assertThat(actual).isAfter(expected);
+        try {
+            assertThat(actual).isAfter(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertTimeIsAfterOrEqualTo(String field, LocalTime expected, LocalTime actual) {
-        assertThat(actual).isAfterOrEqualTo(expected);
+        try {
+            assertThat(actual).isAfterOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateIsAfterOrEqualTo(String field, LocalDate expected, LocalDate actual) {
-        assertThat(actual).isAfterOrEqualTo(expected);
+        try {
+            assertThat(actual).isAfterOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateTimeIsAfterOrEqualTo(String field, LocalDateTime expected, LocalDateTime actual) {
-        assertThat(actual).isAfterOrEqualTo(expected);
+        try {
+            assertThat(actual).isAfterOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateTimeIsAfterOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual) {
-        assertThat(actual).isAfterOrEqualTo(expected);
+        try {
+            assertThat(actual).isAfterOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateTimeIsAfterOrEqualTo(String field, OffsetDateTime expected, OffsetDateTime actual) {
-        assertThat(actual).isAfterOrEqualTo(expected);
+        try {
+            assertThat(actual).isAfterOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertTimeIsBefore(String field, LocalTime expected, LocalTime actual) {
-        assertThat(actual).isBefore(expected);
+        try {
+            assertThat(actual).isBefore(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateIsBefore(String field, LocalDate expected, LocalDate actual) {
-        assertThat(actual).isBefore(expected);
+        try {
+            assertThat(actual).isBefore(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateTimeIsBefore(String field, LocalDateTime expected, LocalDateTime actual) {
-        assertThat(actual).isBefore(expected);
+        try {
+            assertThat(actual).isBefore(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateTimeIsBefore(String field, ZonedDateTime expected, ZonedDateTime actual) {
-        assertThat(actual).isBefore(expected);
+        try {
+            assertThat(actual).isBefore(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateTimeIsBefore(String field, OffsetDateTime expected, OffsetDateTime actual) {
-        assertThat(actual).isBefore(expected);
+        try {
+            assertThat(actual).isBefore(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertTimeIsBeforeOrEqualTo(String field, LocalTime expected, LocalTime actual) {
-        assertThat(actual).isBeforeOrEqualTo(expected);
+        try {
+            assertThat(actual).isBeforeOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateIsBeforeOrEqualTo(String field, LocalDate expected, LocalDate actual) {
-        assertThat(actual).isBeforeOrEqualTo(expected);
+        try {
+            assertThat(actual).isBeforeOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateTimeIsBeforeOrEqualTo(String field, LocalDateTime expected, LocalDateTime actual) {
-        assertThat(actual).isBeforeOrEqualTo(expected);
+        try {
+            assertThat(actual).isBeforeOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateTimeIsBeforeOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual) {
-        assertThat(actual).isBeforeOrEqualTo(expected);
+        try {
+            assertThat(actual).isBeforeOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateTimeIsBeforeOrEqualTo(String field, OffsetDateTime expected, OffsetDateTime actual) {
-        assertThat(actual).isBeforeOrEqualTo(expected);
+        try {
+            assertThat(actual).isBeforeOrEqualTo(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertTimeIsBetween(String field, LocalTime expectedStartTime, LocalTime expectedEndTime, LocalTime actual) {
-        assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.date.is.between")
     public static void assertDateIsBetween(String field, LocalDate expectedStartDate, LocalDate expectedEndDate, LocalDate actual) {
-        assertThat(actual).isStrictlyBetween(expectedStartDate, expectedEndDate);
+        try {
+            assertThat(actual).isStrictlyBetween(expectedStartDate, expectedEndDate);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertDateTimeIsBetween(String field, LocalDateTime expectedStartTime,
                                                LocalDateTime expectedEndTime, LocalDateTime actual) {
-        assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertDateTimeIsBetween(String field, ZonedDateTime expectedStartTime,
                                                ZonedDateTime expectedEndTime, ZonedDateTime actual) {
-        assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertDateTimeIsBetween(String field, OffsetDateTime expectedStartTime,
                                                OffsetDateTime expectedEndTime, OffsetDateTime actual) {
-        assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isStrictlyBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertTimeIsBetweenOrEqualTo(String field, LocalTime expectedStartTime,
                                                     LocalTime expectedEndTime, LocalTime actual) {
-        assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.date.is.between.or.equal.to")
     public static void assertDateIsBetweenOrEqualTo(String field, LocalDate expectedStartDate,
                                                     LocalDate expectedEndDate, LocalDate actual) {
-        assertThat(actual).isBetween(expectedStartDate, expectedEndDate);
+        try {
+            assertThat(actual).isBetween(expectedStartDate, expectedEndDate);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertDateTimeIsBetweenOrEqualTo(String field, LocalDateTime expectedStartTime,
                                                         LocalDateTime expectedEndTime, LocalDateTime actual) {
-        assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertDateTimeIsBetweenOrEqualTo(String field, ZonedDateTime expectedStartTime,
                                                         ZonedDateTime expectedEndTime, ZonedDateTime actual) {
-        assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertDateTimeIsBetweenOrEqualTo(String field, OffsetDateTime expectedStartTime,
                                                         OffsetDateTime expectedEndTime, OffsetDateTime actual) {
-        assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        try {
+            assertThat(actual).isBetween(expectedStartTime, expectedEndTime);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.start.with")
     public static void assertStartWith(String field, String expectedPrefix, String actual) {
-        assertThat(actual).startsWith(expectedPrefix);
+        try {
+            assertThat(actual).startsWith(expectedPrefix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.start.with.ignoring.case")
     public static void assertStartWithIgnoringCase(String field, String expectedPrefix, String actual) {
-        assertThat(actual).startsWithIgnoringCase(expectedPrefix);
+        try {
+            assertThat(actual).startsWithIgnoringCase(expectedPrefix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.start.with")
     public static void assertDoesNotStartWith(String field, String expectedNotPrefix, String actual) {
-        assertThat(actual).doesNotStartWith(expectedNotPrefix);
+        try {
+            assertThat(actual).doesNotStartWith(expectedNotPrefix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.start.with.ignoring.case")
     public static void assertDoesNotStartWithIgnoringCase(String field, String expectedNotPrefix, String actual) {
-        assertThat(actual).doesNotStartWithIgnoringCase(expectedNotPrefix);
+        try {
+            assertThat(actual).doesNotStartWithIgnoringCase(expectedNotPrefix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.end.with")
     public static void assertEndWith(String field, String expectedSuffix, String actual) {
-        assertThat(actual).endsWith(expectedSuffix);
+        try {
+            assertThat(actual).endsWith(expectedSuffix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.end.with.ignoring.case")
     public static void assertEndWithIgnoringCase(String field, String expectedSuffix, String actual) {
-        assertThat(actual).startsWithIgnoringCase(expectedSuffix);
+        try {
+            assertThat(actual).startsWithIgnoringCase(expectedSuffix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.end.with")
     public static void assertDoesNotEndWith(String field, String expectedNotSuffix, String actual) {
-        assertThat(actual).doesNotEndWith(expectedNotSuffix);
+        try {
+            assertThat(actual).doesNotEndWith(expectedNotSuffix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.end.with.ignoring.case")
     public static void assertDoesNotEndWithIgnoringCase(String field, String expectedNotSuffix, String actual) {
-        assertThat(actual).doesNotEndWithIgnoringCase(expectedNotSuffix);
+        try {
+            assertThat(actual).doesNotEndWithIgnoringCase(expectedNotSuffix);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.ignoring.case")
     public static void assertEqualsWithIgnoringCase(String field, String expected, String actual) {
-        assertThat(actual).isEqualToIgnoringCase(expected);
+        try {
+            assertThat(actual).isEqualToIgnoringCase(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.case")
     public static void assertNotEqualsWithIgnoringCase(String field, String notExpected, String actual) {
-        assertThat(actual).isNotEqualToIgnoringCase(notExpected);
+        try {
+            assertThat(actual).isNotEqualToIgnoringCase(notExpected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.equals.with.ignoring.whitespace")
     public static void assertEqualsWithIgnoringWhitespace(String field, String expected, String actual) {
-        assertThat(actual).isEqualToIgnoringWhitespace(expected);
+        try {
+            assertThat(actual).isEqualToIgnoringWhitespace(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.whitespace")
     public static void assertNotEqualsWithIgnoringWhitespace(String field, String expected, String actual) {
-        assertThat(actual).isNotEqualToIgnoringWhitespace(expected);
+        try {
+            assertThat(actual).isNotEqualToIgnoringWhitespace(expected);
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.contains.only.whitespaces")
     public static void assertContainsOnlyWhitespaces(String field, String actual) {
-        assertThat(actual).containsOnlyWhitespaces();
+        try {
+            assertThat(actual).containsOnlyWhitespaces();
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.contains.whitespaces")
     public static void assertContainsWhitespaces(String field, String actual) {
-        assertThat(actual).containsWhitespaces();
+        try {
+            assertThat(actual).containsWhitespaces();
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 
     @Step("getLangValue:asserts.step.assert.not.contains.whitespaces")
     public static void assertNotContainsWhitespaces(String field, String actual) {
-        assertThat(actual).doesNotContainAnyWhitespaces();
+        try {
+            assertThat(actual).doesNotContainAnyWhitespaces();
+        } catch (AssertionError e) {
+            throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
+        }
     }
 }

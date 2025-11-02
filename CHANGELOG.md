@@ -3,8 +3,8 @@
 ### 1.4.5
 
 - Core: изменен метод isLocal() для работы с различными CI/CD
+- Core: в Asserts при падении добавлено название поля
 - Kafka: исправлена плавающая ошибка ConcurrentModificationException при отписке
-- 
 
 ### 1.4.4
 

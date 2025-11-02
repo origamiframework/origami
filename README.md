@@ -36,7 +36,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.4.4</version>
+        <version>1.4.5</version>
         <relativePath/>
     </parent>
 ```
