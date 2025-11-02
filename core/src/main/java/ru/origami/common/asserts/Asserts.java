@@ -1452,12 +1452,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.list.equals")
+    public static <T> void assertListEquals(String field, List<T> expectedList, List<T> actualList, String message) {
+            assertThat(actualList).withFailMessage(message).isEqualTo(expectedList);
+    }
+
+    @Step("getLangValue:asserts.step.assert.list.equals")
     public static <T> void assertListEqualsInAnyMatch(String field, List<T> expectedList, List<T> actualList) {
         try {
             assertThat(actualList).hasSameElementsAs(expectedList);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.list.equals")
+    public static <T> void assertListEqualsInAnyMatch(String field, List<T> expectedList, List<T> actualList, String message) {
+            assertThat(actualList).withFailMessage(message).hasSameElementsAs(expectedList);
     }
 
     @Step("getLangValue:asserts.step.assert.list.contains")
@@ -1469,6 +1479,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.list.contains")
+    public static <T> void assertListContains(String field, T expectedValue, List<T> actualList, String message) {
+            assertThat(actualList).withFailMessage(message).contains(expectedValue);
+    }
+
     @Step("getLangValue:asserts.step.assert.list.size")
     public static void assertListSize(String field, int size, List<?> actualList) {
         try {
@@ -1476,6 +1491,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.list.size")
+    public static void assertListSize(String field, int size, List<?> actualList, String message) {
+            assertThat(actualList).withFailMessage(message).hasSize(size);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -1488,12 +1508,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
+    public static void assertTimeEquals(String field, LocalTime expected, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateEquals(String field, LocalDate expected, LocalDate actual) {
         try {
             assertThat(actual).isEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals")
+    public static void assertDateEquals(String field, LocalDate expected, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
@@ -1506,6 +1536,11 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
+    public static void assertDateTimeEquals(String field, LocalDateTime expected, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateTimeEquals(String field, ZonedDateTime expected, ZonedDateTime actual) {
         try {
             assertThat(actual).isEqualTo(expected);
@@ -1515,12 +1550,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.equals")
+    public static void assertDateTimeEquals(String field, ZonedDateTime expected, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals")
     public static void assertDateTimeEquals(String field, OffsetDateTime expected, OffsetDateTime actual) {
         try {
             assertThat(actual).isEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals")
+    public static void assertDateTimeEquals(String field, OffsetDateTime expected, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
@@ -1533,12 +1578,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
+    public static void assertTimeIsAfter(String field, LocalTime expected, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfter(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateIsAfter(String field, LocalDate expected, LocalDate actual) {
         try {
             assertThat(actual).isAfter(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after")
+    public static void assertDateIsAfter(String field, LocalDate expected, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfter(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
@@ -1551,6 +1606,11 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
+    public static void assertDateTimeIsAfter(String field, LocalDateTime expected, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfter(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateTimeIsAfter(String field, ZonedDateTime expected, ZonedDateTime actual) {
         try {
             assertThat(actual).isAfter(expected);
@@ -1560,12 +1620,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after")
+    public static void assertDateTimeIsAfter(String field, ZonedDateTime expected, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfter(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after")
     public static void assertDateTimeIsAfter(String field, OffsetDateTime expected, OffsetDateTime actual) {
         try {
             assertThat(actual).isAfter(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after")
+    public static void assertDateTimeIsAfter(String field, OffsetDateTime expected, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfter(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
@@ -1578,12 +1648,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
+    public static void assertTimeIsAfterOrEqualTo(String field, LocalTime expected, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfterOrEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateIsAfterOrEqualTo(String field, LocalDate expected, LocalDate actual) {
         try {
             assertThat(actual).isAfterOrEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
+    public static void assertDateIsAfterOrEqualTo(String field, LocalDate expected, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfterOrEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
@@ -1596,6 +1676,11 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
+    public static void assertDateTimeIsAfterOrEqualTo(String field, LocalDateTime expected, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfterOrEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateTimeIsAfterOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual) {
         try {
             assertThat(actual).isAfterOrEqualTo(expected);
@@ -1605,12 +1690,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
+    public static void assertDateTimeIsAfterOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfterOrEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
     public static void assertDateTimeIsAfterOrEqualTo(String field, OffsetDateTime expected, OffsetDateTime actual) {
         try {
             assertThat(actual).isAfterOrEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.after.or.equal.to")
+    public static void assertDateTimeIsAfterOrEqualTo(String field, OffsetDateTime expected, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isAfterOrEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
@@ -1623,12 +1718,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
+    public static void assertTimeIsBefore(String field, LocalTime expected, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBefore(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateIsBefore(String field, LocalDate expected, LocalDate actual) {
         try {
             assertThat(actual).isBefore(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before")
+    public static void assertDateIsBefore(String field, LocalDate expected, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isBefore(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
@@ -1641,6 +1746,11 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
+    public static void assertDateTimeIsBefore(String field, LocalDateTime expected, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBefore(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateTimeIsBefore(String field, ZonedDateTime expected, ZonedDateTime actual) {
         try {
             assertThat(actual).isBefore(expected);
@@ -1650,12 +1760,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before")
+    public static void assertDateTimeIsBefore(String field, ZonedDateTime expected, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBefore(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before")
     public static void assertDateTimeIsBefore(String field, OffsetDateTime expected, OffsetDateTime actual) {
         try {
             assertThat(actual).isBefore(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before")
+    public static void assertDateTimeIsBefore(String field, OffsetDateTime expected, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBefore(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
@@ -1668,12 +1788,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
+    public static void assertTimeIsBeforeOrEqualTo(String field, LocalTime expected, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBeforeOrEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateIsBeforeOrEqualTo(String field, LocalDate expected, LocalDate actual) {
         try {
             assertThat(actual).isBeforeOrEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
+    public static void assertDateIsBeforeOrEqualTo(String field, LocalDate expected, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isBeforeOrEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
@@ -1686,12 +1816,22 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
+    public static void assertDateTimeIsBeforeOrEqualTo(String field, LocalDateTime expected, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBeforeOrEqualTo(expected);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
     public static void assertDateTimeIsBeforeOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual) {
         try {
             assertThat(actual).isBeforeOrEqualTo(expected);
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
+    public static void assertDateTimeIsBeforeOrEqualTo(String field, ZonedDateTime expected, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBeforeOrEqualTo(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
@@ -1703,6 +1843,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.time.is.before.or.equal.to")
+    public static void assertDateTimeIsBeforeOrEqualTo(String field, OffsetDateTime expected, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBeforeOrEqualTo(expected);
+    }
+
     @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertTimeIsBetween(String field, LocalTime expectedStartTime, LocalTime expectedEndTime, LocalTime actual) {
         try {
@@ -1712,6 +1857,12 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.time.is.between")
+    public static void assertTimeIsBetween(String field, LocalTime expectedStartTime, LocalTime expectedEndTime,
+                                           LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isStrictlyBetween(expectedStartTime, expectedEndTime);
+    }
+
     @Step("getLangValue:asserts.step.assert.date.is.between")
     public static void assertDateIsBetween(String field, LocalDate expectedStartDate, LocalDate expectedEndDate, LocalDate actual) {
         try {
@@ -1719,6 +1870,12 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.date.is.between")
+    public static void assertDateIsBetween(String field, LocalDate expectedStartDate, LocalDate expectedEndDate,
+                                           LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isStrictlyBetween(expectedStartDate, expectedEndDate);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
@@ -1732,6 +1889,12 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
+    public static void assertDateTimeIsBetween(String field, LocalDateTime expectedStartTime,
+                                               LocalDateTime expectedEndTime, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isStrictlyBetween(expectedStartTime, expectedEndTime);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.between")
     public static void assertDateTimeIsBetween(String field, ZonedDateTime expectedStartTime,
                                                ZonedDateTime expectedEndTime, ZonedDateTime actual) {
         try {
@@ -1739,6 +1902,12 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.between")
+    public static void assertDateTimeIsBetween(String field, ZonedDateTime expectedStartTime,
+                                               ZonedDateTime expectedEndTime, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isStrictlyBetween(expectedStartTime, expectedEndTime);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between")
@@ -1751,6 +1920,12 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.time.is.between")
+    public static void assertDateTimeIsBetween(String field, OffsetDateTime expectedStartTime,
+                                               OffsetDateTime expectedEndTime, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isStrictlyBetween(expectedStartTime, expectedEndTime);
+    }
+
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertTimeIsBetweenOrEqualTo(String field, LocalTime expectedStartTime,
                                                     LocalTime expectedEndTime, LocalTime actual) {
@@ -1761,6 +1936,12 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
+    public static void assertTimeIsBetweenOrEqualTo(String field, LocalTime expectedStartTime,
+                                                    LocalTime expectedEndTime, LocalTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBetween(expectedStartTime, expectedEndTime);
+    }
+
     @Step("getLangValue:asserts.step.assert.date.is.between.or.equal.to")
     public static void assertDateIsBetweenOrEqualTo(String field, LocalDate expectedStartDate,
                                                     LocalDate expectedEndDate, LocalDate actual) {
@@ -1769,6 +1950,12 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.date.is.between.or.equal.to")
+    public static void assertDateIsBetweenOrEqualTo(String field, LocalDate expectedStartDate,
+                                                    LocalDate expectedEndDate, LocalDate actual, String message) {
+            assertThat(actual).withFailMessage(message).isBetween(expectedStartDate, expectedEndDate);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
@@ -1782,6 +1969,12 @@ public class Asserts {
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
+    public static void assertDateTimeIsBetweenOrEqualTo(String field, LocalDateTime expectedStartTime,
+                                                        LocalDateTime expectedEndTime, LocalDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBetween(expectedStartTime, expectedEndTime);
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
     public static void assertDateTimeIsBetweenOrEqualTo(String field, ZonedDateTime expectedStartTime,
                                                         ZonedDateTime expectedEndTime, ZonedDateTime actual) {
         try {
@@ -1789,6 +1982,12 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
+    public static void assertDateTimeIsBetweenOrEqualTo(String field, ZonedDateTime expectedStartTime,
+                                                        ZonedDateTime expectedEndTime, ZonedDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBetween(expectedStartTime, expectedEndTime);
     }
 
     @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
@@ -1801,6 +2000,12 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.time.is.between.or.equal.to")
+    public static void assertDateTimeIsBetweenOrEqualTo(String field, OffsetDateTime expectedStartTime,
+                                                        OffsetDateTime expectedEndTime, OffsetDateTime actual, String message) {
+            assertThat(actual).withFailMessage(message).isBetween(expectedStartTime, expectedEndTime);
+    }
+
     @Step("getLangValue:asserts.step.assert.start.with")
     public static void assertStartWith(String field, String expectedPrefix, String actual) {
         try {
@@ -1808,6 +2013,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.start.with")
+    public static void assertStartWith(String field, String expectedPrefix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).startsWith(expectedPrefix);
     }
 
     @Step("getLangValue:asserts.step.assert.start.with.ignoring.case")
@@ -1819,6 +2029,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.start.with.ignoring.case")
+    public static void assertStartWithIgnoringCase(String field, String expectedPrefix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).startsWithIgnoringCase(expectedPrefix);
+    }
+
     @Step("getLangValue:asserts.step.assert.not.start.with")
     public static void assertDoesNotStartWith(String field, String expectedNotPrefix, String actual) {
         try {
@@ -1826,6 +2041,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.not.start.with")
+    public static void assertDoesNotStartWith(String field, String expectedNotPrefix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).doesNotStartWith(expectedNotPrefix);
     }
 
     @Step("getLangValue:asserts.step.assert.not.start.with.ignoring.case")
@@ -1837,6 +2057,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.not.start.with.ignoring.case")
+    public static void assertDoesNotStartWithIgnoringCase(String field, String expectedNotPrefix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).doesNotStartWithIgnoringCase(expectedNotPrefix);
+    }
+
     @Step("getLangValue:asserts.step.assert.end.with")
     public static void assertEndWith(String field, String expectedSuffix, String actual) {
         try {
@@ -1844,6 +2069,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.end.with")
+    public static void assertEndWith(String field, String expectedSuffix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).endsWith(expectedSuffix);
     }
 
     @Step("getLangValue:asserts.step.assert.end.with.ignoring.case")
@@ -1855,6 +2085,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.end.with.ignoring.case")
+    public static void assertEndWithIgnoringCase(String field, String expectedSuffix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).startsWithIgnoringCase(expectedSuffix);
+    }
+
     @Step("getLangValue:asserts.step.assert.not.end.with")
     public static void assertDoesNotEndWith(String field, String expectedNotSuffix, String actual) {
         try {
@@ -1862,6 +2097,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.not.end.with")
+    public static void assertDoesNotEndWith(String field, String expectedNotSuffix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).doesNotEndWith(expectedNotSuffix);
     }
 
     @Step("getLangValue:asserts.step.assert.not.end.with.ignoring.case")
@@ -1873,6 +2113,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.not.end.with.ignoring.case")
+    public static void assertDoesNotEndWithIgnoringCase(String field, String expectedNotSuffix, String actual, String message) {
+            assertThat(actual).withFailMessage(message).doesNotEndWithIgnoringCase(expectedNotSuffix);
+    }
+
     @Step("getLangValue:asserts.step.assert.equals.with.ignoring.case")
     public static void assertEqualsWithIgnoringCase(String field, String expected, String actual) {
         try {
@@ -1880,6 +2125,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals.with.ignoring.case")
+    public static void assertEqualsWithIgnoringCase(String field, String expected, String actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualToIgnoringCase(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.case")
@@ -1891,6 +2141,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.case")
+    public static void assertNotEqualsWithIgnoringCase(String field, String notExpected, String actual, String message) {
+            assertThat(actual).withFailMessage(message).isNotEqualToIgnoringCase(notExpected);
+    }
+
     @Step("getLangValue:asserts.step.assert.equals.with.ignoring.whitespace")
     public static void assertEqualsWithIgnoringWhitespace(String field, String expected, String actual) {
         try {
@@ -1898,6 +2153,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.equals.with.ignoring.whitespace")
+    public static void assertEqualsWithIgnoringWhitespace(String field, String expected, String actual, String message) {
+            assertThat(actual).withFailMessage(message).isEqualToIgnoringWhitespace(expected);
     }
 
     @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.whitespace")
@@ -1909,6 +2169,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.not.equals.with.ignoring.whitespace")
+    public static void assertNotEqualsWithIgnoringWhitespace(String field, String expected, String actual, String message) {
+            assertThat(actual).withFailMessage(message).isNotEqualToIgnoringWhitespace(expected);
+    }
+
     @Step("getLangValue:asserts.step.assert.contains.only.whitespaces")
     public static void assertContainsOnlyWhitespaces(String field, String actual) {
         try {
@@ -1916,6 +2181,11 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.contains.only.whitespaces")
+    public static void assertContainsOnlyWhitespaces(String field, String actual, String message) {
+            assertThat(actual).withFailMessage(message).containsOnlyWhitespaces();
     }
 
     @Step("getLangValue:asserts.step.assert.contains.whitespaces")
@@ -1927,6 +2197,11 @@ public class Asserts {
         }
     }
 
+    @Step("getLangValue:asserts.step.assert.contains.whitespaces")
+    public static void assertContainsWhitespaces(String field, String actual, String message) {
+            assertThat(actual).withFailMessage(message).containsWhitespaces();
+    }
+
     @Step("getLangValue:asserts.step.assert.not.contains.whitespaces")
     public static void assertNotContainsWhitespaces(String field, String actual) {
         try {
@@ -1934,5 +2209,10 @@ public class Asserts {
         } catch (AssertionError e) {
             throw new AssertionError("%s ==> %s".formatted(field, e.getMessage()));
         }
+    }
+
+    @Step("getLangValue:asserts.step.assert.not.contains.whitespaces")
+    public static void assertNotContainsWhitespaces(String field, String actual, String message) {
+            assertThat(actual).withFailMessage(message).doesNotContainAnyWhitespaces();
     }
 }
