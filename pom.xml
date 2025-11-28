@@ -53,6 +53,7 @@
         <module>websocket</module>
         <module>ibm_mq</module>
         <module>selenide</module>
+        <module>test_containers</module>
     </modules>
 
     <properties>
@@ -288,6 +289,11 @@
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.2.0-M1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
         </dependency>
     </dependencies>
 

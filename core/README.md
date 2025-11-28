@@ -183,16 +183,19 @@ public class ServiceMethodTask extends Task {
 ```
     global.ssl.trust.store.location=cacerts
     global.ssl.trust.store.password=changeit
-    
+    ИЛИ
     global.ssl.trust.store.location=src/main/resources/cacerts
     global.ssl.trust.store.password=changeit
 ```
+Так же в CI/CD можно переопределить данные переменные. Названия будут GLOBAL_SSL_TRUST_STORE_LOCATION и
+ GLOBAL_SSL_TRUST_STORE_PASSWORD соответственно.
 
 <br/>Существует возможность глобально отключить проверку сертификатов для всех HTTPS-соединений
 
 ```
     disable.ssl.verification=true
 ```
+Так же в CI/CD можно переопределить данную переменную. Название для CI/CD: DISABLE_SSL_VERIFICATION.
 
 ### Методы
 

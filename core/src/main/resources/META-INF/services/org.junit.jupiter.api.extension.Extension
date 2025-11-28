@@ -1,3 +1,2 @@
 ru.origami.testit_allure.test_it.listener.BaseJunit5Listener
 ru.origami.testit_allure.allure.junit5.AllureJunit5
-ru.origami.common.utils.BeforeAllTestsExtension

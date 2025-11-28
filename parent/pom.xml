@@ -65,6 +65,11 @@
                 <artifactId>origami-framework-selenide</artifactId>
                 <version>1.4.5</version>
             </dependency>
+            <dependency>
+                <groupId>ru.origamiframework</groupId>
+                <artifactId>origami-framework-test-containers</artifactId>
+                <version>1.4.5</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

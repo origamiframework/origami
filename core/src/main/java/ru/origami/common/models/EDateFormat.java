@@ -4,20 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 @Getter
 @ToString
 @AllArgsConstructor
 public enum EDateFormat implements IDateFormat {
-
-    // TODO PATTERN_17 пока нет. Был дублем PATTERN_2. Пока что 17 просто удален без перенумерации последующих,
-    // чтобы не было путаницы и не приходилось сверять паттерны
 
     PATTERN_1("yyyy-MM-dd HH:mm:ss"),
     PATTERN_2("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
@@ -35,6 +25,7 @@ public enum EDateFormat implements IDateFormat {
     PATTERN_14("dd-MM-yyyy"),
     PATTERN_15("dd.MM.yyyy HH:mm"),
     PATTERN_16("yyyy-MM-dd'T'HH:mm:ssZ"),
+    PATTERN_17("yyyy-MM-dd'T'HH:mm:ssX"),
     PATTERN_18("yyyyMMdd-HH:mm:ss.SSS"),
     PATTERN_19("ddMMyyyy_HH.mm"),
     PATTERN_20("yyyy-MM-dd'Z'"),
@@ -44,7 +35,10 @@ public enum EDateFormat implements IDateFormat {
     PATTERN_24("yyyy-MM-dd'T'HH:mm:ss[.SSS][XXX][X]"),
     PATTERN_25("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"),
     PATTERN_26("yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
-    PATTERN_27("HH:mm dd/MM/yyyy");
+    PATTERN_27("HH:mm dd/MM/yyyy"),
+    PATTERN_28("yyyy-MM-dd'T'HH:mm:ss.SSSX"),
+    PATTERN_29("yyyy-MM-dd HH:mm:ss:SSS X"),
+    PATTERN_30("yyyy-MM-dd HH:mm:ss:SSSX");
 
     private final String pattern;
 }

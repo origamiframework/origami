@@ -64,11 +64,12 @@
 ```
 
 <b>Параметры:</b>
-- <b>stand</b> - стенд, на котором осуществляется запуск тестов
+- <b>stand</b> - стенд, на котором осуществляется запуск тестов(CI/CD название: STAND)
 - <b>language</b> - язык логирования и внутренних шагов Allure и Test IT. Доступные значения: ru, en. Можно указывать свой файл
-- <b>logging.enabled</b> - определяет осуществление логирования при прогоне в CI. По умолчанию: <i>false</i>.
+- <b>logging.enabled</b> - определяет осуществление логирования при прогоне в CI. По умолчанию: <i>false</i> (CI/CD название: LOGGING_ENABLED)
 - <b>test.timezone</b> - при наличии параметра будет установлено системное время для запуска тестов.
-- <b>hibernate.excel.result.enabled</b> - параметр необходим для прикрепления результата выборки из базы данных в формате Excel. По умолчанию: <i>false</i>. Доступен при подключении модуля <i>hibernate</i>.
+- <b>hibernate.excel.result.enabled</b> - параметр необходим для прикрепления результата выборки из базы данных в формате Excel. 
+ По умолчанию: <i>false</i>. Доступен при подключении модуля <i>hibernate</i>. (CI/CD название: HIBERNATE_EXCEL_RESULT_ENABLED)
 - <b>kafka.test.data.package</b> - путь до пакета с файлами для TestDataKafka. По умолчанию: <i>src/main/resources/test_data/kafka</i>. Доступен при подключении модуля <i>kafka</i>.
 - <b>testit.private.token</b> - токен пользователя Test IT.
 - <b>testit.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT

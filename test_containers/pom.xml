@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.origamiframework</groupId>
+    <artifactId>origami-framework-test-containers</artifactId>
+    <version>1.4.5</version>
+
+    <name>Origami Framework Test Containers</name>
+    <description>Origami Framework Test Containers</description>
+
+    <parent>
+        <groupId>ru.origamiframework</groupId>
+        <artifactId>origami-framework-dependency</artifactId>
+        <version>1.4.5</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.origamiframework</groupId>
+            <artifactId>origami-framework-core</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.origamiframework</groupId>
+            <artifactId>origami-framework-kafka</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.21.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.21.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.21.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <version>1.21.3</version>
+        </dependency>
+    </dependencies>
+</project>
