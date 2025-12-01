@@ -12,10 +12,7 @@
 [Origami Framework](https://origamiframework.ru/) - это фреймворк для автоматизации тестирования на Java, созданный для того,
 чтобы упрощать построение тестовой архитектуры и ускорять процесс приемочного и регрессионного тестирования.
 
-С подробным руководством по Origami Framework на текущий момент можно ознакомиться в README.
-
-Нашли ошибку или нужна новая функциональность? Пожалуйста, [cообщайте](https://github.com/origamiframework/origami/issues?state=open) 
-о любых ошибках и предложениях.
+С подробным руководством по Origami Framework можно ознакомиться на официальном сайте https://origamiframework.ru/.
 
 ## Описание
 
@@ -27,11 +24,14 @@
 * [WebSocket](websocket/README.md)
 * [Selenide](selenide/README.md)
 * [IBM MQ](ibm_mq/README.md)
+* [Test Containers](test_containers/README.md)
 
-## Подключение
+## С чего начать?
 
-Необходимо добавить родителя в pom.xml в проекте. При этом в проект автоматически подтянутся все необходимые зависимости,
-так же подтягивается Core([origami-framework-core](core/README.md)).
+Полное руководство по началу работы можно найти в разделе [С чего начать?](https://origamiframework.ru/start.html).
+
+Для работы с Origami Framework рекомендуется использовать версию Java 17+(автоматически устанавливается при подключении origami-framework-parent).
+При работе с [Maven](https://maven.apache.org/) необходимо добавить родителя в pom.xml в Вашем тестовом проекте
 ```XML
     <parent>
         <groupId>ru.origamiframework</groupId>
@@ -41,9 +41,10 @@
     </parent>
 ```
 
-## Конфигурация
+Использование [Maven](https://maven.apache.org/) не является обязательным. Так же можно запускать тесты, например,
+с помощью [Gradle](https://gradle.org/).
 
-Создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым:
+Далее необходимо создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым:
 
 ```PROPERTIES
     stand=dev
@@ -78,8 +79,16 @@
 - <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: <i>5000</i>
 - <b>web.page.load.timeout</b> - таймаут загрузки веб-страницы (в миллисекундах). По умолчанию: <i>10000</i></p>
 
-При дублировании какого либо параметра в файле параметров для конкретного стенда(например в <i>dev.json</i>) - значение
-будет переопределено.
+Так же вы можете воспользоваться архетипом для быстрого создания проекта [Origami Archetype](https://github.com/origamiframework/origami-archetype).
 
-Про заполнение параметров Test IT можно почитать [официальную документацию Test IT](https://github.com/testit-tms/adapters-java/tree/main/testit-adapter-junit5).
+## Примеры
 
+Раздел с примерами все еще дорабатывается и пополняется. Примеры можно найти в отдельном 
+репозитории [Origami Samples](https://github.com/origamiframework/origami-samples).
+
+## Помощь
+
+Нашли ошибку или нужна новая функциональность?
+
+Пожалуйста, [cообщайте](https://github.com/origamiframework/origami/issues?state=open)
+о любых ошибках и предложениях.

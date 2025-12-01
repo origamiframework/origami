@@ -1,6 +1,6 @@
-# Test Containers
+# Origami Test Containers
 
-* [Подключение](#Подключение)
+Документацию по работе можно найти в разделе [Origami Test Containers](https://origamiframework.ru/docs.html#origami-test-containers).
 
 ## Подключение
 
