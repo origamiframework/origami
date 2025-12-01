@@ -23,11 +23,11 @@ import static ru.origami.common.environment.Language.getLangValue;
 
 public class TestContainersLauncher implements LauncherSessionListener {
 
-    private static final String CONTAINERS_PKG_PREFIX = "containers.pkg.prefix";
-    private static final String CI_CONTAINERS_PKG_PREFIX = "CONTAINERS_PKG_PREFIX";
+    private static final String CONTAINERS_PKG_PREFIX = "test.containers.pkg.prefix";
+    private static final String CI_CONTAINERS_PKG_PREFIX = "TEST_CONTAINERS_PKG_PREFIX";
 
-    private static final String CONTAINERS_NAME = "containers.name";
-    private static final String CI_CONTAINERS_NAME = "CONTAINERS_NAME";
+    private static final String CONTAINERS_NAME = "test.containers.name";
+    private static final String CI_CONTAINERS_NAME = "TEST_CONTAINERS_NAME";
 
     private static final AtomicBoolean STARTED = new AtomicBoolean(false);
 
@@ -123,7 +123,7 @@ public class TestContainersLauncher implements LauncherSessionListener {
         // 2) Совпадение по @ContainerName (если аннотация есть)
         List<Class<? extends TestContainers>> byAnno = subs.stream()
                 .filter(c -> {
-                    ContainerName ann = c.getAnnotation(ContainerName.class);
+                    TestContainerName ann = c.getAnnotation(TestContainerName.class);
 
                     return ann != null && ann.value().equalsIgnoreCase(wanted);
                 })
@@ -151,7 +151,7 @@ public class TestContainersLauncher implements LauncherSessionListener {
 
     private static String list(Set<Class<? extends TestContainers>> subs) {
         return subs.stream().map(c -> {
-            ContainerName ann = c.getAnnotation(ContainerName.class);
+            TestContainerName ann = c.getAnnotation(TestContainerName.class);
             String tag = ann == null ? "" : "  (@%s)".formatted(ann.value());
 
             return " - %s [%s]%s".formatted(c.getName(), c.getSimpleName(), tag);

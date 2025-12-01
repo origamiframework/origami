@@ -38,8 +38,13 @@ public abstract class TestContainers {
     private static final String CI_APP_LOG_LEVEL_PROP = "APP_LOG_LEVEL";
     private static final String APP_LOG_LEVEL = getSysEnvPropertyOrDefault(APP_LOG_LEVEL_PROP,CI_APP_LOG_LEVEL_PROP, "INFO");
 
-    private static final String CONTAINERS_REUSE = "containers.reuse";
-    private static final String CI_CONTAINERS_REUSE = "CONTAINERS_REUSE";
+    private static final String CONTAINERS_REUSE = "test.containers.reuse";
+    private static final String CI_CONTAINERS_REUSE = "TEST_CONTAINERS_REUSE";
+
+    private static final String CONTAINERS_FIXED_PORTS = "test.containers.fixed.ports";
+    private static final String CI_CONTAINERS_FIXED_PORTS = "TEST_CONTAINERS_FIXED_PORTS";
+    private static final String CONTAINERS_WITH_FIXED_PORTS = Environment.getSysEnvPropertyOrDefault(CONTAINERS_FIXED_PORTS,
+            CI_CONTAINERS_FIXED_PORTS, null);
 
     private final AtomicBoolean IS_STARTED = new AtomicBoolean(false);
 
@@ -63,6 +68,14 @@ public abstract class TestContainers {
 
     protected void withFixedPorts() {
         withFixedPorts = true;
+    }
+
+    private boolean getWithFixedPorts() {
+        if (Objects.nonNull(CONTAINERS_WITH_FIXED_PORTS) && "true".equalsIgnoreCase(CONTAINERS_WITH_FIXED_PORTS)) {
+            return true;
+        }
+
+        return withFixedPorts;
     }
 
     protected void withPostgres() {
@@ -194,7 +207,7 @@ public abstract class TestContainers {
                 .withUsername("postgres")
                 .withPassword("postgres");
 
-        if (withFixedPorts) {
+        if (getWithFixedPorts()) {
             postgreSQLContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                     .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
         }
@@ -217,7 +230,7 @@ public abstract class TestContainers {
                 .withListener("broker:19092")
                 .withExposedPorts(port);
 
-        if (withFixedPorts) {
+        if (getWithFixedPorts()) {
             kafkaContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                     .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
         }
@@ -313,7 +326,7 @@ public abstract class TestContainers {
                     .withEnv("KAFKA_BOOTSTRAP_SERVERS", "broker:19092");
         }
 
-        if (withFixedPorts) {
+        if (getWithFixedPorts()) {
             int bindPort = getLastPort();
             genericContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                     .withPortBindings(new PortBinding(Ports.Binding.bindPort(bindPort), new ExposedPort(port))));
