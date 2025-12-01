@@ -71,8 +71,8 @@ public abstract class TestContainers {
     }
 
     private boolean getWithFixedPorts() {
-        if (Objects.nonNull(CONTAINERS_WITH_FIXED_PORTS) && "true".equalsIgnoreCase(CONTAINERS_WITH_FIXED_PORTS)) {
-            return true;
+        if (Objects.nonNull(CONTAINERS_WITH_FIXED_PORTS)) {
+            return "true".equalsIgnoreCase(CONTAINERS_WITH_FIXED_PORTS);
         }
 
         return withFixedPorts;
