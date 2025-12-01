@@ -103,7 +103,7 @@ public class TestContainersLauncher implements LauncherSessionListener {
 
             if (candidates.size() > 1) {
                 throw multipleFoundError(new LinkedHashSet<>(candidates), wanted, getLangValue("test.containers.multiple.found.by.name.error")
-                        .formatted(wanted, pkgPrefix.isEmpty() ? getLangValue("test.containers.multiple.found.by.name.error.prefix") : "."));
+                        .formatted(wanted, pkgPrefix.isEmpty() ? getLangValue("test.containers.multiple.found.by.name.error.prefix") : ""));
             }
         }
 
