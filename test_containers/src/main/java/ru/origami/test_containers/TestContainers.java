@@ -29,13 +29,14 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.getSysEnvPropertyOrDefault;
 import static ru.origami.common.environment.Language.getLangValue;
+import static ru.origami.test_containers.CmdUtil.SERVICE_SRC_DIR;
 import static ru.origami.test_containers.CmdUtil.ensureServiceJarBuilt;
 
 @Slf4j
 public abstract class TestContainers {
 
-    private static final String APP_LOG_LEVEL_PROP = "app.log.level";
-    private static final String CI_APP_LOG_LEVEL_PROP = "APP_LOG_LEVEL";
+    private static final String APP_LOG_LEVEL_PROP = "test.containers.app.log.level";
+    private static final String CI_APP_LOG_LEVEL_PROP = "TEST_CONTAINERS_APP_LOG_LEVEL";
     private static final String APP_LOG_LEVEL = getSysEnvPropertyOrDefault(APP_LOG_LEVEL_PROP,CI_APP_LOG_LEVEL_PROP, "INFO");
 
     private static final String CONTAINERS_REUSE = "test.containers.reuse";
@@ -299,7 +300,7 @@ public abstract class TestContainers {
                                         .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
 
                                 if (Objects.nonNull(ciJavaOpts)) {
-                                    d.env("JAVA_OPTS", "-Dspring.profiles.active=local");
+                                    d.env("JAVA_OPTS", ciJavaOpts);
                                 } else {
                                     d.env("JAVA_OPTS", "");
                                 }
@@ -307,7 +308,7 @@ public abstract class TestContainers {
                                 d.build();
                             }
                     )
-                    .withFileFromPath("app.jar", Path.of("service-src/target/%s.jar".formatted(imageName)));
+                    .withFileFromPath("app.jar", Path.of("%s/target/%s.jar".formatted(SERVICE_SRC_DIR, imageName)));
 
             genericContainer = new GenericContainer<>(appImage);
         }
