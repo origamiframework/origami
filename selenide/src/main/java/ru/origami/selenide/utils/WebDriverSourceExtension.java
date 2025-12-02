@@ -2,6 +2,7 @@ package ru.origami.selenide.utils;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -75,7 +76,7 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        if (context.getExecutionException().isPresent()) {
+        if (WebDriverRunner.hasWebDriverStarted() && context.getExecutionException().isPresent()) {
             SelenideAttachment.screenshot();
             SelenideAttachment.source();
         }
