@@ -12,7 +12,9 @@ import ru.origami.selenide.attachment.SelenideAttachment;
 import java.util.Objects;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
+import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.isLocal;
+import static ru.origami.common.environment.Language.getLangValue;
 
 public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
 
@@ -20,7 +22,13 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        Configuration.baseUrl = Environment.get("web.site.url");
+        String baseUrl = Environment.getWithNullValue("web.site.url");
+
+        if (Objects.isNull(baseUrl)) {
+            fail(getLangValue("selenide.web.site.url.is.empty"));
+        }
+
+        Configuration.baseUrl = baseUrl;
         Configuration.browserSize = "1920x1080";
         Configuration.downloadsFolder = "target/selenide/downloads";
         Configuration.reportsFolder = "target/selenide/reports";
@@ -56,7 +64,6 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void afterEach(ExtensionContext context) {
-        Selenide.closeWindow();
         Selenide.closeWebDriver();
 
         try {
