@@ -10,52 +10,19 @@
  * Do not edit the class manually.
  */
 
-
 package ru.origami.testit_allure.test_it.client.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
 import java.util.*;
 
-
 /**
  * AutoTestModel
  */
-@JsonPropertyOrder({
-  AutoTestModel.JSON_PROPERTY_GLOBAL_ID,
-  AutoTestModel.JSON_PROPERTY_IS_DELETED,
-  AutoTestModel.JSON_PROPERTY_MUST_BE_APPROVED,
-  AutoTestModel.JSON_PROPERTY_ID,
-  AutoTestModel.JSON_PROPERTY_CREATED_DATE,
-  AutoTestModel.JSON_PROPERTY_MODIFIED_DATE,
-  AutoTestModel.JSON_PROPERTY_CREATED_BY_ID,
-  AutoTestModel.JSON_PROPERTY_MODIFIED_BY_ID,
-  AutoTestModel.JSON_PROPERTY_LAST_TEST_RUN_ID,
-  AutoTestModel.JSON_PROPERTY_LAST_TEST_RUN_NAME,
-  AutoTestModel.JSON_PROPERTY_LAST_TEST_RESULT_ID,
-  AutoTestModel.JSON_PROPERTY_LAST_TEST_RESULT_OUTCOME,
-  AutoTestModel.JSON_PROPERTY_STABILITY_PERCENTAGE,
-  AutoTestModel.JSON_PROPERTY_EXTERNAL_ID,
-  AutoTestModel.JSON_PROPERTY_LINKS,
-  AutoTestModel.JSON_PROPERTY_PROJECT_ID,
-  AutoTestModel.JSON_PROPERTY_NAME,
-  AutoTestModel.JSON_PROPERTY_NAMESPACE,
-  AutoTestModel.JSON_PROPERTY_CLASSNAME,
-  AutoTestModel.JSON_PROPERTY_STEPS,
-  AutoTestModel.JSON_PROPERTY_SETUP,
-  AutoTestModel.JSON_PROPERTY_TEARDOWN,
-  AutoTestModel.JSON_PROPERTY_TITLE,
-  AutoTestModel.JSON_PROPERTY_DESCRIPTION,
-  AutoTestModel.JSON_PROPERTY_LABELS,
-  AutoTestModel.JSON_PROPERTY_IS_FLAKY,
-  AutoTestModel.SERIALIZED_NAME_EXTERNAL_KEY
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AutoTestModel {
 
