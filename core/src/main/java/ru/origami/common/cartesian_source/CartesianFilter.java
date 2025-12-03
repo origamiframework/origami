@@ -4,7 +4,9 @@ package ru.origami.common.cartesian_source;
     Пример реализации:
 
     public static class MyFilter implements CartesianFilter {
-        @Override public boolean test(Object[] args) {
+
+        @Override
+        public boolean test(Object[] args) {
             int number = (int) args[0];
             String letter = (String) args[1];
             boolean flag = (boolean) args[2];

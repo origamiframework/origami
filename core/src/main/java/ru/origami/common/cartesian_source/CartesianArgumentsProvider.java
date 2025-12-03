@@ -145,7 +145,6 @@ public class CartesianArgumentsProvider implements ArgumentsProvider {
         return wrapped;
     }
 
-
     private static List<Object[]> cartesianConcat(List<List<Object[]>> axes) {
         List<Object[]> out = new ArrayList<>();
 
