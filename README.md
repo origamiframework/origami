@@ -12,38 +12,39 @@
 [Origami Framework](https://origamiframework.ru/) - это фреймворк для автоматизации тестирования на Java, созданный для того,
 чтобы упрощать построение тестовой архитектуры и ускорять процесс приемочного и регрессионного тестирования.
 
-С подробным руководством по Origami Framework на текущий момент можно ознакомиться в README.
-
-Нашли ошибку или нужна новая функциональность? Пожалуйста, [cообщайте](https://github.com/origamiframework/origami/issues?state=open) 
-о любых ошибках и предложениях.
+С подробным руководством по Origami Framework можно ознакомиться на официальном сайте https://origamiframework.ru/.
 
 ## Описание
 
 Фреймворк включает в себя:
 * [Core](core/README.md)
 * [Hibernate](hibernate/README.md)
-* [IBM MQ](ibm_mq/README.md)
 * [Kafka](kafka/README.md)
 * [RestAssured](rest/README.md)
 * [WebSocket](websocket/README.md)
 * [Selenide](selenide/README.md)
+* [IBM MQ](ibm_mq/README.md)
+* [Test Containers](test_containers/README.md)
 
-## Подключение
+## С чего начать?
 
-Необходимо добавить родителя в pom.xml в проекте. При этом в проект автоматически подтянутся все необходимые зависимости,
-так же подтягивается Core([origami-framework-core](core/README.md)).
+Полное руководство по началу работы можно найти в разделе [С чего начать?](https://origamiframework.ru/start.html).
+
+Для работы с Origami Framework рекомендуется использовать версию Java 17+(автоматически устанавливается при подключении origami-framework-parent).
+При работе с [Maven](https://maven.apache.org/) необходимо добавить родителя в pom.xml в Вашем тестовом проекте
 ```XML
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.4.4</version>
+        <version>1.4.5</version>
         <relativePath/>
     </parent>
 ```
 
-## Конфигурация
+Использование [Maven](https://maven.apache.org/) не является обязательным. Так же можно запускать тесты, например,
+с помощью [Gradle](https://gradle.org/).
 
-Создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым:
+Далее необходимо создать файл конфигурации <b>resources/origami.properties</b> со следующим содержимым:
 
 ```PROPERTIES
     stand=dev
@@ -64,24 +65,34 @@
 ```
 
 <b>Параметры:</b>
-- <b>stand</b> - стенд, на котором осуществляется запуск тестов.
-- <b>language</b> - язык логирования и внутренних шагов для Allure и Test IT. Доступные значения: ru, en. Можно указывать свой файл
-- <b>logging.enabled</b> - определяет осуществление логирования при прогоне в CI. По умолчанию: false.
+- <b>stand</b> - стенд, на котором осуществляется запуск тестов (CI/CD переменная: STAND)
+- <b>language</b> - язык логирования и внутренних шагов Allure и Test IT. Доступные значения: ru, en. Можно указывать свой файл
+- <b>logging.enabled</b> - определяет осуществление логирования при прогоне в CI. По умолчанию: <i>false</i> (CI/CD переменная: LOGGING_ENABLED)
 - <b>test.timezone</b> - при наличии параметра будет установлено системное время для запуска тестов.
-- <b>hibernate.excel.result.enabled</b> - параметр необходим для прикрепления результата выборки из базы данных в формате Excel.
-  По умолчанию: false. Доступен при подключении модуля hibernate.
-- <b>kafka.test.data.package</b> - путь до пакета с файлами для [TestDataKafka](kafka/src/main/java/ru/origami/kafka/utils/TestDataKafka.java).
-  По умолчанию: <i>src/main/resources/test_data/kafka</i>. Доступен при подключении модуля kafka.
-- <b>testit.private.token</b> - токен технического пользователя qa_testit.
-- <b>testit.enable.result</b> - при значении true тестовый прогон будет прикреплен к Test IT. При значении false или отсутствии параметра
-  тестовый прогон не будет загружен в Test IT
+- <b>hibernate.excel.result.enabled</b> - параметр необходим для прикрепления результата выборки из базы данных в формате Excel. 
+ По умолчанию: <i>false</i>. Доступен при подключении модуля <i>hibernate</i> (CI/CD переменная: HIBERNATE_EXCEL_RESULT_ENABLED)
+- <b>kafka.test.data.package</b> - путь до пакета с файлами для TestDataKafka. По умолчанию: <i>src/main/resources/test_data/kafka</i>. Доступен при подключении модуля <i>kafka</i>.
+- <b>testit.url</b> - ваш адрес Test IT
+- <b>testit.private.token</b> - токен пользователя Test IT
+- <b>testit.project.id</b> - id проекта Test IT
+- <b>testit.configuration.id</b> - id конфигурации Test IT
+- <b>testit.adapter.mode</b> - режим работы адаптера Test IT
+- <b>testit.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT
 - <b>web.site.url</b> - базовый URL-адрес
-- <b>web.browser.name</b> - браузер для использования. По умолчанию: chrome
-- <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: 5000
-- <b>web.page.load.timeout</b> - таймаут загрузки веб-страницы (в миллисекундах). По умолчанию: 10000
+- <b>web.browser.name</b> - браузер для использования. По умолчанию: <i>chrome</i>
+- <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: <i>5000</i>
+- <b>web.page.load.timeout</b> - таймаут загрузки веб-страницы (в миллисекундах). По умолчанию: <i>10000</i></p>
 
-При дублировании какого либо параметра в файле параметров для конкретного стенда(например в dev.json) - значение
-будет переопределено.
+Так же вы можете воспользоваться архетипом для быстрого создания проекта [Origami Archetype](https://github.com/origamiframework/origami-archetype).
 
-Про заполнение параметров Test IT можно почитать [официальную документацию Test IT](https://github.com/testit-tms/adapters-java/tree/main/testit-adapter-junit5).
+## Примеры
 
+Раздел с примерами все еще дорабатывается и пополняется. Примеры можно найти в отдельном 
+репозитории [Origami Samples](https://github.com/origamiframework/origami-samples).
+
+## Помощь
+
+Нашли ошибку или нужна новая функциональность?
+
+Пожалуйста, [cообщайте](https://github.com/origamiframework/origami/issues?state=open)
+о любых ошибках и предложениях.

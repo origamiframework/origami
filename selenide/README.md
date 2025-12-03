@@ -1,9 +1,8 @@
-# Selenide
+# Origami Selenide
 
-Содержание:
-* [Подключение](#Подключение)
-* [Параметры](#параметры)
-* [Основной Readme](../README.md)
+Модуль для работы с Web UI на основе [Selenide](https://ru.selenide.org/index.html).
+
+Документацию по работе можно найти в разделе [Origami Selenide](https://origamiframework.ru/docs.html#origami-selenide).
 
 ## Подключение
 
@@ -14,10 +13,3 @@
         <artifactId>origami-framework-selenide</artifactId>
     </dependency>
 ```
-
-## Параметры
-
-- <b>web.site.url</b> - базовый URL-адрес
-- <b>web.browser.name</b> - браузер для использования. По умолчанию: chrome
-- <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: 5000
-- <b>web.page.load.timeout</b> - таймаут загрузки веб-страницы (в миллисекундах). По умолчанию: 10000

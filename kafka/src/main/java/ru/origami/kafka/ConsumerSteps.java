@@ -1578,7 +1578,7 @@ public class ConsumerSteps extends CommonSteps {
 
         do {
             subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed).get(0);
-            Stream<ConsumerRecord<String, String>> recordStream = subscribeResult.getRecords().stream();
+            Stream<ConsumerRecord<String, String>> recordStream = List.copyOf(subscribeResult.getRecords()).stream();
 
             if (!CollectionUtils.isEmpty(searchWords)) {
                 recordStream = recordStream.filter(r ->

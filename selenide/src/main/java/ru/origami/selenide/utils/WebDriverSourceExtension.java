@@ -2,6 +2,7 @@ package ru.origami.selenide.utils;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -12,7 +13,9 @@ import ru.origami.selenide.attachment.SelenideAttachment;
 import java.util.Objects;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
+import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.isLocal;
+import static ru.origami.common.environment.Language.getLangValue;
 
 public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
 
@@ -20,7 +23,13 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        Configuration.baseUrl = Environment.get("web.site.url");
+        String baseUrl = Environment.getWithNullValue("web.site.url");
+
+        if (Objects.isNull(baseUrl)) {
+            fail(getLangValue("selenide.web.site.url.is.empty"));
+        }
+
+        Configuration.baseUrl = baseUrl;
         Configuration.browserSize = "1920x1080";
         Configuration.downloadsFolder = "target/selenide/downloads";
         Configuration.reportsFolder = "target/selenide/reports";
@@ -56,7 +65,6 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void afterEach(ExtensionContext context) {
-        Selenide.closeWindow();
         Selenide.closeWebDriver();
 
         try {
@@ -68,7 +76,7 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        if (context.getExecutionException().isPresent()) {
+        if (WebDriverRunner.hasWebDriverStarted() && context.getExecutionException().isPresent()) {
             SelenideAttachment.screenshot();
             SelenideAttachment.source();
         }

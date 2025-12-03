@@ -9,6 +9,8 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.*;
@@ -17,16 +19,35 @@ import static ru.origami.common.environment.Language.*;
 public final class Environment {
 
     private static final Properties PROPERTIES = new Properties();
+
     public static final String ORIGAMI_PROPERTIES_FILE = "origami.properties";
+
     public static final String STAND = "stand";
+    public static final String CI_STAND = "STAND";
+
     private static final String LOGGING_ENABLED = "logging.enabled";
+    private static final String CI_LOGGING_ENABLED = "LOGGING_ENABLED";
+
     private static final String HIBERNATE_EXCEL_RESULT_ENABLED = "hibernate.excel.result.enabled";
+    private static final String CI_HIBERNATE_EXCEL_RESULT_ENABLED = "HIBERNATE_EXCEL_RESULT_ENABLED";
+
     private static final String TEST_TIMEZONE = "test.timezone";
-    private static final String SSL_TRUSTSTORE_LOCATION = "global.ssl.trust.store.location";
-    private static final String SSL_TRUSTSTORE_PASSWORD = "global.ssl.trust.store.password";
-    private static final String CUSTOM_PROPERTIES_FILE_MASK = "custom.properties.file.path";
+
+    private static final String SSL_TRUST_STORE_LOCATION = "global.ssl.trust.store.location";
+    private static final String CI_SSL_TRUST_STORE_LOCATION = "GLOBAL_SSL_TRUST_STORE_LOCATION";
+    private static final String SSL_TRUST_STORE_PASSWORD = "global.ssl.trust.store.password";
+    private static final String CI_SSL_TRUST_STORE_PASSWORD = "GLOBAL_SSL_TRUST_STORE_PASSWORD";
+
     public static final String SSL_VERIFICATION = "disable.ssl.verification";
+    public static final String CI_SSL_VERIFICATION = "DISABLE_SSL_VERIFICATION";
+
     private static final String ALLURE_LINK_ISSUE_PATTERN = "allure.link.issue.pattern";
+    private static final String CUSTOM_PROPERTIES_FILE_MASK = "custom.properties.file.path";
+
+    private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
+    private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
+    public static final String TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
+            CI_TEST_CONTAINERS_ENABLED_PROP, "false");
 
     static {
         loadOrigamiProperties();
@@ -67,21 +88,79 @@ public final class Environment {
 
     private static String getPropertyValue(String key, boolean withNullValue) {
         String propertyValue = null;
+        String formattedValue = null;
 
         try {
             propertyValue = new String(PROPERTIES.getProperty(key).getBytes(StandardCharsets.UTF_8));
+
+            if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED)) {
+                Pattern pattern = Pattern.compile("\\$\\{(.+)\\}");
+                Matcher matcher = pattern.matcher(propertyValue);
+                String inputKey = null;
+
+                if (matcher.matches()) {
+                    inputKey = matcher.group(1);
+                }
+
+                if (Objects.nonNull(inputKey)) {
+                    formattedValue = getSysEnvPropertyOrDefault(inputKey, inputKey, null);
+                }
+            }
         } catch (NullPointerException npe) {
             if (!withNullValue) {
                 fail(getLangValue("env.missing.property").formatted(key));
             }
         }
 
-        return propertyValue;
+        return Objects.nonNull(formattedValue) ? formattedValue : propertyValue;
     }
 
-    public static boolean isLocal() {
-        return System.getProperty("is.local") == null || Boolean.parseBoolean(System.getProperty("is.local"));
+    public static String getSysEnvPropertyOrDefault(String prop, String env, String defaultValue) {
+        String value = System.getProperty(prop);
+
+        if (Objects.nonNull(value)) {
+            return value;
+        }
+
+        value = System.getenv(env);
+
+        return Objects.nonNull(value) ? value : defaultValue;
     }
+
+//    public static boolean isLocal() {
+//        return System.getProperty("is.local") == null || Boolean.parseBoolean(System.getProperty("is.local"));
+//    }
+
+    public static boolean isLocal() {
+        String[] ciEnvVars = new String[] {
+                "CI",                    // Общая переменная, практически во всех CI/CD
+                "GITHUB_ACTIONS",        // GitHub Actions
+                "GITLAB_CI",             // GitLab CI
+                "JENKINS_URL",           // Jenkins
+                "TRAVIS",                // Travis CI
+                "CIRCLECI",              // CircleCI
+                "TEAMCITY_VERSION",      // TeamCity
+                "BUILD_NUMBER",          // Bamboo, Jenkins
+                "BITBUCKET_BUILD_NUMBER",// Bitbucket Pipelines
+                "BUILDKITE",             // Buildkite
+                "APPVEYOR",              // AppVeyor
+                "AZURE_HTTP_USER_AGENT", // Azure Pipelines
+                "BUDDY",                 // Buddy
+                "BAMBOO_BUILDNUMBER",    // Atlassian Bamboo
+                "IS_CI"                  // Custom
+        };
+
+        for (String envVar : ciEnvVars) {
+            String value = System.getenv(envVar);
+
+            if (Objects.nonNull(value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     public static boolean isLoggingEnabled() {
         return getWithNullValue(LOGGING_ENABLED) != null && Boolean.parseBoolean(get(LOGGING_ENABLED));
@@ -142,10 +221,21 @@ public final class Environment {
     }
 
     private static void loadSystemProperties() {
-        String systemStand = System.getProperty(STAND);
+        String[][] props = {
+                {STAND, CI_STAND},
+                {LOGGING_ENABLED, CI_LOGGING_ENABLED},
+                {HIBERNATE_EXCEL_RESULT_ENABLED, CI_HIBERNATE_EXCEL_RESULT_ENABLED},
+                {SSL_TRUST_STORE_LOCATION, CI_SSL_TRUST_STORE_LOCATION},
+                {SSL_TRUST_STORE_PASSWORD, CI_SSL_TRUST_STORE_PASSWORD},
+                {SSL_VERIFICATION, CI_SSL_VERIFICATION},
+        };
 
-        if (Objects.nonNull(systemStand)) {
-            PROPERTIES.put(STAND, systemStand);
+        for (String[] pair : props) {
+            String value = getSysEnvPropertyOrDefault(pair[0], pair[1], null);
+
+            if (Objects.nonNull(value)) {
+                PROPERTIES.put(pair[0], value);
+            }
         }
     }
 
@@ -291,27 +381,27 @@ public final class Environment {
     }
 
     private static void setSslTrustStore() {
-        if (Objects.nonNull(getWithNullValue(SSL_TRUSTSTORE_LOCATION))) {
+        if (Objects.nonNull(getWithNullValue(SSL_TRUST_STORE_LOCATION))) {
             try {
-                File file = new File(get(SSL_TRUSTSTORE_LOCATION));
+                File file = new File(get(SSL_TRUST_STORE_LOCATION));
 
                 if (!file.exists()) {
-                    URL fileUrl = Thread.currentThread().getContextClassLoader().getResource(get(SSL_TRUSTSTORE_LOCATION));
+                    URL fileUrl = Thread.currentThread().getContextClassLoader().getResource(get(SSL_TRUST_STORE_LOCATION));
 
                     if (Objects.nonNull(fileUrl)) {
                         file = new File(fileUrl.toURI());
                     } else {
-                        fail(getLangValue("env.not.exists.trust.store.file").formatted(get(SSL_TRUSTSTORE_LOCATION), SSL_TRUSTSTORE_LOCATION));
+                        fail(getLangValue("env.not.exists.trust.store.file").formatted(get(SSL_TRUST_STORE_LOCATION), SSL_TRUST_STORE_LOCATION));
                     }
                 }
 
 //                FileUtils.writeByteArrayToFile(file, Thread.currentThread().getContextClassLoader()
 //                        .getResourceAsStream("cacerts").readAllBytes());
                 System.setProperty("javax.net.ssl.trustStore", file.getAbsolutePath());
-                System.setProperty("javax.net.ssl.trustStorePassword", getWithNullValue(SSL_TRUSTSTORE_PASSWORD));
+                System.setProperty("javax.net.ssl.trustStorePassword", getWithNullValue(SSL_TRUST_STORE_PASSWORD));
 
-                if (Objects.isNull(getWithNullValue(SSL_TRUSTSTORE_PASSWORD))) {
-                    log.info(getLangValue("env.empty.trust.store.password"), SSL_TRUSTSTORE_PASSWORD, SSL_TRUSTSTORE_LOCATION);
+                if (Objects.isNull(getWithNullValue(SSL_TRUST_STORE_PASSWORD))) {
+                    log.info(getLangValue("env.empty.trust.store.password"), SSL_TRUST_STORE_PASSWORD, SSL_TRUST_STORE_LOCATION);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

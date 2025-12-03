@@ -10,42 +10,19 @@
  * Do not edit the class manually.
  */
 
-
 package ru.origami.testit_allure.test_it.client.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
 import java.util.*;
 
-
 /**
  * TestRunV2GetModel
  */
-@JsonPropertyOrder({
-  TestRunV2GetModel.JSON_PROPERTY_STARTED_ON,
-  TestRunV2GetModel.JSON_PROPERTY_COMPLETED_ON,
-  TestRunV2GetModel.JSON_PROPERTY_STATE_NAME,
-  TestRunV2GetModel.JSON_PROPERTY_PROJECT_ID,
-  TestRunV2GetModel.JSON_PROPERTY_TEST_PLAN_ID,
-  TestRunV2GetModel.JSON_PROPERTY_TEST_RESULTS,
-  TestRunV2GetModel.JSON_PROPERTY_CREATED_DATE,
-  TestRunV2GetModel.JSON_PROPERTY_MODIFIED_DATE,
-  TestRunV2GetModel.JSON_PROPERTY_CREATED_BY_ID,
-  TestRunV2GetModel.JSON_PROPERTY_MODIFIED_BY_ID,
-  TestRunV2GetModel.JSON_PROPERTY_CREATED_BY_USER_NAME,
-  TestRunV2GetModel.JSON_PROPERTY_ID,
-  TestRunV2GetModel.JSON_PROPERTY_NAME,
-  TestRunV2GetModel.JSON_PROPERTY_DESCRIPTION,
-  TestRunV2GetModel.JSON_PROPERTY_LAUNCH_SOURCE,
-  TestRunV2GetModel.SERIALIZED_NAME_ATTACHMENTS,
-  TestRunV2GetModel.SERIALIZED_NAME_LINKS
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TestRunV2GetModel {
   public static final String SERIALIZED_NAME_ATTACHMENTS = "attachments";

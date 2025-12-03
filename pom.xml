@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-dependency</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.5</version>
     <packaging>pom</packaging>
     <name>Origami</name>
     <description>Origami Test Framework</description>
@@ -53,6 +53,7 @@
         <module>websocket</module>
         <module>ibm_mq</module>
         <module>selenide</module>
+        <module>test_containers</module>
     </modules>
 
     <properties>
@@ -289,6 +290,11 @@
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.2.0-M1</version>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -405,11 +411,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.8.0</version>
-            </plugin>
         </plugins>
     </build>
 
@@ -458,7 +459,15 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.8.0</version>
                         <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>publish-to-central</id>
+                                <phase>deploy</phase>
+                                <goals><goal>publish</goal></goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <publishingServerId>sonatype-central</publishingServerId>
                         </configuration>
