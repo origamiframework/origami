@@ -44,16 +44,14 @@ public class TestContainersLauncher implements LauncherSessionListener {
                 return;
             }
 
-            if ("false".equalsIgnoreCase(Environment.TEST_CONTAINERS_ENABLED)) {
-                return;
-            }
-
-            try {
-                TestContainers impl = selectImplementation();
-                impl.startIfNeeded();
-            } catch (AssertionFailedError ex) {
-                error = ex;
-                throw ex;
+            if ("true".equalsIgnoreCase(Environment.TEST_CONTAINERS_ENABLED)) {
+                try {
+                    TestContainers impl = selectImplementation();
+                    impl.startIfNeeded();
+                } catch (AssertionFailedError ex) {
+                    error = ex;
+                    throw ex;
+                }
             }
         }
     }
@@ -120,7 +118,7 @@ public class TestContainersLauncher implements LauncherSessionListener {
             return fqn;
         }
 
-        // 2) Совпадение по @ContainerName (если аннотация есть)
+        // 2) Совпадение по @TestContainerName (если аннотация есть)
         List<Class<? extends TestContainers>> byAnno = subs.stream()
                 .filter(c -> {
                     TestContainerName ann = c.getAnnotation(TestContainerName.class);
