@@ -10,6 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
 import org.testcontainers.containers.*;
+import org.testcontainers.clickhouse.ClickHouseContainer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startables;
@@ -476,12 +477,38 @@ public abstract class TestContainers {
 
     private void setDatabaseContainerSystemProperties(TestContainer testContainer) {
         if (Objects.nonNull(testContainer.getName())) {
+            String name;
+            String username;
+            String password;
+
+            try {
+                name = testContainer.getDatabaseContainer().getDatabaseName();
+            } catch (Exception e) {
+                if (testContainer.getDatabaseContainer() instanceof ClickHouseContainer) {
+                    name = "default";
+                } else {
+                    name = "testdb";
+                }
+            }
+
+            try {
+                username = testContainer.getDatabaseContainer().getUsername();
+            } catch (Exception e) {
+                username = "test";
+            }
+
+            try {
+                password = testContainer.getDatabaseContainer().getPassword();
+            } catch (Exception e) {
+                password = "test";
+            }
+
             System.setProperty(testContainer.getName() + "_host", testContainer.getDatabaseContainer().getHost());
             System.setProperty(testContainer.getName() + "_port", String.valueOf(testContainer.getDatabaseContainer()
                     .getMappedPort(testContainer.getOriginalPort())));
-            System.setProperty(testContainer.getName() + "_name", testContainer.getDatabaseContainer().getDatabaseName());
-            System.setProperty(testContainer.getName() + "_username", testContainer.getDatabaseContainer().getUsername());
-            System.setProperty(testContainer.getName() + "_password", testContainer.getDatabaseContainer().getPassword());
+            System.setProperty(testContainer.getName() + "_name", name);
+            System.setProperty(testContainer.getName() + "_username", username);
+            System.setProperty(testContainer.getName() + "_password", password);
         }
     }
 }
