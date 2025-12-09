@@ -39,7 +39,7 @@ public abstract class TestContainers {
 
     private static final String APP_LOG_LEVEL_PROP = "test.containers.app.log.level";
     private static final String CI_APP_LOG_LEVEL_PROP = "TEST_CONTAINERS_APP_LOG_LEVEL";
-    private static final String APP_LOG_LEVEL = getSysEnvPropertyOrDefault(APP_LOG_LEVEL_PROP,CI_APP_LOG_LEVEL_PROP, "INFO");
+    private static final String APP_LOG_LEVEL = getSysEnvPropertyOrDefault(APP_LOG_LEVEL_PROP, CI_APP_LOG_LEVEL_PROP, "INFO");
 
     private static final String CONTAINERS_REUSE = "test.containers.reuse";
     private static final String CI_CONTAINERS_REUSE = "TEST_CONTAINERS_REUSE";
@@ -119,9 +119,7 @@ public abstract class TestContainers {
                     fail(getLangValue("test.containers.postgres.started.error").formatted(e.getMessage()));
                 }
 
-                if (CollectionUtils.isNotEmpty(postgresScriptLocations)) {
-                    PostgresInitializer.migrate(postgres.getPostgreSQLContainer(), postgresScriptLocations);
-                }
+                PostgresInitializer.migrate(postgres.getPostgreSQLContainer(), postgresScriptLocations);
             }
 
             if (withKafka) {
@@ -141,10 +139,7 @@ public abstract class TestContainers {
                     fail(getLangValue("test.containers.kafka.started.error").formatted(e.getMessage()));
                 }
 
-                if (CollectionUtils.isNotEmpty(kafkaTopics)) {
-                    String bootstrapServers = kafka.getKafkaContainer().getBootstrapServers().replace("PLAINTEXT://", "");
-                    KafkaInitializer.createTopics(bootstrapServers, kafkaTopics);
-                }
+                KafkaInitializer.createTopics(kafka.getKafkaContainer().getBootstrapServers(), kafkaTopics);
             }
 
             try {

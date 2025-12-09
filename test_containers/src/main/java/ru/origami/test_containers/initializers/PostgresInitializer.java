@@ -1,6 +1,7 @@
 package ru.origami.test_containers.initializers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.flywaydb.core.Flyway;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -13,13 +14,17 @@ public final class PostgresInitializer {
     }
 
     public static void migrate(PostgreSQLContainer<?> container, List<String> locations) {
-        Flyway flyway = Flyway.configure()
-                .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
-                .locations(locations.stream()
-                        .map(l -> "classpath:%s".formatted(l))
-                        .toArray(String[]::new)) // пример db/migration
-                .load();
+        if (CollectionUtils.isNotEmpty(locations)) {
+            Flyway flyway = Flyway.configure()
+                    .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
+                    .locations(locations.stream()
+                            .map("classpath:%s"::formatted)
+                            .toArray(String[]::new)) // пример db/migration
+                    .sqlMigrationPrefix("v")
+                    .repeatableSqlMigrationPrefix("r")
+                    .load();
 
-        flyway.migrate();
+            flyway.migrate();
+        }
     }
 }
