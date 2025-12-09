@@ -16,7 +16,7 @@ public final class PostgresInitializer {
         Flyway flyway = Flyway.configure()
                 .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
                 .locations(locations.stream()
-                        .map("classpath:%s"::formatted)
+                        .map(l -> "classpath:%s".formatted(l))
                         .toArray(String[]::new)) // пример db/migration
                 .load();
 
