@@ -182,18 +182,16 @@ public abstract class TestContainers {
                                     container.getHost(), mappedPorts);
 
                             if (Objects.nonNull(startable.getName())) {
-                                String schema = "";
-
-                                if (!(container instanceof JdbcDatabaseContainer)) {
-                                    schema = "http://";
+                                if (container instanceof JdbcDatabaseContainer) {
+                                    setDatabaseContainerSystemProperties(startable);
+                                } else {
+                                    System.setProperty(startable.getName() + "_host", "http://" + container.getHost());
+                                    System.setProperty(startable.getName() + "_port", String.valueOf(
+                                            container.getMappedPort(startable.getOriginalPort())));
                                     System.setProperty(startable.getName() + "_ws_host", container.getHost());
                                     System.setProperty(startable.getName() + "_ws_port", String.valueOf(container
                                             .getMappedPort(startable.getOriginalPort())));
                                 }
-
-                                System.setProperty(startable.getName() + "_host", schema + container.getHost());
-                                System.setProperty(startable.getName() + "_port", String.valueOf(
-                                        container.getMappedPort(startable.getOriginalPort())));
                             }
                         }
                     } else {
@@ -468,16 +466,22 @@ public abstract class TestContainers {
             testContainer.getDatabaseContainer().start();
             log.info(getLangValue("test.containers.database.started"), dbName,
                     testContainer.getDatabaseContainer().getDockerImageName(), testContainer.getDatabaseContainer().getJdbcUrl());
-
-            if (Objects.nonNull(testContainer.getName())) {
-                System.setProperty(testContainer.getName() + "_host", testContainer.getDatabaseContainer().getHost());
-                System.setProperty(testContainer.getName() + "_port", String.valueOf(testContainer.getDatabaseContainer()
-                        .getMappedPort(testContainer.getOriginalPort())));
-            }
+            setDatabaseContainerSystemProperties(testContainer);
         } catch (Exception e) {
             fail(getLangValue("test.containers.database.started.error").formatted(dbName, e.getMessage()));
         }
 
         DatabaseInitializer.migrate(testContainer.getDatabaseContainer(), testContainer.getDatabaseScriptLocations());
+    }
+
+    private void setDatabaseContainerSystemProperties(TestContainer testContainer) {
+        if (Objects.nonNull(testContainer.getName())) {
+            System.setProperty(testContainer.getName() + "_host", testContainer.getDatabaseContainer().getHost());
+            System.setProperty(testContainer.getName() + "_port", String.valueOf(testContainer.getDatabaseContainer()
+                    .getMappedPort(testContainer.getOriginalPort())));
+            System.setProperty(testContainer.getName() + "_name", testContainer.getDatabaseContainer().getDatabaseName());
+            System.setProperty(testContainer.getName() + "_username", testContainer.getDatabaseContainer().getUsername());
+            System.setProperty(testContainer.getName() + "_password", testContainer.getDatabaseContainer().getPassword());
+        }
     }
 }
