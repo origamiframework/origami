@@ -252,6 +252,8 @@ public abstract class TestContainers {
 
     protected TestContainer buildDefaultOracleContainer(String containerName) {
         int port = 1521;
+        int secondPort = 8080;
+        int secondBindPort = 15211;
         OracleContainer oracleContainer = new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe:21-slim"))
                 .withNetwork(network)
                 .withNetworkAliases("db")
@@ -261,7 +263,8 @@ public abstract class TestContainers {
 
         if (getWithFixedPorts()) {
             oracleContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
-                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port)),
+                            new PortBinding(Ports.Binding.bindPort(secondBindPort), new ExposedPort(secondPort))));
         }
 
         return new TestContainer()
@@ -278,12 +281,9 @@ public abstract class TestContainers {
         int port = 1433;
         MSSQLServerContainer<?> mssqlContainer = new MSSQLServerContainer<>(
                 DockerImageName.parse("mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04"))
-                .acceptLicense() // обязательно для MSSQL
+                .acceptLicense()
                 .withNetwork(network)
-                .withNetworkAliases("db")
-                .withDatabaseName("testdb")
-                .withUsername("sa")
-                .withPassword("YourStrong!Passw0rd1"); // пароль должен соответствовать требованиям MSSQL
+                .withNetworkAliases("db");
 
         if (getWithFixedPorts()) {
             mssqlContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -302,18 +302,16 @@ public abstract class TestContainers {
 
     protected TestContainer buildDefaultClickhouseContainer(String containerName) {
         int port = 8123;
-
+        int secondPort = 9000;
         ClickHouseContainer clickHouseContainer = new ClickHouseContainer(
                 DockerImageName.parse("clickhouse/clickhouse-server:23.8-alpine"))
                 .withNetwork(network)
-                .withNetworkAliases("db")
-                .withDatabaseName("testdb")
-                .withUsername("test")
-                .withPassword("test");
+                .withNetworkAliases("db");
 
         if (getWithFixedPorts()) {
             clickHouseContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
-                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port)),
+                            new PortBinding(Ports.Binding.bindPort(secondPort), new ExposedPort(secondPort))));
         }
 
         return new TestContainer()
