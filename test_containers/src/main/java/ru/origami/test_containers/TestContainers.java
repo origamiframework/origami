@@ -20,6 +20,8 @@ import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.utility.DockerImageName;
 import ru.origami.common.environment.Environment;
+import ru.origami.test_containers.initializers.KafkaInitializer;
+import ru.origami.test_containers.initializers.PostgresInitializer;
 
 import java.nio.file.Path;
 import java.util.*;
@@ -59,6 +61,7 @@ public abstract class TestContainers {
     private boolean withKafka = false;
 
     protected List<NewTopic> kafkaTopics = new ArrayList<>();
+    protected List<String> postgresScriptLocations = new ArrayList<>();
 
     private boolean withFixedPorts = false;
     private static int lastPort = 8080;
@@ -115,6 +118,10 @@ public abstract class TestContainers {
                 } catch (Exception e) {
                     fail(getLangValue("test.containers.postgres.started.error").formatted(e.getMessage()));
                 }
+
+                if (CollectionUtils.isNotEmpty(postgresScriptLocations)) {
+                    PostgresInitializer.migrate(postgres.getPostgreSQLContainer(), postgresScriptLocations);
+                }
             }
 
             if (withKafka) {
@@ -136,7 +143,7 @@ public abstract class TestContainers {
 
                 if (CollectionUtils.isNotEmpty(kafkaTopics)) {
                     String bootstrapServers = kafka.getKafkaContainer().getBootstrapServers().replace("PLAINTEXT://", "");
-                    createTopics(bootstrapServers, kafkaTopics);
+                    KafkaInitializer.createTopics(bootstrapServers, kafkaTopics);
                 }
             }
 
@@ -252,19 +259,6 @@ public abstract class TestContainers {
         }
 
         return t;
-    }
-
-    private void createTopics(String bootstrapServers, List<NewTopic> topics) {
-        Properties props = new Properties();
-        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000");
-
-        try (AdminClient admin = AdminClient.create(props)) {
-            admin.createTopics(topics).all().get();
-            log.info(getLangValue("test.containers.kafka.topics.created"), topics.stream().map(NewTopic::name).toList());
-        } catch (Exception e) {
-            throw new RuntimeException(getLangValue("test.containers.kafka.topics.created.error").formatted(bootstrapServers), e);
-        }
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName) {

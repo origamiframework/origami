@@ -1,5 +1,10 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.4.6
+
+- Selenide: убраны лишние зависимости allure
+- Test Containers: добавлена возможность выполнения sql скриптов при запуске postgres
+
 ### 1.4.5
 
 - Core: изменен метод isLocal() для корректной работы с различными CI/CD
