@@ -7,21 +7,16 @@ import com.github.dockerjava.api.model.Ports;
 import junit.framework.AssertionFailedError;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.*;
 import org.testcontainers.images.builder.ImageFromDockerfile;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.utility.DockerImageName;
 import ru.origami.common.environment.Environment;
 import ru.origami.test_containers.initializers.KafkaInitializer;
-import ru.origami.test_containers.initializers.PostgresInitializer;
+import ru.origami.test_containers.initializers.DatabaseInitializer;
 
 import java.nio.file.Path;
 import java.util.*;
@@ -54,14 +49,19 @@ public abstract class TestContainers {
     protected Network network = Network.newNetwork();
 
     protected TestContainer postgres = null;
+    protected TestContainer mssql = null;
+    protected TestContainer clickhouse = null;
+    protected TestContainer oracle = null;
     protected TestContainer kafka = null;
     protected List<TestContainer> containers = new ArrayList();
 
     private boolean withPostgres = false;
+    private boolean withMSSQL = false;
+    private boolean withClickhouse = false;
+    private boolean withOracle = false;
     private boolean withKafka = false;
 
     protected List<NewTopic> kafkaTopics = new ArrayList<>();
-    protected List<String> postgresScriptLocations = new ArrayList<>();
 
     private boolean withFixedPorts = false;
     private static int lastPort = 8080;
@@ -87,6 +87,21 @@ public abstract class TestContainers {
         withPostgres = true;
     }
 
+    protected void withMSSQL() {
+        mssql = buildDefaultMSSQLServerContainer();
+        withMSSQL = true;
+    }
+
+    protected void withOracle() {
+        oracle = buildDefaultOracleContainer();
+        withOracle = true;
+    }
+
+    protected void withClickhouse() {
+        clickhouse = buildDefaultClickhouseContainer();
+        withClickhouse = true;
+    }
+
     protected void withKafka() {
         kafka = buildDefaultKafkaContainer();
         withKafka = true;
@@ -105,21 +120,31 @@ public abstract class TestContainers {
                     postgres = buildDefaultPostgreSQLContainer();
                 }
 
-                try {
-                    postgres.getPostgreSQLContainer().start();
-                    log.info(getLangValue("test.containers.postgres.started"),
-                            postgres.getPostgreSQLContainer().getDockerImageName(), postgres.getPostgreSQLContainer().getJdbcUrl());
+                startDatabaseContainers(postgres, "Postgres");
+            }
 
-                    if (Objects.nonNull(postgres.getName())) {
-                        System.setProperty(postgres.getName() + "_host", postgres.getPostgreSQLContainer().getHost());
-                        System.setProperty(postgres.getName() + "_port", String.valueOf(postgres.getPostgreSQLContainer()
-                                .getMappedPort(postgres.getOriginalPort())));
-                    }
-                } catch (Exception e) {
-                    fail(getLangValue("test.containers.postgres.started.error").formatted(e.getMessage()));
+            if (withOracle) {
+                if (Objects.isNull(oracle)) {
+                    oracle = buildDefaultOracleContainer();
                 }
 
-                PostgresInitializer.migrate(postgres.getPostgreSQLContainer(), postgresScriptLocations);
+                startDatabaseContainers(oracle, "Oracle");
+            }
+
+            if (withClickhouse) {
+                if (Objects.isNull(clickhouse)) {
+                    clickhouse = buildDefaultClickhouseContainer();
+                }
+
+                startDatabaseContainers(clickhouse, "Clickhouse");
+            }
+
+            if (withMSSQL) {
+                if (Objects.isNull(mssql)) {
+                    mssql = buildDefaultMSSQLServerContainer();
+                }
+
+                startDatabaseContainers(mssql, "MS SQL");
             }
 
             if (withKafka) {
@@ -161,14 +186,14 @@ public abstract class TestContainers {
 
                                 if (!(container instanceof JdbcDatabaseContainer)) {
                                     schema = "http://";
+                                    System.setProperty(startable.getName() + "_ws_host", container.getHost());
+                                    System.setProperty(startable.getName() + "_ws_port", String.valueOf(container
+                                            .getMappedPort(startable.getOriginalPort())));
                                 }
 
                                 System.setProperty(startable.getName() + "_host", schema + container.getHost());
                                 System.setProperty(startable.getName() + "_port", String.valueOf(
                                         container.getMappedPort(startable.getOriginalPort())));
-                                System.setProperty(startable.getName() + "_ws_host", container.getHost());
-                                System.setProperty(startable.getName() + "_ws_port", String.valueOf(container
-                                        .getMappedPort(startable.getOriginalPort())));
                             }
                         }
                     } else {
@@ -219,6 +244,82 @@ public abstract class TestContainers {
                 .setName(containerName)
                 .setOriginalPort(port)
                 .setContainer(postgreSQLContainer);
+    }
+
+    protected TestContainer buildDefaultOracleContainer() {
+        return buildDefaultOracleContainer("oracle_container");
+    }
+
+    protected TestContainer buildDefaultOracleContainer(String containerName) {
+        int port = 1521;
+        OracleContainer oracleContainer = new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe:21-slim"))
+                .withNetwork(network)
+                .withNetworkAliases("db")
+                .withDatabaseName("testdb")
+                .withUsername("test")
+                .withPassword("test");
+
+        if (getWithFixedPorts()) {
+            oracleContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
+        }
+
+        return new TestContainer()
+                .setName(containerName)
+                .setOriginalPort(port)
+                .setContainer(oracleContainer);
+    }
+
+    protected TestContainer buildDefaultMSSQLServerContainer() {
+        return buildDefaultMSSQLServerContainer("mssql_container");
+    }
+
+    protected TestContainer buildDefaultMSSQLServerContainer(String containerName) {
+        int port = 1433;
+        MSSQLServerContainer<?> mssqlContainer = new MSSQLServerContainer<>(
+                DockerImageName.parse("mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04"))
+                .acceptLicense() // обязательно для MSSQL
+                .withNetwork(network)
+                .withNetworkAliases("db")
+                .withDatabaseName("testdb")
+                .withUsername("sa")
+                .withPassword("YourStrong!Passw0rd1"); // пароль должен соответствовать требованиям MSSQL
+
+        if (getWithFixedPorts()) {
+            mssqlContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
+        }
+
+        return new TestContainer()
+                .setName(containerName)
+                .setOriginalPort(port)
+                .setContainer(mssqlContainer);
+    }
+
+    protected TestContainer buildDefaultClickhouseContainer() {
+        return buildDefaultClickhouseContainer("clickhouse_container");
+    }
+
+    protected TestContainer buildDefaultClickhouseContainer(String containerName) {
+        int port = 8123;
+
+        ClickHouseContainer clickHouseContainer = new ClickHouseContainer(
+                DockerImageName.parse("clickhouse/clickhouse-server:23.8-alpine"))
+                .withNetwork(network)
+                .withNetworkAliases("db")
+                .withDatabaseName("testdb")
+                .withUsername("test")
+                .withPassword("test");
+
+        if (getWithFixedPorts()) {
+            clickHouseContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
+        }
+
+        return new TestContainer()
+                .setName(containerName)
+                .setOriginalPort(port)
+                .setContainer(clickHouseContainer);
     }
 
     protected TestContainer buildDefaultKafkaContainer() {
@@ -303,7 +404,7 @@ public abstract class TestContainers {
         }
 
         if (withPostgres) {
-            genericContainer.dependsOn(postgres.getPostgreSQLContainer())
+            genericContainer.dependsOn(postgres.getDatabaseContainer())
                     .withEnv("DATASOURCE_URL", "jdbc:postgresql://db:5432/testdb")
                     .withEnv("DATASOURCE_SCHEMA", "public")
                     .withEnv("DATASOURCE_USER", "postgres")
@@ -362,5 +463,23 @@ public abstract class TestContainers {
                 Startables.deepStart(toStartList.stream().map(TestContainer::getContainer)).join();
             }
         }
+    }
+
+    private void startDatabaseContainers(TestContainer testContainer, String dbName) {
+        try {
+            testContainer.getDatabaseContainer().start();
+            log.info(getLangValue("test.containers.database.started"), dbName,
+                    testContainer.getDatabaseContainer().getDockerImageName(), testContainer.getDatabaseContainer().getJdbcUrl());
+
+            if (Objects.nonNull(testContainer.getName())) {
+                System.setProperty(testContainer.getName() + "_host", testContainer.getDatabaseContainer().getHost());
+                System.setProperty(testContainer.getName() + "_port", String.valueOf(testContainer.getDatabaseContainer()
+                        .getMappedPort(testContainer.getOriginalPort())));
+            }
+        } catch (Exception e) {
+            fail(getLangValue("test.containers.database.started.error").formatted(dbName, e.getMessage()));
+        }
+
+        DatabaseInitializer.migrate(testContainer.getDatabaseContainer(), testContainer.getDatabaseScriptLocations());
     }
 }

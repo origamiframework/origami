@@ -8,9 +8,9 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import java.util.List;
 
 @Slf4j
-public final class PostgresInitializer {
+public final class DatabaseInitializer {
 
-    private PostgresInitializer() {
+    private DatabaseInitializer() {
     }
 
     public static void migrate(JdbcDatabaseContainer<?> container, List<String> locations) {
