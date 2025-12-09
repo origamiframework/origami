@@ -50,24 +50,24 @@
             <version>${postgresql.version}</version>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.clickhouse</groupId>
+            <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
-            <version>0.3.2</version>
+            <version>${clickhouse.version}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc10</artifactId>
-            <version>19.22.0.0</version>
+            <artifactId>ojdbc11</artifactId>
+            <version>${oracle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>orai18n</artifactId>
-            <version>19.3.0.0</version>
+            <version>${oracle.orai18n.version}</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>12.6.0.jre11</version>
+            <version>${mssql.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.bgee.log4jdbc-log4j2</groupId>-->
