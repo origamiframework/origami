@@ -22,6 +22,8 @@ import ru.origami.test_containers.initializers.DatabaseInitializer;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -66,6 +68,12 @@ public abstract class TestContainers {
 
     private boolean withFixedPorts = false;
     private static int lastPort = 8080;
+
+    static {
+        Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
+        logger.setLevel(Level.OFF);
+        logger.setUseParentHandlers(false);
+    }
 
     protected static int getLastPort() {
         return lastPort++;
@@ -229,7 +237,7 @@ public abstract class TestContainers {
         int port = 5432;
         PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16"))
                 .withNetwork(network)
-                .withNetworkAliases("db")
+                .withNetworkAliases("postgres-db")
                 .withDatabaseName("testdb")
                 .withUsername("postgres")
                 .withPassword("postgres");
@@ -255,7 +263,7 @@ public abstract class TestContainers {
         int secondBindPort = 15211;
         OracleContainer oracleContainer = new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe:21-slim"))
                 .withNetwork(network)
-                .withNetworkAliases("db")
+                .withNetworkAliases("oracle-db")
                 .withDatabaseName("testdb")
                 .withUsername("test")
                 .withPassword("test");
@@ -282,7 +290,7 @@ public abstract class TestContainers {
                 DockerImageName.parse("mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04"))
                 .acceptLicense()
                 .withNetwork(network)
-                .withNetworkAliases("db");
+                .withNetworkAliases("mssql-db");
 
         if (getWithFixedPorts()) {
             mssqlContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -305,7 +313,7 @@ public abstract class TestContainers {
         ClickHouseContainer clickHouseContainer = new ClickHouseContainer(
                 DockerImageName.parse("clickhouse/clickhouse-server:23.8-alpine"))
                 .withNetwork(network)
-                .withNetworkAliases("db");
+                .withNetworkAliases("clickhouse-db");
 
         if (getWithFixedPorts()) {
             clickHouseContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -402,10 +410,33 @@ public abstract class TestContainers {
 
         if (withPostgres) {
             genericContainer.dependsOn(postgres.getDatabaseContainer())
-                    .withEnv("DATASOURCE_URL", "jdbc:postgresql://db:5432/testdb")
+                    .withEnv("DATASOURCE_URL", "jdbc:postgresql://postgres-db:5432/testdb")
                     .withEnv("DATASOURCE_SCHEMA", "public")
                     .withEnv("DATASOURCE_USER", "postgres")
                     .withEnv("DATASOURCE_PASSWORD", "postgres");
+        }
+
+        if (withOracle) {
+            genericContainer.dependsOn(oracle.getDatabaseContainer())
+                    .withEnv("DATASOURCE_URL", "jdbc:oracle:thin://oracle-db:1521/testdb")
+                    .withEnv("DATASOURCE_SCHEMA", "TEST")
+                    .withEnv("DATASOURCE_USER", "test")
+                    .withEnv("DATASOURCE_PASSWORD", "test");
+        }
+
+        if (withClickhouse) {
+            genericContainer.dependsOn(clickhouse.getDatabaseContainer())
+                    .withEnv("DATASOURCE_URL", "jdbc:clickhouse://clickhouse-db:8123/default")
+                    .withEnv("DATASOURCE_USER", "test")
+                    .withEnv("DATASOURCE_PASSWORD", "test");
+        }
+
+        if (withMSSQL) {
+            genericContainer.dependsOn(mssql.getDatabaseContainer())
+                    .withEnv("DATASOURCE_URL", "jdbc:sqlserver://mssql-db:1433;databaseName=master;encrypt=false")
+                    .withEnv("DATASOURCE_SCHEMA", "dbo")
+                    .withEnv("DATASOURCE_USER", "sa")
+                    .withEnv("DATASOURCE_PASSWORD", "A_Str0ng_Required_Password");
         }
 
         if (withKafka) {
@@ -484,7 +515,7 @@ public abstract class TestContainers {
             try {
                 name = testContainer.getDatabaseContainer().getDatabaseName();
             } catch (Exception e) {
-                if (testContainer.getDatabaseContainer() instanceof ClickHouseContainer) {
+                if (testContainer.getDatabaseContainer() instanceof org.testcontainers.containers.ClickHouseContainer) {
                     name = "default";
                 } else {
                     name = "testdb";
