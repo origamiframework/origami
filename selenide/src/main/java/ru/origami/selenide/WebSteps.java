@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import groovy.util.logging.Slf4j;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
+import ru.origami.common.environment.Environment;
 import ru.origami.testit_allure.annotations.Step;
 
 import java.util.Set;
@@ -15,6 +16,10 @@ import static ru.origami.common.environment.Language.getLangValue;
 
 @Slf4j
 public class WebSteps {
+
+    public void open() {
+        openUrl(Environment.get("web.site.url"));
+    }
 
     @Step("getLangValue:selenide.step.open.url")
     public void openUrl(String url) {
