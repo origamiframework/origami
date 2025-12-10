@@ -1,7 +1,7 @@
 package ru.origami.testit_allure.junit;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import ru.origami.testit_allure.annotations.DisplayName;
 
 import java.lang.reflect.Method;
 

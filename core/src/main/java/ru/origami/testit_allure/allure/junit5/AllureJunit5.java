@@ -1,5 +1,6 @@
 package ru.origami.testit_allure.allure.junit5;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
@@ -8,7 +9,6 @@ import ru.origami.testit_allure.allure.java_commons.util.ObjectUtils;
 import ru.origami.testit_allure.allure.java_commons.util.ResultsUtils;
 import ru.origami.testit_allure.allure.model.Status;
 import ru.origami.testit_allure.allure.model.StatusDetails;
-import ru.origami.testit_allure.annotations.DisplayName;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

@@ -1,5 +1,6 @@
 package ru.origami.testit_allure.test_it.testit.services;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import ru.origami.testit_allure.annotations.*;
 import ru.origami.testit_allure.test_it.testit.annotations.*;
