@@ -47,7 +47,7 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
         String browser = Environment.getWithNullValue("web.browser.name");
         Configuration.browser = Objects.nonNull(browser) ? browser : DEFAULT_BROWSER_NAME;
 
-        Capabilities.setUp(Configuration.browser);
+        Capabilities.setUp();
 
 //        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
 

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static ru.origami.common.environment.Environment.isLocal;
+
 @UtilityClass
 public class Capabilities {
 
@@ -21,19 +23,19 @@ public class Capabilities {
             "--disable-dev-shm-usage"    // для /dev/shm в Docker
     );
 
-    public static void setUp(String browser) {
-        Configuration.browser = browser;
+    public static void setUp() {
+        if (!isLocal()) {
+            MutableCapabilities options =
+                    switch (Configuration.browser.toLowerCase()) {
+                        case "chrome" -> getChromeCapabilities();
+                        case "firefox" -> getFirefoxCapabilities();
+                        case "yandex" -> getYandexCapabilities();
+                        default -> null;
+                    };
 
-        MutableCapabilities options =
-                switch (browser.toLowerCase()) {
-                    case "chrome" -> getChromeCapabilities();
-                    case "firefox" -> getFirefoxCapabilities();
-                    case "yandex" -> getYandexCapabilities();
-                    default -> null;
-                };
-
-        if (Objects.nonNull(options)) {
-        Configuration.browserCapabilities = options;
+            if (Objects.nonNull(options)) {
+                Configuration.browserCapabilities = options;
+            }
         }
     }
 
