@@ -1,7 +1,6 @@
 package ru.origami.selenide;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import groovy.util.logging.Slf4j;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
@@ -10,6 +9,7 @@ import ru.origami.testit_allure.annotations.Step;
 import java.util.Set;
 
 import static com.codeborne.selenide.Selenide.localStorage;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.getLangValue;
 
@@ -19,11 +19,12 @@ public class WebSteps {
     @Step("getLangValue:selenide.step.open.url")
     public void openUrl(String url) {
         Selenide.open(url);
+        getWebDriver().manage().window().maximize();
     }
 
     @Step("getLangValue:selenide.step.current.url")
     public String getCurrentUrl() {
-        return WebDriverRunner.getWebDriver().getCurrentUrl();
+        return getWebDriver().getCurrentUrl();
     }
 
     @Step("getLangValue:selenide.step.refresh.page")
@@ -43,7 +44,7 @@ public class WebSteps {
 
     @Step("getLangValue:selenide.step.browser.size")
     public void setBrowserSize(int width, int height) {
-        WebDriverRunner.getWebDriver().manage().window().setSize(new Dimension(width, height));
+        getWebDriver().manage().window().setSize(new Dimension(width, height));
     }
 
     @Step("getLangValue:selenide.step.back")
@@ -73,13 +74,13 @@ public class WebSteps {
 
     @Step("getLangValue:selenide.step.get.cookies")
     public Set<Cookie> getCookies() {
-        return WebDriverRunner.getWebDriver().manage().getCookies();
+        return getWebDriver().manage().getCookies();
     }
 
     @Step("getLangValue:selenide.step.get.cookie.by.name")
     public Cookie getCookieByName(String cookieName) {
         try {
-            WebDriverRunner.getWebDriver().manage().getCookieNamed(cookieName);
+            getWebDriver().manage().getCookieNamed(cookieName);
         } catch (NullPointerException ignore) {
             fail(getLangValue("selenide.cookie.not.found.error").formatted(cookieName));
         }
@@ -89,11 +90,11 @@ public class WebSteps {
 
     @Step("getLangValue:selenide.step.set.cookie")
     public void setCookie(String cookieName, String cookieValue) {
-        if (WebDriverRunner.getWebDriver().manage().getCookieNamed(cookieName) != null) {
-            WebDriverRunner.getWebDriver().manage().deleteCookieNamed(cookieName);
+        if (getWebDriver().manage().getCookieNamed(cookieName) != null) {
+            getWebDriver().manage().deleteCookieNamed(cookieName);
         }
 
-        WebDriverRunner.getWebDriver().manage().addCookie(new Cookie(cookieName, cookieValue));
+        getWebDriver().manage().addCookie(new Cookie(cookieName, cookieValue));
     }
 
     @Step("getLangValue:selenide.step.clear.browser.local.storage")
