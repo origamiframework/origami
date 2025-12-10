@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -26,12 +29,14 @@ public class TestContainer {
 
     private Integer originalPort;
 
+    protected List<String> databaseScriptLocations = new ArrayList<>();
+
     public GenericContainer<?> getGenericContainer() {
         return (GenericContainer<?>) container;
     }
 
-    public PostgreSQLContainer<?> getPostgreSQLContainer() {
-        return (PostgreSQLContainer<?>) container;
+    public JdbcDatabaseContainer<?> getDatabaseContainer() {
+        return (JdbcDatabaseContainer<?>) container;
     }
 
     public KafkaContainer getKafkaContainer() {

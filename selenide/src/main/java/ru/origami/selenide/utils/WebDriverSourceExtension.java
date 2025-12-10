@@ -30,11 +30,13 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
         }
 
         Configuration.baseUrl = baseUrl;
-        Configuration.browserSize = "1920x1080";
+//        Configuration.browserSize = "1920x1080";
         Configuration.downloadsFolder = "target/selenide/downloads";
         Configuration.reportsFolder = "target/selenide/reports";
 //        Configuration.proxyEnabled = true;
         Configuration.fileDownload = FOLDER;
+        Configuration.screenshots = true;
+        Configuration.savePageSource = true;
 
         String timeout = Environment.getWithNullValue("web.timeout");
         Configuration.timeout = Objects.nonNull(timeout) ? Long.parseLong(timeout) : 5000;
@@ -44,6 +46,8 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 
         String browser = Environment.getWithNullValue("web.browser.name");
         Configuration.browser = Objects.nonNull(browser) ? browser : DEFAULT_BROWSER_NAME;
+
+        Capabilities.setUp();
 
 //        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
 

@@ -1,5 +1,6 @@
 package ru.origami.testit_allure.allure.junitplatform;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestSource;
 import org.junit.platform.engine.TestTag;
@@ -16,7 +17,6 @@ import ru.origami.testit_allure.allure.java_commons.util.AnnotationUtils;
 import ru.origami.testit_allure.allure.java_commons.util.ResultsUtils;
 import ru.origami.testit_allure.allure.model.*;
 import ru.origami.testit_allure.annotations.Description;
-import ru.origami.testit_allure.annotations.DisplayName;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;

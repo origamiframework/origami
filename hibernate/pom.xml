@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-hibernate</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.6</version>
 
     <name>Origami Framework Hibernate</name>
     <description>Origami Framework Hibernate</description>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-dependency</artifactId>
-        <version>1.4.5</version>
+        <version>1.4.6</version>
     </parent>
 
     <properties>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.4.5</version>
+            <version>1.4.6</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -47,27 +47,27 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.clickhouse</groupId>
+            <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
-            <version>0.3.2</version>
+            <version>${clickhouse.version}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc10</artifactId>
-            <version>19.22.0.0</version>
+            <artifactId>ojdbc11</artifactId>
+            <version>${oracle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>orai18n</artifactId>
-            <version>19.3.0.0</version>
+            <version>${oracle.orai18n.version}</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>12.6.0.jre11</version>
+            <version>${mssql.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.bgee.log4jdbc-log4j2</groupId>-->
