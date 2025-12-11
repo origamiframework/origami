@@ -11,43 +11,49 @@ import ru.origami.common.environment.Environment;
 import ru.origami.selenide.attachment.SelenideAttachment;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
 import static org.junit.jupiter.api.Assertions.fail;
-import static ru.origami.common.environment.Environment.isLocal;
+import static ru.origami.common.OrigamiHelper.waitInMillis;
+import static ru.origami.common.environment.Environment.getSysEnvPropertyOrDefault;
 import static ru.origami.common.environment.Language.getLangValue;
 
 public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
 
-    private static String DEFAULT_BROWSER_NAME = "chrome";
+    private static final AtomicBoolean IS_FIRST_EXECUTE = new AtomicBoolean(true);
+
+    private static final String BROWSER_NAME_PROP = "web.browser.name";
+    private static final String CI_BROWSER_NAME_PROP = "WEB_BROWSER_NAME";
+    private static final String BROWSER_NAME = getSysEnvPropertyOrDefault(BROWSER_NAME_PROP, CI_BROWSER_NAME_PROP, "chrome");
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        String baseUrl = Environment.getWithNullValue("web.site.url");
+        if (IS_FIRST_EXECUTE.getAndSet(false)) {
+            String baseUrl = Environment.getWithNullValue("web.site.url");
 
-        if (Objects.isNull(baseUrl)) {
-            fail(getLangValue("selenide.web.site.url.is.empty"));
-        }
+            if (Objects.isNull(baseUrl)) {
+                fail(getLangValue("selenide.web.site.url.is.empty"));
+            }
 
-        Configuration.baseUrl = baseUrl;
+            Configuration.baseUrl = baseUrl;
 //        Configuration.browserSize = "1920x1080";
-        Configuration.downloadsFolder = "target/selenide/downloads";
-        Configuration.reportsFolder = "target/selenide/reports";
+            Configuration.downloadsFolder = "target/selenide/downloads";
+            Configuration.reportsFolder = "target/selenide/reports";
 //        Configuration.proxyEnabled = true;
-        Configuration.fileDownload = FOLDER;
-        Configuration.screenshots = true;
-        Configuration.savePageSource = true;
+            Configuration.fileDownload = FOLDER;
+            Configuration.screenshots = true;
+            Configuration.savePageSource = true;
 
-        String timeout = Environment.getWithNullValue("web.timeout");
-        Configuration.timeout = Objects.nonNull(timeout) ? Long.parseLong(timeout) : 5000;
+            String timeout = Environment.getWithNullValue("web.timeout");
+            Configuration.timeout = Objects.nonNull(timeout) ? Long.parseLong(timeout) : 5000;
 
-        String pageLoadTimeout = Environment.getWithNullValue("web.page.load.timeout");
-        Configuration.pageLoadTimeout = Objects.nonNull(pageLoadTimeout) ? Long.parseLong(pageLoadTimeout) : 10000;
+            String pageLoadTimeout = Environment.getWithNullValue("web.page.load.timeout");
+            Configuration.pageLoadTimeout = Objects.nonNull(pageLoadTimeout) ? Long.parseLong(pageLoadTimeout) : 10000;
 
-        String browser = Environment.getWithNullValue("web.browser.name");
-        Configuration.browser = Objects.nonNull(browser) ? browser : DEFAULT_BROWSER_NAME;
+            Configuration.browser = BROWSER_NAME;
 
-        Capabilities.setUp();
+            Capabilities.setUp();
 
 //        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
 
@@ -61,20 +67,14 @@ public class WebDriverSourceExtension implements BeforeEachCallback, AfterEachCa
 //                WebDriverManager.chromedriver().setup();
 //            }
 //        }
-
-        if (!isLocal()) {
-            Configuration.headless = true;
         }
     }
 
     @Override
     public void afterEach(ExtensionContext context) {
-        Selenide.closeWebDriver();
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            Selenide.closeWebDriver();
+            waitInMillis(500);
         }
     }
 
