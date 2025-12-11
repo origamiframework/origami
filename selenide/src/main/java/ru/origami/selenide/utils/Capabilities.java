@@ -36,6 +36,8 @@ public class Capabilities {
             if (Objects.nonNull(options)) {
                 Configuration.browserCapabilities = options;
             }
+
+            Configuration.headless = true;
         }
     }
 
