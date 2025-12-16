@@ -53,12 +53,12 @@
     test.timezone=UTC
     hibernate.excel.result.enabled=false
     kafka.test.data.package=src/main/resources/test_data/kafka
-    testit.url=https://111.111.111.111
-    testit.private.token=token
-    testit.project.id=project-id
-    testit.configuration.id=configuration-id
-    testit.adapter.mode=2
-    testit.enable.result=false
+    test.it.url=https://111.111.111.111
+    test.it.private.token=token
+    test.it.project.id=project-id
+    test.it.configuration.id=configuration-id
+    test.it.adapter.mode=2
+    test.it.enable.result=false
     web.browser.name=chrome
     web.timeout=5000
     web.page.load.timeout=10000
@@ -72,12 +72,12 @@
 - <b>hibernate.excel.result.enabled</b> - параметр необходим для прикрепления результата выборки из базы данных в формате Excel. 
  По умолчанию: <i>false</i>. Доступен при подключении модуля <i>hibernate</i> (CI/CD переменная: HIBERNATE_EXCEL_RESULT_ENABLED)
 - <b>kafka.test.data.package</b> - путь до пакета с файлами для TestDataKafka. По умолчанию: <i>src/main/resources/test_data/kafka</i>. Доступен при подключении модуля <i>kafka</i>.
-- <b>testit.url</b> - ваш адрес Test IT
-- <b>testit.private.token</b> - токен пользователя Test IT
-- <b>testit.project.id</b> - id проекта Test IT
-- <b>testit.configuration.id</b> - id конфигурации Test IT
-- <b>testit.adapter.mode</b> - режим работы адаптера Test IT
-- <b>testit.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT
+- <b>test.it.url</b> - ваш адрес Test IT
+- <b>test.it.private.token</b> - токен пользователя Test IT
+- <b>test.it.project.id</b> - id проекта Test IT
+- <b>test.it.configuration.id</b> - id конфигурации Test IT
+- <b>test.it.adapter.mode</b> - режим работы адаптера Test IT
+- <b>test.it.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT (CI/CD переменная: TEST_IT_ENABLE_RESULT)
 - <b>web.site.url</b> - базовый URL-адрес
 - <b>web.browser.name</b> - браузер для использования. По умолчанию: <i>chrome</i> (CI/CD переменная: WEB_BROWSER_NAME)
 - <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: <i>5000</i>
