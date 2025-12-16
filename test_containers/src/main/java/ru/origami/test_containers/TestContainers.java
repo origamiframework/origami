@@ -16,6 +16,7 @@ import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.utility.DockerImageName;
 import ru.origami.common.environment.Environment;
+import ru.origami.test_containers.initializers.IbmMqInitializer;
 import ru.origami.test_containers.initializers.KafkaInitializer;
 import ru.origami.test_containers.initializers.DatabaseInitializer;
 
@@ -56,6 +57,7 @@ public abstract class TestContainers {
     protected TestContainer clickhouse = null;
     protected TestContainer oracle = null;
     protected TestContainer kafka = null;
+    protected TestContainer ibmMq = null;
     protected List<TestContainer> containers = new ArrayList();
 
     private boolean withPostgres = false;
@@ -63,8 +65,10 @@ public abstract class TestContainers {
     private boolean withClickhouse = false;
     private boolean withOracle = false;
     private boolean withKafka = false;
+    private boolean withIbmMq = false;
 
     protected List<NewTopic> kafkaTopics = new ArrayList<>();
+    protected List<String> ibmMqQueues = new ArrayList<>();
 
     private boolean withFixedPorts = false;
     private static int lastPort = 8080;
@@ -163,7 +167,7 @@ public abstract class TestContainers {
 
                 try {
                     kafka.getKafkaContainer().start();
-                    log.info(getLangValue("test.containers.kafka.started"),
+                    log.info(getLangValue("test.containers.kafka.started"), kafka.getName(),
                             kafka.getKafkaContainer().getDockerImageName(), kafka.getKafkaContainer().getBootstrapServers());
 
                     if (Objects.nonNull(kafka.getName())) {
@@ -174,6 +178,28 @@ public abstract class TestContainers {
                 }
 
                 KafkaInitializer.createTopics(kafka.getKafkaContainer().getBootstrapServers(), kafkaTopics);
+            }
+
+            if (withIbmMq) {
+                if (Objects.isNull(ibmMq)) {
+                    ibmMq = buildDefaultIbmMqContainer();
+                }
+
+                try {
+                    ibmMq.getKafkaContainer().start();
+                    log.info(getLangValue("test.containers.ibm.mq.started"), ibmMq.getName(),
+                            ibmMq.getGenericContainer().getDockerImageName());
+
+                    if (Objects.nonNull(ibmMq.getName())) {
+                        System.setProperty(ibmMq.getName() + "_name", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_QMGR_NAME"));
+                        System.setProperty(ibmMq.getName() + "_user", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_APP_USER"));
+                        System.setProperty(ibmMq.getName() + "_password", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_APP_PASSWORD"));
+                    }
+                } catch (Exception e) {
+                    fail(getLangValue("test.containers.ibm.mq.started.error").formatted(e.getMessage()));
+                }
+
+                IbmMqInitializer.createQueues(ibmMq, ibmMqQueues);
             }
 
             try {
@@ -360,6 +386,32 @@ public abstract class TestContainers {
         }
 
         return t;
+    }
+
+    protected TestContainer buildDefaultIbmMqContainer() {
+        return buildDefaultIbmMqContainer("ibm_mq_container");
+    }
+
+    protected TestContainer buildDefaultIbmMqContainer(String containerName) {
+        int port = 1414;
+        int secondPort = 9443;
+        GenericContainer<?> ibmMqContainer = new GenericContainer<>(DockerImageName.parse("icr.io/ibm-messaging/mq:9.3.0.0-r1"))
+                .withEnv("LICENSE", "accept")
+                .withEnv("MQ_QMGR_NAME", "QM1")
+                .withEnv("MQ_APP_USER", "app")
+                .withEnv("MQ_APP_PASSWORD", "passw0rd")
+                .withExposedPorts(port, secondPort);
+
+        if (getWithFixedPorts()) {
+            ibmMqContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                    .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port)),
+                            new PortBinding(Ports.Binding.bindPort(secondPort), new ExposedPort(secondPort))));
+        }
+
+        return new TestContainer()
+                .setName(containerName)
+                .setOriginalPort(port)
+                .setContainer(ibmMqContainer);
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName) {
