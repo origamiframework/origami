@@ -120,6 +120,11 @@ public abstract class TestContainers {
         withKafka = true;
     }
 
+    protected void withIbmMq() {
+        ibmMq = buildDefaultIbmMqContainer();
+        withIbmMq = true;
+    }
+
     public final void startIfNeeded() throws AssertionFailedError {
         synchronized (this) {
             if (IS_STARTED.getAndSet(true)) {
@@ -186,13 +191,16 @@ public abstract class TestContainers {
                 }
 
                 try {
-                    ibmMq.getKafkaContainer().start();
+                    ibmMq.getGenericContainer().start();
                     log.info(getLangValue("test.containers.ibm.mq.started"), ibmMq.getName(),
                             ibmMq.getGenericContainer().getDockerImageName());
 
                     if (Objects.nonNull(ibmMq.getName())) {
-                        System.setProperty(ibmMq.getName() + "_name", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_QMGR_NAME"));
-                        System.setProperty(ibmMq.getName() + "_user", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_APP_USER"));
+                        System.setProperty(ibmMq.getName() + "_host", ibmMq.getGenericContainer().getHost());
+                        System.setProperty(ibmMq.getName() + "_port", String.valueOf(ibmMq.getGenericContainer()
+                                .getMappedPort(ibmMq.getOriginalPort())));
+                        System.setProperty(ibmMq.getName() + "_queue_manager", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_QMGR_NAME"));
+                        System.setProperty(ibmMq.getName() + "_username", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_APP_USER"));
                         System.setProperty(ibmMq.getName() + "_password", getContainerEnvByName(ibmMq.getGenericContainer(), "MQ_APP_PASSWORD"));
                     }
                 } catch (Exception e) {

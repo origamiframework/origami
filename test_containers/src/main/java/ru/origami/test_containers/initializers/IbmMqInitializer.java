@@ -19,34 +19,36 @@ public final class IbmMqInitializer {
 
     public static void createQueues(TestContainer ibmMqContainer, List<String> queueNames) {
         if (CollectionUtils.isNotEmpty(queueNames)) {
-            StringBuilder mqscScript = new StringBuilder();
-
-            queueNames.forEach(queueName -> mqscScript
-                    .append("DEFINE QLOCAL('")
-                    .append(queueName)
-                    .append("') REPLACE\n"));
-            queueNames.forEach(queueName -> mqscScript
-                    .append("SET AUTHREC PROFILE('")
-                    .append(queueName)
-                    .append("') OBJTYPE(QUEUE) ")
-                    .append("SET AUTHREC PROFILE('TEST.QUEUE1') OBJTYPE(QUEUE) ")
-                    .append("  PRINCIPAL('")
-                    .append(Environment.get(ibmMqContainer.getName() + "_user"))
-                    .append("') AUTHADD(ALL)\n"));
-
             Container.ExecResult result;
 
             try {
+                StringBuilder mqscScript = new StringBuilder();
+                String user = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_username", null, null);
+                String name = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_queue_manager", null, null);
+
+                queueNames.forEach(queueName -> mqscScript
+                        .append("DEFINE QLOCAL('")
+                        .append(queueName)
+                        .append("') REPLACE\n"));
+                queueNames.forEach(queueName -> mqscScript
+                        .append("SET AUTHREC PROFILE('")
+                        .append(queueName)
+                        .append("') OBJTYPE(QUEUE) ")
+                        .append("  PRINCIPAL('")
+                        .append(user)
+                        .append("') AUTHADD(ALL)\n"));
+
                 result = ibmMqContainer.getGenericContainer().execInContainer(
                         "/bin/bash",
                         "-c",
-                        "echo \"" + mqscScript.toString().replace("\n", "\\n") + "\" | runmqsc "
-                                + Environment.get(ibmMqContainer.getName() + "_name"));
+                        "echo \"" + mqscScript + "\" | runmqsc " + name);
             } catch (Exception e) {
                 throw new RuntimeException(getLangValue("test.containers.ibm.mq.queues.created.error"), e);
             }
 
-            if (Objects.nonNull(result) && result.getExitCode() != 0) {
+            if (result.getExitCode() != 0) {
+                log.info("runmqsc stdout:\n{}", result.getStdout());
+                log.error("runmqsc stderr:\n{}", result.getStderr());
                 throw new RuntimeException(getLangValue("test.containers.ibm.mq.queues.created.error.code").formatted(result.getExitCode()));
             } else {
                 log.info(getLangValue("test.containers.ibm.mq.queues.created"), queueNames);
