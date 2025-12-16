@@ -23,8 +23,10 @@ public final class IbmMqInitializer {
 
             try {
                 StringBuilder mqscScript = new StringBuilder();
-                String user = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_username", null, null);
-                String name = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_queue_manager", null, null);
+                String user = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_username",
+                        ibmMqContainer.getName() + "_username", null);
+                String name = Environment.getSysEnvPropertyOrDefault(ibmMqContainer.getName() + "_queue_manager",
+                        ibmMqContainer.getName() + "_queue_manager", null);
 
                 queueNames.forEach(queueName -> mqscScript
                         .append("DEFINE QLOCAL('")
