@@ -14,14 +14,14 @@ import static ru.origami.common.environment.Environment.ORIGAMI_PROPERTIES_FILE;
 
 public class AppProperties {
 
-    public static final String URL = "test.it.url";
-    public static final String PRIVATE_TOKEN = "test.it.private.token";
-    public static final String PROJECT_ID = "test.it.project.id";
-    public static final String CONFIGURATION_ID = "test.it.configuration.id";
-    public static final String TEST_RUN_ID = "test.it.test.run.id";
-    public static final String TEST_RUN_NAME = "test.it.test.run.name";
-    public static final String ADAPTER_MODE = "test.it.adapter.mode";
-    private static final String ENV_PREFIX = "test.it.tms";
+    public static final String URL = "testit.url";
+    public static final String PRIVATE_TOKEN = "testit.private.token";
+    public static final String PROJECT_ID = "testit.project.id";
+    public static final String CONFIGURATION_ID = "testit.configuration.id";
+    public static final String TEST_RUN_ID = "testit.test.run.id";
+    public static final String TEST_RUN_NAME = "testit.test.run.name";
+    public static final String ADAPTER_MODE = "testit.adapter.mode";
+    private static final String ENV_PREFIX = "testit.tms";
     private static final String CONFIG_FILE = "CONFIG_FILE";
     private static final Logger log = LoggerFactory.getLogger(AppProperties.class);
 

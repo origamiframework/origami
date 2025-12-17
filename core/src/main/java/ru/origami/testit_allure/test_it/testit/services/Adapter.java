@@ -24,7 +24,7 @@ public final class Adapter {
     private static AdapterManager adapterManager;
     private static ResultStorage storage;
 
-    private static final String ENABLE_TEST_IT_PROPERTY = "test.it.enable.result";
+    private static final String ENABLE_TEST_IT_PROPERTY = "testit.enable.result";
     private static final String CI_ENABLE_TEST_IT_PROPERTY = "TEST_IT_ENABLE_RESULT";
 
     public static AdapterManager getAdapterManager() throws NoSuchAlgorithmException, KeyManagementException {
