@@ -43,7 +43,7 @@ public class FailOnBeforeAllFailureExtension implements BeforeEachCallback, Invo
                     ? displayNameAnn.value()
                     : methodName;
 
-            log.error(getLangValue("before.all.error"), className, methodName, t);
+            log.error(getLangValue("before.all.error"), className, methodName, t.getMessage());
             t.printStackTrace(System.err);
 
             BeforeAllErrorInfo info = BeforeAllErrorInfo.Builder()
