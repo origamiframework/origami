@@ -50,7 +50,7 @@ public final class IbmMqInitializer {
 
             if (result.getExitCode() != 0) {
                 log.info("runmqsc stdout:\n{}", result.getStdout());
-                log.error("runmqsc stderr:\n{}", result.getStderr());
+                System.err.printf("runmqsc stderr:%n%s", result.getStderr());
                 throw new RuntimeException(getLangValue("test.containers.ibm.mq.queues.created.error.code").formatted(result.getExitCode()));
             } else {
                 log.info(getLangValue("test.containers.ibm.mq.queues.created"), queueNames);

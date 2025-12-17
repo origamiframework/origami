@@ -246,7 +246,7 @@ public abstract class TestContainers {
                 for (TestContainer startable : containers) {
                     if (startable.getContainer() instanceof GenericContainer<?> container) {
                         if (!container.isRunning()) {
-                            log.error(getLangValue("test.containers.container.started.error"), startable.getName(),
+                            System.err.printf(getLangValue("test.containers.container.started.error"), startable.getName(),
                                     container.getDockerImageName(), e.getMessage());
                         }
                     }

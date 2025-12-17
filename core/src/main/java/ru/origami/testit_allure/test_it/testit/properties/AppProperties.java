@@ -52,7 +52,7 @@ public class AppProperties {
 //                return;
             }
         } catch (IOException e) {
-            log.error("Exception while read properties: {}", e.getMessage());
+            System.err.printf("Exception while read properties: %s%n", e.getMessage());
         }
 
 //        throw new RuntimeException(String.format("Config file '%s' not found", fileName));

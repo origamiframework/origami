@@ -36,7 +36,7 @@ public class SslVerification {
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
             HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         } catch (Exception ex) {
-            log.error(getLangValue("ssl.verification.error"));
+            System.err.println(getLangValue("ssl.verification.error"));
             ex.printStackTrace();
         }
     }

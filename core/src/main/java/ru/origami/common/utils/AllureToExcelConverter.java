@@ -132,7 +132,7 @@ public class AllureToExcelConverter {
 
             workbook.close();
         } catch (Exception e) {
-            log.error(getLangValue("allure.excel.error"));
+            System.err.println(getLangValue("allure.excel.error"));
             e.printStackTrace();
         }
     }
