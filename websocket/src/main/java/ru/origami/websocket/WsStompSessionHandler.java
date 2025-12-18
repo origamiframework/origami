@@ -54,7 +54,7 @@ public class WsStompSessionHandler<T> extends StompSessionHandlerAdapter {
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload,
                                 Throwable exception) {
         if (isLocal() || isLoggingEnabled()) {
-            log.error(getLangValue("websocket.exception"), exception.getMessage(), exception);
+            System.err.printf(getLangValue("websocket.exception"), exception.getMessage(), exception);
         }
 
         if (Objects.isNull(this.exception)) {

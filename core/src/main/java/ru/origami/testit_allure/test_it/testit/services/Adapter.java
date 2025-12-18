@@ -2,6 +2,7 @@ package ru.origami.testit_allure.test_it.testit.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.origami.common.environment.Environment;
 import ru.origami.testit_allure.test_it.testit.models.LinkItem;
 import ru.origami.testit_allure.test_it.testit.models.LinkType;
 import ru.origami.testit_allure.test_it.testit.properties.AppProperties;
@@ -22,14 +23,16 @@ public final class Adapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Adapter.class);
     private static AdapterManager adapterManager;
     private static ResultStorage storage;
+
     private static final String ENABLE_TEST_IT_PROPERTY = "testit.enable.result";
+    private static final String CI_ENABLE_TEST_IT_PROPERTY = "TEST_IT_ENABLE_RESULT";
 
     public static AdapterManager getAdapterManager() throws NoSuchAlgorithmException, KeyManagementException {
         if (Objects.isNull(adapterManager)) {
             Properties appProperties = AppProperties.loadProperties();
+            String enable = Environment.getSysEnvPropertyOrDefault(ENABLE_TEST_IT_PROPERTY, CI_ENABLE_TEST_IT_PROPERTY, "false");
 
-            if (!appProperties.isEmpty() && (Objects.nonNull(appProperties.get(ENABLE_TEST_IT_PROPERTY))
-                    && appProperties.get(ENABLE_TEST_IT_PROPERTY).equals("true"))) {
+            if (!appProperties.isEmpty() && enable.equals("true")) {
                 ConfigManager manager = new ConfigManager(appProperties);
                 adapterManager = new AdapterManager(manager.getClientConfiguration(), manager.getAdapterConfig());
             }

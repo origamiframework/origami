@@ -13,6 +13,7 @@ import java.util.Properties;
 import static ru.origami.common.environment.Environment.ORIGAMI_PROPERTIES_FILE;
 
 public class AppProperties {
+
     public static final String URL = "testit.url";
     public static final String PRIVATE_TOKEN = "testit.private.token";
     public static final String PROJECT_ID = "testit.project.id";
@@ -22,7 +23,6 @@ public class AppProperties {
     public static final String ADAPTER_MODE = "testit.adapter.mode";
     private static final String ENV_PREFIX = "testit.tms";
     private static final String CONFIG_FILE = "CONFIG_FILE";
-    private static final String PROPERTIES_FILE = ORIGAMI_PROPERTIES_FILE;
     private static final Logger log = LoggerFactory.getLogger(AppProperties.class);
 
     public AppProperties() {
@@ -52,7 +52,7 @@ public class AppProperties {
 //                return;
             }
         } catch (IOException e) {
-            log.error("Exception while read properties: {}", e.getMessage());
+            System.err.printf("Exception while read properties: %s%n", e.getMessage());
         }
 
 //        throw new RuntimeException(String.format("Config file '%s' not found", fileName));
@@ -144,15 +144,17 @@ public class AppProperties {
     private static String getConfigFileName() {
         Properties systemProperties = System.getProperties();
         String fileNameFromCli = systemProperties.getProperty(String.format("%sConfigFile", ENV_PREFIX.toLowerCase()));
+
         if (fileNameFromCli != null) {
             return fileNameFromCli;
         }
 
         String fileNameFromEnv = System.getenv(String.format("%s%s", ENV_PREFIX, CONFIG_FILE.toUpperCase(Locale.getDefault())));
+
         if (fileNameFromEnv != null) {
             return fileNameFromEnv;
         }
 
-        return PROPERTIES_FILE;
+        return ORIGAMI_PROPERTIES_FILE;
     }
 }

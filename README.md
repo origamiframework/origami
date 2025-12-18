@@ -36,7 +36,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.4.7</version>
+        <version>1.4.8</version>
         <relativePath/>
     </parent>
 ```
@@ -77,7 +77,7 @@
 - <b>testit.project.id</b> - id проекта Test IT
 - <b>testit.configuration.id</b> - id конфигурации Test IT
 - <b>testit.adapter.mode</b> - режим работы адаптера Test IT
-- <b>testit.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT
+- <b>testit.enable.result</b> - при значении <i>true</i> тестовый прогон будет загружен в Test IT (CI/CD переменная: TEST_IT_ENABLE_RESULT)
 - <b>web.site.url</b> - базовый URL-адрес
 - <b>web.browser.name</b> - браузер для использования. По умолчанию: <i>chrome</i> (CI/CD переменная: WEB_BROWSER_NAME)
 - <b>web.timeout</b> - таймаут в миллисекундах для провала теста, если условия все еще не выполнены. По умолчанию: <i>5000</i>

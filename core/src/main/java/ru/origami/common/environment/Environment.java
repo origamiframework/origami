@@ -46,11 +46,20 @@ public final class Environment {
 
     private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
-    public static final String TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
-            CI_TEST_CONTAINERS_ENABLED_PROP, "false");
+    public static final String TEST_CONTAINERS_ENABLED;
 
     static {
         loadOrigamiProperties();
+
+        String testContainersEnabledFromProp = getWithNullValue(TEST_CONTAINERS_ENABLED_PROP);
+
+        if (!"true".equalsIgnoreCase(testContainersEnabledFromProp)) {
+            testContainersEnabledFromProp = "false";
+        }
+
+        TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
+                CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp);
+
         loadLanguageProperties();
         loadCustomProperties();
         loadSystemProperties();
@@ -116,13 +125,13 @@ public final class Environment {
     }
 
     public static String getSysEnvPropertyOrDefault(String prop, String env, String defaultValue) {
-        String value = System.getProperty(prop);
+        String value = System.getenv(env);
 
         if (Objects.nonNull(value)) {
             return value;
         }
 
-        value = System.getenv(env);
+        value = System.getProperty(prop);
 
         return Objects.nonNull(value) ? value : defaultValue;
     }
@@ -132,7 +141,7 @@ public final class Environment {
 //    }
 
     public static boolean isLocal() {
-        String[] ciEnvVars = new String[] {
+        String[] ciEnvVars = new String[]{
                 "CI",                    // Общая переменная, практически во всех CI/CD
                 "GITHUB_ACTIONS",        // GitHub Actions
                 "GITLAB_CI",             // GitLab CI
