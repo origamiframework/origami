@@ -1,5 +1,6 @@
 package ru.origami.testit_allure.test_it.listener;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.extension.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.function.Consumer;
 
 import static java.util.Objects.nonNull;
 
+@Order(1)
 public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAllCallback, InvocationInterceptor, TestWatcher {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseJunit5Listener.class);
     private final AdapterManager adapterManager;

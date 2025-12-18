@@ -2,7 +2,7 @@ package ru.origami.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
@@ -14,8 +14,9 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.getLangValue;
 
+@Order(2)
 @Slf4j
-public class FailOnBeforeAllFailureExtension implements BeforeEachCallback, InvocationInterceptor {
+public class FailOnBeforeAllFailureExtension implements InvocationInterceptor {
 
     private static final String INIT_ERROR_KEY = "beforeAllError";
 
@@ -56,13 +57,32 @@ public class FailOnBeforeAllFailureExtension implements BeforeEachCallback, Invo
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) {
-        BeforeAllErrorInfo info = getStore(context).get(INIT_ERROR_KEY, BeforeAllErrorInfo.class);
+    public void interceptTestMethod(Invocation<Void> invocation,
+                                    ReflectiveInvocationContext<Method> invocationContext,
+                                    ExtensionContext extensionContext) throws Throwable {
+        BeforeAllErrorInfo info = getStore(extensionContext).get(INIT_ERROR_KEY, BeforeAllErrorInfo.class);
 
         if (Objects.nonNull(info)) {
             String message = getLangValue("before.all.error.after.each").formatted(info.getMethodName(), info.getThrowable().toString());
 
             fail(message, info.getThrowable());
         }
+
+        invocation.proceed();
+    }
+
+    @Override
+    public void interceptTestTemplateMethod(Invocation<Void> invocation,
+                                            ReflectiveInvocationContext<Method> invocationContext,
+                                            ExtensionContext extensionContext) throws Throwable {
+        BeforeAllErrorInfo info = getStore(extensionContext).get(INIT_ERROR_KEY, BeforeAllErrorInfo.class);
+
+        if (Objects.nonNull(info)) {
+            String message = getLangValue("before.all.error.after.each").formatted(info.getMethodName(), info.getThrowable().toString());
+
+            fail(message, info.getThrowable());
+        }
+
+        invocation.proceed();
     }
 }
