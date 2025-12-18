@@ -1,7 +1,6 @@
 package ru.origami.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -12,6 +11,7 @@ import ru.origami.common.models.BeforeAllErrorInfo;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.getLangValue;
 
 @Slf4j
@@ -62,7 +62,7 @@ public class FailOnBeforeAllFailureExtension implements BeforeEachCallback, Invo
         if (Objects.nonNull(info)) {
             String message = getLangValue("before.all.error.after.each").formatted(info.getMethodName(), info.getThrowable().toString());
 
-            Assertions.fail(message, info.getThrowable());
+            fail(message, info.getThrowable());
         }
     }
 }
