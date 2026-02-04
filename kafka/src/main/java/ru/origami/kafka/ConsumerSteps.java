@@ -11,10 +11,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import ru.origami.common.OrigamiHelper;
-import ru.origami.kafka.models.KafkaObject;
-import ru.origami.kafka.models.KafkaRecord;
-import ru.origami.kafka.models.SubscribeResult;
-import ru.origami.kafka.models.Topic;
+import ru.origami.kafka.models.*;
 import ru.origami.testit_allure.annotations.Step;
 
 import java.io.IOException;
@@ -332,7 +329,7 @@ public class ConsumerSteps extends CommonSteps {
 
     @Step("getLangValue:kafka.step.consumer.read.first")
     private KafkaRecord<String> readFirstBySearchWords(String topic, List<String> searchWords, String logValue, boolean withEmptyResult) {
-        Consumer<String, String> consumer = subscribe(topic, true);
+        ConsumerConnection conn = subscribe(topic, true);
         KafkaRecord<String> neededRecord = null;
         int attempt = 0;
 
@@ -341,7 +338,7 @@ public class ConsumerSteps extends CommonSteps {
             waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
 
-            List<ConsumerRecord<String, String>> records = readRecords(consumer, topic);
+            List<ConsumerRecord<String, String>> records = readRecords(conn.getConsumer(), topic);
             Collections.reverse(records);
 
             for (ConsumerRecord<String, String> record : records) {
@@ -360,9 +357,9 @@ public class ConsumerSteps extends CommonSteps {
             }
         } while (neededRecord == null && attempt < getRetryMaxAttempts());
 
-        consumer.close();
         period = null;
         neededPartitions.clear();
+        conn.setFree(true);
 
         if (neededRecord == null && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
@@ -845,7 +842,7 @@ public class ConsumerSteps extends CommonSteps {
 
     @Step("getLangValue:kafka.step.consumer.read.all")
     private List<KafkaRecord<String>> readAllBySearchWords(String topic, List<String> searchWords, String logValue, boolean withEmptyResult) {
-        Consumer<String, String> consumer = subscribe(topic, true);
+        ConsumerConnection conn = subscribe(topic, true);
         List<KafkaRecord<String>> neededRecords = new ArrayList<>();
         int attempt = 0;
 
@@ -854,7 +851,7 @@ public class ConsumerSteps extends CommonSteps {
             waitRecord(getRetryReadTimeout());
             logAttempt(attempt);
 
-            for (ConsumerRecord<String, String> record : readRecords(consumer, topic)) {
+            for (ConsumerRecord<String, String> record : readRecords(conn.getConsumer(), topic)) {
                 if (CollectionUtils.isEmpty(searchWords)) {
                     neededRecords.add(new KafkaRecord<>(record));
                 } else {
@@ -866,9 +863,9 @@ public class ConsumerSteps extends CommonSteps {
             }
         } while (neededRecords.isEmpty() && attempt < getRetryMaxAttempts());
 
-        consumer.close();
         period = null;
         neededPartitions.clear();
+        conn.setFree(true);
 
         if (neededRecords.isEmpty() && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
@@ -1019,8 +1016,8 @@ public class ConsumerSteps extends CommonSteps {
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
     public void subscribe(Topic topic, Class clazz) {
-        Consumer<String, String> consumer = subscribe(getTopicFullName(topic), false);
-        this.subscribeTopicTask.addSubscribe(consumer, clazz, getTopicFullName(topic));
+        ConsumerConnection conn = subscribe(getTopicFullName(topic), false);
+        this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
     }
 
     /**

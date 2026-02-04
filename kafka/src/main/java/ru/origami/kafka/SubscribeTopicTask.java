@@ -2,6 +2,7 @@ package ru.origami.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
+import ru.origami.kafka.models.ConsumerConnection;
 import ru.origami.kafka.models.SubscribeResult;
 
 import java.util.*;
@@ -19,9 +20,9 @@ public class SubscribeTopicTask extends TimerTask {
 
     private List<SubscribeResult> subscribeList = new CopyOnWriteArrayList<>();
 
-    void addSubscribe(Consumer<String, String> consumer, Class mappingClass, String topic) {
+    void addSubscribe(ConsumerConnection conn, Class mappingClass, String topic) {
         // TODO ошибку fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic)) вынести сюда и отменять прошлые подписки
-        subscribeList.add(new SubscribeResult(consumer, mappingClass, topic));
+        subscribeList.add(new SubscribeResult(conn, mappingClass, topic));
         waitInMillis(950);
     }
 
@@ -68,7 +69,7 @@ public class SubscribeTopicTask extends TimerTask {
             subscribeList.removeAll(subscribeList.parallelStream()
                     .peek(this::addRecords)
                     .filter(r -> !r.isSubscribed())
-                    .peek(r -> r.getConsumer().close())
+                    .peek(r -> r.getConnection().setFree(true))
                     .toList());
         }
     }
@@ -77,7 +78,7 @@ public class SubscribeTopicTask extends TimerTask {
         if (Objects.isNull(subscribeResult.getException())) {
             try {
                 subscribeResult.getRecords().addAll(StreamSupport
-                        .stream(subscribeResult.getConsumer().poll(DURATION)
+                        .stream(subscribeResult.getConnection().getConsumer().poll(DURATION)
                                 .records(subscribeResult.getTopic()).spliterator(), false)
                         .collect(Collectors.toList()));
             } catch (Exception ex) {
