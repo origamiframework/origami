@@ -10,9 +10,9 @@ import static ru.origami.common.environment.Language.getLangValue;
 
 public class CmdUtil {
 
-    private static final String CI_SERVICE_SRC_DIR = "SERVICE_SRC_DIR";
-    private static final String DEFAULT_SERVICE_SRC_DIR = "service-src";
-    public static final String SERVICE_SRC_DIR = getSysEnvPropertyOrDefault(CI_SERVICE_SRC_DIR, CI_SERVICE_SRC_DIR, DEFAULT_SERVICE_SRC_DIR);
+    private static final String CI_REPOSITORIES_DIR = "REPOSITORIES_DIR";
+    private static final String DEFAULT_REPOSITORIES_DIR = "repositories";
+    public static final String REPOSITORIES_DIR = getSysEnvPropertyOrDefault(CI_REPOSITORIES_DIR, CI_REPOSITORIES_DIR, DEFAULT_REPOSITORIES_DIR);
 
     private static String[] resolveMavenCmd(File workDir) {
         File mvnw = new File(workDir, "mvnw");
@@ -55,7 +55,7 @@ public class CmdUtil {
     }
 
     public static void ensureServiceJarBuilt(String jarName) {
-        File dir = new File(SERVICE_SRC_DIR);
+        File dir = new File(REPOSITORIES_DIR, jarName);
 
         if (!dir.isDirectory()) {
             throw new IllegalStateException(getLangValue("test.containers.cmd.service.sources.not.found")

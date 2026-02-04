@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.getSysEnvPropertyOrDefault;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.test_containers.CmdUtil.SERVICE_SRC_DIR;
+import static ru.origami.test_containers.CmdUtil.REPOSITORIES_DIR;
 import static ru.origami.test_containers.CmdUtil.ensureServiceJarBuilt;
 
 @Slf4j
@@ -463,7 +463,7 @@ public abstract class TestContainers {
                                 d.build();
                             }
                     )
-                    .withFileFromPath("app.jar", Path.of("%s/target/%s.jar".formatted(SERVICE_SRC_DIR, imageName)));
+                    .withFileFromPath("app.jar", Path.of("%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName)));
 
             genericContainer = new GenericContainer<>(appImage);
         }
