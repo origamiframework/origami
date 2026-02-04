@@ -70,18 +70,22 @@ public class CommonSteps {
         }
 
         try {
-            conn = consumerPool.stream()
-                    .filter(c -> c.getClazz().equals(this.getClass()))
-                    .filter(ConsumerConnection::isFree)
-                    .findFirst()
-                    .orElse(null);
+            if (!isEarliest) {
+                conn = consumerPool.stream()
+                        .filter(c -> c.getClazz().equals(this.getClass()))
+                        .filter(ConsumerConnection::isFree)
+                        .findFirst()
+                        .orElse(null);
+            }
 
             if (Objects.isNull(conn)) {
                 conn = new ConsumerConnection()
                         .setConsumer(Connection.getConsumer(properties, isEarliest))
-                        .setClazz(this.getClass())
-                        .setEarliest(isEarliest);
-                consumerPool.add(conn);
+                        .setClazz(this.getClass());
+
+                if (!isEarliest) {
+                    consumerPool.add(conn);
+                }
             }
         } catch (Exception e) {
             fail(getLangValue("kafka.cannot.connect").formatted(e.getMessage()));
@@ -170,7 +174,12 @@ public class CommonSteps {
 
             conn.getConsumer().poll(Duration.ofMillis(500));
         } catch (Exception e) {
-            conn.setFree(true);
+            if (isEarliest) {
+                conn.getConsumer().close();
+            } else {
+                conn.setFree(true);
+            }
+
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
         }
 
@@ -208,7 +217,7 @@ public class CommonSteps {
         } catch (Exception e) {
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
         } finally {
-            conn.setFree(true);
+            conn.getConsumer().close();
         }
 
         return 0;

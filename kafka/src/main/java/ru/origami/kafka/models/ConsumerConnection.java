@@ -15,6 +15,4 @@ public class ConsumerConnection {
     private Consumer<String, String> consumer;
 
     private boolean isFree;
-
-    private boolean isEarliest;
 }

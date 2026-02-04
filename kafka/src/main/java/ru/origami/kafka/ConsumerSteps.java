@@ -364,7 +364,7 @@ public class ConsumerSteps extends CommonSteps {
 
         period = null;
         neededPartitions.clear();
-        conn.setFree(true);
+        conn.getConsumer().close();
 
         if (neededRecord == null && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
@@ -874,7 +874,7 @@ public class ConsumerSteps extends CommonSteps {
 
         period = null;
         neededPartitions.clear();
-        conn.setFree(true);
+        conn.getConsumer().close();
 
         if (neededRecords.isEmpty() && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
