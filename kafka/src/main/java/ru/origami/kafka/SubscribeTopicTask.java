@@ -1,7 +1,6 @@
 package ru.origami.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.Consumer;
 import ru.origami.kafka.models.ConsumerConnection;
 import ru.origami.kafka.models.SubscribeResult;
 
@@ -12,6 +11,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static ru.origami.common.OrigamiHelper.waitInMillis;
 import static ru.origami.common.environment.Language.getLangValue;
 import static ru.origami.kafka.ConsumerSteps.DURATION;
 
@@ -23,7 +23,6 @@ public class SubscribeTopicTask extends TimerTask {
     void addSubscribe(ConsumerConnection conn, Class mappingClass, String topic) {
         // TODO ошибку fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic)) вынести сюда и отменять прошлые подписки
         subscribeList.add(new SubscribeResult(conn, mappingClass, topic));
-        waitInMillis(950);
     }
 
     List<SubscribeResult> unsubscribe(String topic, boolean needUnsubscribe) {
@@ -40,7 +39,6 @@ public class SubscribeTopicTask extends TimerTask {
         }
 
         List<SubscribeResult> results = resultStream.toList();
-        waitInMillis(100);
 
         if (results.isEmpty()) {
             fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic));
@@ -88,14 +86,6 @@ public class SubscribeTopicTask extends TimerTask {
             } catch (Exception ex) {
                 subscribeResult.setException(ex);
             }
-        }
-    }
-
-    public static void waitInMillis(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }

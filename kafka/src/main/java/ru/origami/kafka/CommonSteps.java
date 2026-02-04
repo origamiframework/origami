@@ -14,6 +14,7 @@ import ru.origami.kafka.models.ProducerConnection;
 import ru.origami.kafka.models.Properties;
 import ru.origami.kafka.models.Topic;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -127,7 +128,6 @@ public class CommonSteps {
         ConsumerConnection conn = getConsumer(isEarliest);
 
         try {
-//            long epoch = new Date().getTime();
             List<TopicPartition> topicPartitions = null;
             Set<Integer> existingPartitions = conn.getConsumer().partitionsFor(topic)
                     .stream()
@@ -160,23 +160,15 @@ public class CommonSteps {
                 }
             }
 
-//            Map<TopicPartition, Long> offsets = topicPartitions.stream().collect(Collectors.toMap(k -> k, v -> epoch));
-//
-//            Map<TopicPartition, Long> filteredOffsets = consumer.offsetsForTimes(offsets)
-//                    .entrySet()
-//                    .stream()
-//                    .filter(offset -> offset.getValue() != null)
-//                    .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().offset()));
-
             conn.getConsumer().assign(topicPartitions);
 
             if (isEarliest) {
                 conn.getConsumer().seekToBeginning(topicPartitions);
             } else {
-                conn.getConsumer().seekToEnd(Collections.emptySet());
-//                consumer.commitSync();
+                conn.getConsumer().seekToEnd(topicPartitions);
             }
-//            filteredOffsets.forEach(consumer::seek);
+
+            conn.getConsumer().poll(Duration.ofMillis(500));
         } catch (Exception e) {
             conn.setFree(true);
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
