@@ -178,6 +178,7 @@ public class CommonSteps {
             }
 //            filteredOffsets.forEach(consumer::seek);
         } catch (Exception e) {
+            conn.setFree(true);
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
         }
 
@@ -196,7 +197,8 @@ public class CommonSteps {
     }
 
     long getNumberOfMessages(String topic) {
-        Consumer<String, String> consumer = getConsumer(true).getConsumer();
+        ConsumerConnection conn = getConsumer(true);
+        Consumer<String, String> consumer = conn.getConsumer();
 
         try {
             List<TopicPartition> partitions = consumer.partitionsFor(topic)
@@ -213,6 +215,8 @@ public class CommonSteps {
             return partitions.stream().mapToLong(p -> endPartitions.get(p) - consumer.position(p)).sum();
         } catch (Exception e) {
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
+        } finally {
+            conn.setFree(true);
         }
 
         return 0;
