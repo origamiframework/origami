@@ -71,6 +71,7 @@ public class SubscribeTopicTask extends TimerTask {
             subscribeList.removeAll(subscribeList.parallelStream()
                     .peek(this::addRecords)
                     .filter(r -> !r.isSubscribed())
+                    .peek(r -> r.getConnection().setFree(true))
                     .toList());
         }
     }

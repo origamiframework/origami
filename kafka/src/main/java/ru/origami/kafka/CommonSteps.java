@@ -15,6 +15,7 @@ import ru.origami.kafka.models.Properties;
 import ru.origami.kafka.models.Topic;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -74,6 +75,7 @@ public class CommonSteps {
                 conn = consumerPool.stream()
                         .filter(c -> c.getClazz().equals(this.getClass()))
                         .filter(ConsumerConnection::isFree)
+                        .filter(c -> Duration.between(c.getStartFreeTime(), LocalDateTime.now()).toMillis() >= 500L)
                         .findFirst()
                         .orElse(null);
             }
