@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import ru.origami.kafka.KafkaConnectionRegistry;
 import ru.origami.kafka.ConsumerConnection;
+import ru.origami.kafka.ProducerConnection;
 
 import java.util.List;
 
@@ -13,11 +14,18 @@ public class KafkaCleanupExtension implements AfterAllCallback {
     public void afterAll(ExtensionContext context) {
         Class<?> testClass = context.getRequiredTestClass();
 
-        List<ConsumerConnection> connectionsToClose = KafkaConnectionRegistry.getConnectionsByCreator(testClass);
+        List<ConsumerConnection> consumerConnections = KafkaConnectionRegistry.getConsumerConnections(testClass);
 
-        if (!connectionsToClose.isEmpty()) {
-            connectionsToClose.stream().filter(c -> !c.isClosed()).forEach(ConsumerConnection::close);
-            KafkaConnectionRegistry.removeConnections(connectionsToClose);
+        if (!consumerConnections.isEmpty()) {
+            consumerConnections.stream().filter(c -> !c.isClosed()).forEach(ConsumerConnection::close);
+            KafkaConnectionRegistry.removeConsumerConnections(consumerConnections);
+        }
+
+        List<ProducerConnection> producerConnections = KafkaConnectionRegistry.getProducerConnections(testClass);
+
+        if (!producerConnections.isEmpty()) {
+            producerConnections.stream().filter(c -> !c.isClosed()).forEach(ProducerConnection::close);
+            KafkaConnectionRegistry.removeProducerConnections(producerConnections);
         }
     }
 }

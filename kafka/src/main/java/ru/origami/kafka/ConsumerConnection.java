@@ -6,8 +6,11 @@ import lombok.ToString;
 import org.apache.kafka.clients.consumer.Consumer;
 import ru.origami.kafka.models.Topic;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static ru.origami.common.OrigamiHelper.waitInMillis;
 
 @Getter
 @Setter
@@ -51,10 +54,11 @@ public class ConsumerConnection {
         if (!isClosed && Objects.nonNull(consumer)) {
             if (Objects.nonNull(topic) && Objects.nonNull(subscribeTopicTask)) {
                 subscribeTopicTask.unsubscribe(topic.getTopic(), true, false);
+                waitInMillis(520);
             }
 
             try {
-                consumer.close();
+                consumer.close(Duration.ofSeconds(5));
                 isClosed = true;
             } catch (Exception e) {
             }

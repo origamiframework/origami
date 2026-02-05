@@ -23,7 +23,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.OrigamiHelper.getRandomFromList;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.kafka.KafkaConnectionRegistry.getConnectionsByCreator;
+import static ru.origami.kafka.KafkaConnectionRegistry.getConsumerConnections;
+import static ru.origami.kafka.KafkaConnectionRegistry.getProducerConnections;
 
 @Slf4j
 public class CommonSteps {
@@ -32,32 +33,30 @@ public class CommonSteps {
 
     List<Integer> neededPartitions = new ArrayList<>();
 
-    List<ProducerConnection> producerPool = new ArrayList<>();
-
     synchronized Producer<String, String> getProducer() {
-        Producer<String, String> producer = null;
+        ProducerConnection conn = null;
 
         if (properties == null) {
             fail(getLangValue("kafka.props.null"));
         }
 
         try {
-            ProducerConnection conn = producerPool.stream()
+            conn = getProducerConnections(getCallerClass())
+                    .stream()
                     .filter(c -> c.getClazz().equals(this.getClass()))
                     .findFirst()
                     .orElse(null);
 
-            if (Objects.nonNull(conn)) {
-                producer = conn.getProducer();
-            } else {
-                producer = Connection.getProducer(properties);
-                producerPool.add(new ProducerConnection().setProducer(producer).setClazz(this.getClass()));
+            if (Objects.isNull(conn)) {
+                conn = new ProducerConnection(this.getClass(), getCallerClass())
+                        .setProducer(Connection.getProducer(properties));
+                KafkaConnectionRegistry.register(conn);
             }
         } catch (Exception e) {
             fail(getLangValue("kafka.cannot.connect").formatted(e.getMessage()));
         }
 
-        return producer;
+        return conn.getProducer();
     }
 
     synchronized ConsumerConnection getConsumer(boolean isEarliest) {
@@ -69,7 +68,8 @@ public class CommonSteps {
 
         try {
             if (!isEarliest) {
-                conn = getConnectionsByCreator(getCallerClass()).stream()
+                conn = getConsumerConnections(getCallerClass())
+                        .stream()
                         .filter(c -> c.getClazz().equals(this.getClass()))
                         .filter(ConsumerConnection::isFree)
                         .filter(c -> Duration.between(c.getStartFreeTime(), LocalDateTime.now()).toMillis() >= 500L)
