@@ -41,9 +41,11 @@ import static ru.origami.testit_allure.allure.java_commons.Allure.getLifecycle;
 @Slf4j
 public class ConsumerSteps extends CommonSteps {
 
-    public static final Duration DURATION = Duration.ofMillis(500);
+    public static final Duration DURATION_200 = Duration.ofMillis(200);
 
-    public static final Duration DURATION_SECOND = Duration.ofMillis(2000);
+    public static final Duration DURATION_500 = Duration.ofMillis(500);
+
+    public static final Duration DURATION_2_SECONDS = Duration.ofMillis(2000);
 
     private static final long RETRY_DEFAULT_WAITING_TIME = 5000L;
 
@@ -942,7 +944,7 @@ public class ConsumerSteps extends CommonSteps {
 
     private List<ConsumerRecord<String, String>> readRecords(Consumer<String, String> consumer, String topic) {
         long neededTimePeriod = Objects.isNull(period) ? 0 : Instant.now().toEpochMilli() - period;
-        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION);
+        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION_500);
         List<ConsumerRecord<String, String>> records = StreamSupport
                 .stream(consumerRecords.records(topic).spliterator(), false)
                 .collect(Collectors.toList());
@@ -956,7 +958,7 @@ public class ConsumerSteps extends CommonSteps {
                     .count();
 
             if (recordsCount < countMessages) {
-                consumerRecords = consumer.poll(emptyReadCount > 5 ? DURATION_SECOND : DURATION);
+                consumerRecords = consumer.poll(emptyReadCount > 5 ? DURATION_2_SECONDS : DURATION_500);
                 List<ConsumerRecord<String, String>> subRecords = StreamSupport
                         .stream(consumerRecords.records(topic).spliterator(), false)
                         .collect(Collectors.toList());
