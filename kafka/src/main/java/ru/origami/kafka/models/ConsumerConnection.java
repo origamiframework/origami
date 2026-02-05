@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.kafka.clients.consumer.Consumer;
+import ru.origami.kafka.ConsumerSteps;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,6 +26,10 @@ public class ConsumerConnection {
 
     private boolean isClosed;
 
+    private Topic topic;
+
+    private ConsumerSteps consumerSteps;
+
     public ConsumerConnection(Class<?> clazz, Class<?> creatorClass) {
         this.clazz = clazz;
         this.creatorClass = creatorClass;
@@ -35,6 +40,8 @@ public class ConsumerConnection {
 
         if (isFree) {
             startFreeTime = LocalDateTime.now();
+            topic = null;
+            consumerSteps = null;
         }
 
         return this;
@@ -42,6 +49,10 @@ public class ConsumerConnection {
 
     public void close() {
         if (!isClosed && Objects.nonNull(consumer)) {
+            if (Objects.nonNull(topic) && Objects.nonNull(consumerSteps)) {
+                consumerSteps.unsubscribeWhenGetMessageWithEmptyResult(topic, 0);
+            }
+
             consumer.close();
             isClosed = true;
         }

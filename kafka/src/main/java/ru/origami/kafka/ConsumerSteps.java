@@ -1017,7 +1017,9 @@ public class ConsumerSteps extends CommonSteps {
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
     public void subscribe(Topic topic, Class clazz) {
-        ConsumerConnection conn = subscribe(getTopicFullName(topic), false);
+        ConsumerConnection conn = subscribe(getTopicFullName(topic), false)
+                .setTopic(topic)
+                .setConsumerSteps(this);
         this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
     }
 
