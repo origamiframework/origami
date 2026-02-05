@@ -1,7 +1,6 @@
 package ru.origami.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.origami.kafka.models.ConsumerConnection;
 import ru.origami.kafka.models.SubscribeResult;
 
 import java.util.*;
@@ -22,10 +21,10 @@ public class SubscribeTopicTask extends TimerTask {
 
     void addSubscribe(ConsumerConnection conn, Class mappingClass, String topic) {
         // TODO ошибку fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic)) вынести сюда и отменять прошлые подписки
-        subscribeList.add(new SubscribeResult(conn, mappingClass, topic));
+        subscribeList.add(new SubscribeResult(conn.setSubscribeTopicTask(this), mappingClass, topic));
     }
 
-    List<SubscribeResult> unsubscribe(String topic, boolean needUnsubscribe) {
+    List<SubscribeResult> unsubscribe(String topic, boolean needUnsubscribe, boolean withFail) {
         waitInMillis(250L);
 
         Stream<SubscribeResult> resultStream = subscribeList.stream()
@@ -38,11 +37,11 @@ public class SubscribeTopicTask extends TimerTask {
 
         List<SubscribeResult> results = resultStream.toList();
 
-        if (results.isEmpty()) {
+        if (results.isEmpty() && withFail) {
             fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic));
         }
 
-        if (results.size() > 1) {
+        if (results.size() > 1 && withFail) {
             log.info(getLangValue("kafka.many.subscribes"), results.size(), topic);
         }
 
@@ -54,7 +53,10 @@ public class SubscribeTopicTask extends TimerTask {
 
         if (!exceptionsText.isEmpty()) {
             results.forEach(r -> r.setSubscribed(false));
-            fail(getLangValue("kafka.fail.subscribe").formatted(topic, exceptionsText));
+
+            if (withFail) {
+                fail(getLangValue("kafka.fail.subscribe").formatted(topic, exceptionsText));
+            }
         }
 
         return results;

@@ -1,4 +1,4 @@
-package ru.origami.kafka.models;
+package ru.origami.kafka;
 
 import lombok.Getter;
 import lombok.Setter;

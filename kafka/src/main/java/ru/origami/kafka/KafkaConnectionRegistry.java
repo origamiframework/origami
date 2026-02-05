@@ -1,7 +1,5 @@
 package ru.origami.kafka;
 
-import ru.origami.kafka.models.ConsumerConnection;
-
 import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

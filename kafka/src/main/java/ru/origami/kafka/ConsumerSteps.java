@@ -1017,9 +1017,7 @@ public class ConsumerSteps extends CommonSteps {
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
     public void subscribe(Topic topic, Class clazz) {
-        ConsumerConnection conn = subscribe(getTopicFullName(topic), false)
-                .setTopic(topic)
-                .setConsumerSteps(this);
+        ConsumerConnection conn = subscribe(getTopicFullName(topic), false).setTopic(topic);
         this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
     }
 
@@ -1577,7 +1575,7 @@ public class ConsumerSteps extends CommonSteps {
         List<String> notFoundedSearchWords = new ArrayList<>(searchWords);
 
         do {
-            subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed).get(0);
+            subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed, true).get(0);
             Stream<ConsumerRecord<String, String>> recordStream = List.copyOf(subscribeResult.getRecords()).stream();
 
             if (!CollectionUtils.isEmpty(searchWords)) {
@@ -1597,14 +1595,14 @@ public class ConsumerSteps extends CommonSteps {
 
             if (!records.isEmpty() && notFoundedSearchWords.isEmpty()) {
                 needUnsubscribed = true;
-                subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed).get(0);
+                subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed, true).get(0);
             }
         } while (!needUnsubscribed && System.currentTimeMillis() - startTime < waitingTime);
 
         neededPartitions.clear();
 
         if (records.isEmpty()) {
-            this.subscribeTopicTask.unsubscribe(topic, true);
+            this.subscribeTopicTask.unsubscribe(topic, true, true);
             String message = getLangValue("kafka.no.records.while.subscribe").formatted(topic, logValue);
 
             attachConsumerMessageToAllure(topic, message, 0);

@@ -9,8 +9,6 @@ import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.header.Header;
 import ru.origami.kafka.attachment.KafkaAttachment;
-import ru.origami.kafka.models.ConsumerConnection;
-import ru.origami.kafka.models.ProducerConnection;
 import ru.origami.kafka.models.Properties;
 import ru.origami.kafka.models.Topic;
 

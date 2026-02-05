@@ -3,6 +3,7 @@ package ru.origami.kafka.models;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import ru.origami.kafka.ConsumerConnection;
 
 import java.util.ArrayList;
 import java.util.List;
