@@ -33,9 +33,7 @@ public class SubscribeTopicTask extends TimerTask {
                 .filter(SubscribeResult::isSubscribed);
 
         if (needUnsubscribe) {
-            resultStream = resultStream
-                    .map(r -> r.setSubscribed(false))
-                    .peek(r -> r.getConnection().setFree(true));
+            resultStream = resultStream.map(r -> r.setSubscribed(false));
         }
 
         List<SubscribeResult> results = resultStream.toList();
@@ -55,10 +53,7 @@ public class SubscribeTopicTask extends TimerTask {
                 .collect(Collectors.joining("\n"));
 
         if (!exceptionsText.isEmpty()) {
-            results.forEach(r -> {
-                r.setSubscribed(false);
-                r.getConnection().setFree(true);
-            });
+            results.forEach(r -> r.setSubscribed(false));
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, exceptionsText));
         }
 

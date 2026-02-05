@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.OrigamiHelper.getRandomFromList;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
+import static ru.origami.kafka.KafkaConnectionRegistry.getConnectionsByCreator;
 
 @Slf4j
 public class CommonSteps {
@@ -34,8 +35,6 @@ public class CommonSteps {
     List<Integer> neededPartitions = new ArrayList<>();
 
     List<ProducerConnection> producerPool = new ArrayList<>();
-
-    List<ConsumerConnection> consumerPool = new ArrayList<>();
 
     synchronized Producer<String, String> getProducer() {
         Producer<String, String> producer = null;
@@ -72,7 +71,7 @@ public class CommonSteps {
 
         try {
             if (!isEarliest) {
-                conn = consumerPool.stream()
+                conn = getConnectionsByCreator(getCallerClass()).stream()
                         .filter(c -> c.getClazz().equals(this.getClass()))
                         .filter(ConsumerConnection::isFree)
                         .filter(c -> Duration.between(c.getStartFreeTime(), LocalDateTime.now()).toMillis() >= 500L)
@@ -81,12 +80,11 @@ public class CommonSteps {
             }
 
             if (Objects.isNull(conn)) {
-                conn = new ConsumerConnection()
-                        .setConsumer(Connection.getConsumer(properties, isEarliest))
-                        .setClazz(this.getClass());
+                conn = new ConsumerConnection(this.getClass(), getCallerClass())
+                        .setConsumer(Connection.getConsumer(properties, isEarliest));
 
                 if (!isEarliest) {
-                    consumerPool.add(conn);
+                    KafkaConnectionRegistry.register(conn);
                 }
             }
         } catch (Exception e) {
@@ -177,7 +175,7 @@ public class CommonSteps {
             conn.getConsumer().poll(Duration.ofMillis(500));
         } catch (Exception e) {
             if (isEarliest) {
-                conn.getConsumer().close();
+                conn.close();
             } else {
                 conn.setFree(true);
             }
@@ -219,7 +217,7 @@ public class CommonSteps {
         } catch (Exception e) {
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
         } finally {
-            conn.getConsumer().close();
+            conn.close();
         }
 
         return 0;
@@ -239,5 +237,23 @@ public class CommonSteps {
         }
 
         return topicName.toString();
+    }
+
+
+
+    private Class<?> getCallerClass() {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+
+        if (stack.length > 2) {
+            String callerClassName = stack[2].getClassName();
+
+            try {
+                return Class.forName(callerClassName);
+            } catch (ClassNotFoundException e) {
+                return Object.class;
+            }
+        }
+
+        return Object.class;
     }
 }
