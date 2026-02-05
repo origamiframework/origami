@@ -244,13 +244,23 @@ public class CommonSteps {
     private Class<?> getCallerClass() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
-        if (stack.length > 2) {
-            String callerClassName = stack[2].getClassName();
+        for (int i = 2; i < stack.length; i++) {
+            StackTraceElement element = stack[i];
+            String className = element.getClassName();
+
+            if (className.startsWith("ru.origami.kafka.") ||
+                    className.startsWith("java.") ||
+                    className.startsWith("javax.") ||
+                    className.startsWith("sun.") ||
+                    className.startsWith("jdk.") ||
+                    className.startsWith("org.junit.") ||
+                    className.startsWith("org.apache.kafka.")) {
+                continue;
+            }
 
             try {
-                return Class.forName(callerClassName);
+                return Class.forName(className);
             } catch (ClassNotFoundException e) {
-                return Object.class;
             }
         }
 
