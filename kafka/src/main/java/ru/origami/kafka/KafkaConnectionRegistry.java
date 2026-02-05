@@ -34,7 +34,7 @@ public class KafkaConnectionRegistry {
         for (WeakReference<ConsumerConnection> ref : CONNECTIONS) {
             ConsumerConnection conn = ref.get();
 
-            if (conn != null && connectionsToRemove.contains(conn)) {
+            if (conn == null || connectionsToRemove.contains(conn)) {
                 toRemove.add(ref);
             }
         }
