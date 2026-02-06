@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-test-containers</artifactId>
-    <version>1.4.8</version>
+    <version>1.4.9</version>
 
     <name>Origami Framework Test Containers</name>
     <description>Origami Framework Test Containers</description>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-dependency</artifactId>
-        <version>1.4.8</version>
+        <version>1.4.9</version>
     </parent>
 
     <properties>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.4.8</version>
+            <version>1.4.9</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>

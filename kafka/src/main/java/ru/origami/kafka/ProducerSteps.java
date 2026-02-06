@@ -106,7 +106,6 @@ public class ProducerSteps extends CommonSteps {
     private void sendMessage(String topic, String key, String message, List<Header> headers) {
         Producer<String, String> producer = getProducer();
         send(producer, topic, key, message, headers);
-        producer.close();
     }
 
     @Deprecated

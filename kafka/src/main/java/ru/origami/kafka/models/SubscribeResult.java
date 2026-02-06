@@ -2,8 +2,8 @@ package ru.origami.kafka.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import ru.origami.kafka.ConsumerConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class SubscribeResult {
 
-    private final Consumer<String, String> consumer;
+    private final ConsumerConnection connection;
 
     private final String topic;
 
@@ -28,14 +28,14 @@ public class SubscribeResult {
     @Setter
     private Exception exception;
 
-    public SubscribeResult(Consumer<String, String> consumer, Class mappingClass, String topic) {
-        this.consumer = consumer;
+    public SubscribeResult(ConsumerConnection connection, Class mappingClass, String topic) {
+        this.connection = connection;
         this.mappingClass = mappingClass;
         this.topic = topic;
     }
 
     @Override
     public String toString() {
-        return String.format("consumer: %s, class: %s", consumer, mappingClass);
+        return String.format("consumer: %s, class: %s", connection.getConsumer(), mappingClass);
     }
 }

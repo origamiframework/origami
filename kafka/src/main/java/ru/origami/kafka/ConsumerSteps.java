@@ -11,10 +11,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import ru.origami.common.OrigamiHelper;
-import ru.origami.kafka.models.KafkaObject;
-import ru.origami.kafka.models.KafkaRecord;
-import ru.origami.kafka.models.SubscribeResult;
-import ru.origami.kafka.models.Topic;
+import ru.origami.kafka.models.*;
 import ru.origami.testit_allure.annotations.Step;
 
 import java.io.IOException;
@@ -32,6 +29,7 @@ import java.util.stream.StreamSupport;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.fail;
+import static ru.origami.common.OrigamiHelper.waitInMillis;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
 import static ru.origami.kafka.attachment.KafkaAttachment.attachConsumerMessageToAllure;
@@ -43,9 +41,11 @@ import static ru.origami.testit_allure.allure.java_commons.Allure.getLifecycle;
 @Slf4j
 public class ConsumerSteps extends CommonSteps {
 
-    public static final Duration DURATION = Duration.ofMillis(500);
+    public static final Duration DURATION_200 = Duration.ofMillis(200);
 
-    public static final Duration DURATION_SECOND = Duration.ofMillis(2000);
+    public static final Duration DURATION_500 = Duration.ofMillis(500);
+
+    public static final Duration DURATION_2_SECONDS = Duration.ofMillis(2000);
 
     private static final long RETRY_DEFAULT_WAITING_TIME = 5000L;
 
@@ -332,16 +332,20 @@ public class ConsumerSteps extends CommonSteps {
 
     @Step("getLangValue:kafka.step.consumer.read.first")
     private KafkaRecord<String> readFirstBySearchWords(String topic, List<String> searchWords, String logValue, boolean withEmptyResult) {
-        Consumer<String, String> consumer = subscribe(topic, true);
+        ConsumerConnection conn = subscribe(topic, true);
         KafkaRecord<String> neededRecord = null;
         int attempt = 0;
 
         do {
             attempt++;
-            waitRecord(getRetryReadTimeout());
+
+            if (attempt > 1) {
+                waitInMillis(getRetryReadTimeout());
+            }
+
             logAttempt(attempt);
 
-            List<ConsumerRecord<String, String>> records = readRecords(consumer, topic);
+            List<ConsumerRecord<String, String>> records = readRecords(conn.getConsumer(), topic);
             Collections.reverse(records);
 
             for (ConsumerRecord<String, String> record : records) {
@@ -360,9 +364,9 @@ public class ConsumerSteps extends CommonSteps {
             }
         } while (neededRecord == null && attempt < getRetryMaxAttempts());
 
-        consumer.close();
         period = null;
         neededPartitions.clear();
+        conn.close();
 
         if (neededRecord == null && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
@@ -845,16 +849,20 @@ public class ConsumerSteps extends CommonSteps {
 
     @Step("getLangValue:kafka.step.consumer.read.all")
     private List<KafkaRecord<String>> readAllBySearchWords(String topic, List<String> searchWords, String logValue, boolean withEmptyResult) {
-        Consumer<String, String> consumer = subscribe(topic, true);
+        ConsumerConnection conn = subscribe(topic, true);
         List<KafkaRecord<String>> neededRecords = new ArrayList<>();
         int attempt = 0;
 
         do {
             attempt++;
-            waitRecord(getRetryReadTimeout());
+
+            if (attempt > 1) {
+                waitInMillis(getRetryReadTimeout());
+            }
+
             logAttempt(attempt);
 
-            for (ConsumerRecord<String, String> record : readRecords(consumer, topic)) {
+            for (ConsumerRecord<String, String> record : readRecords(conn.getConsumer(), topic)) {
                 if (CollectionUtils.isEmpty(searchWords)) {
                     neededRecords.add(new KafkaRecord<>(record));
                 } else {
@@ -866,9 +874,9 @@ public class ConsumerSteps extends CommonSteps {
             }
         } while (neededRecords.isEmpty() && attempt < getRetryMaxAttempts());
 
-        consumer.close();
         period = null;
         neededPartitions.clear();
+        conn.close();
 
         if (neededRecords.isEmpty() && !withEmptyResult) {
             fail(getLangValue("kafka.no.records").formatted(logValue));
@@ -922,14 +930,6 @@ public class ConsumerSteps extends CommonSteps {
         return objRecords;
     }
 
-    private void waitRecord(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void logAttempt(int attempt) {
         if (isLocal() || isLoggingEnabled()) {
             log.info(getLangValue("kafka.attempt"), attempt);
@@ -944,7 +944,7 @@ public class ConsumerSteps extends CommonSteps {
 
     private List<ConsumerRecord<String, String>> readRecords(Consumer<String, String> consumer, String topic) {
         long neededTimePeriod = Objects.isNull(period) ? 0 : Instant.now().toEpochMilli() - period;
-        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION);
+        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION_500);
         List<ConsumerRecord<String, String>> records = StreamSupport
                 .stream(consumerRecords.records(topic).spliterator(), false)
                 .collect(Collectors.toList());
@@ -958,7 +958,7 @@ public class ConsumerSteps extends CommonSteps {
                     .count();
 
             if (recordsCount < countMessages) {
-                consumerRecords = consumer.poll(emptyReadCount > 5 ? DURATION_SECOND : DURATION);
+                consumerRecords = consumer.poll(emptyReadCount > 5 ? DURATION_2_SECONDS : DURATION_500);
                 List<ConsumerRecord<String, String>> subRecords = StreamSupport
                         .stream(consumerRecords.records(topic).spliterator(), false)
                         .collect(Collectors.toList());
@@ -1019,8 +1019,8 @@ public class ConsumerSteps extends CommonSteps {
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
     public void subscribe(Topic topic, Class clazz) {
-        Consumer<String, String> consumer = subscribe(getTopicFullName(topic), false);
-        this.subscribeTopicTask.addSubscribe(consumer, clazz, getTopicFullName(topic));
+        ConsumerConnection conn = subscribe(getTopicFullName(topic), false).setTopic(topic);
+        this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
     }
 
     /**
@@ -1577,7 +1577,7 @@ public class ConsumerSteps extends CommonSteps {
         List<String> notFoundedSearchWords = new ArrayList<>(searchWords);
 
         do {
-            subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed).get(0);
+            subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed, true).get(0);
             Stream<ConsumerRecord<String, String>> recordStream = List.copyOf(subscribeResult.getRecords()).stream();
 
             if (!CollectionUtils.isEmpty(searchWords)) {
@@ -1597,14 +1597,14 @@ public class ConsumerSteps extends CommonSteps {
 
             if (!records.isEmpty() && notFoundedSearchWords.isEmpty()) {
                 needUnsubscribed = true;
-                subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed).get(0);
+                subscribeResult = this.subscribeTopicTask.unsubscribe(topic, needUnsubscribed, true).get(0);
             }
         } while (!needUnsubscribed && System.currentTimeMillis() - startTime < waitingTime);
 
         neededPartitions.clear();
 
         if (records.isEmpty()) {
-            this.subscribeTopicTask.unsubscribe(topic, true);
+            this.subscribeTopicTask.unsubscribe(topic, true, true);
             String message = getLangValue("kafka.no.records.while.subscribe").formatted(topic, logValue);
 
             attachConsumerMessageToAllure(topic, message, 0);

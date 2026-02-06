@@ -1,7 +1,6 @@
 package ru.origami.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.Consumer;
 import ru.origami.kafka.models.SubscribeResult;
 
 import java.util.*;
@@ -11,21 +10,21 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static ru.origami.common.OrigamiHelper.waitInMillis;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.kafka.ConsumerSteps.DURATION;
+import static ru.origami.kafka.ConsumerSteps.DURATION_200;
 
 @Slf4j
 public class SubscribeTopicTask extends TimerTask {
 
     private List<SubscribeResult> subscribeList = new CopyOnWriteArrayList<>();
 
-    void addSubscribe(Consumer<String, String> consumer, Class mappingClass, String topic) {
+    void addSubscribe(ConsumerConnection conn, Class mappingClass, String topic) {
         // TODO ошибку fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic)) вынести сюда и отменять прошлые подписки
-        subscribeList.add(new SubscribeResult(consumer, mappingClass, topic));
-        waitInMillis(950);
+        subscribeList.add(new SubscribeResult(conn.setSubscribeTopicTask(this), mappingClass, topic));
     }
 
-    List<SubscribeResult> unsubscribe(String topic, boolean needUnsubscribe) {
+    List<SubscribeResult> unsubscribe(String topic, boolean needUnsubscribe, boolean withFail) {
         waitInMillis(250L);
 
         Stream<SubscribeResult> resultStream = subscribeList.stream()
@@ -37,14 +36,12 @@ public class SubscribeTopicTask extends TimerTask {
         }
 
         List<SubscribeResult> results = resultStream.toList();
-        waitInMillis(100);
 
-        if (results.isEmpty()) {
-            results.forEach(r -> r.setSubscribed(false));
+        if (results.isEmpty() && withFail) {
             fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic));
         }
 
-        if (results.size() > 1) {
+        if (results.size() > 1 && withFail) {
             log.info(getLangValue("kafka.many.subscribes"), results.size(), topic);
         }
 
@@ -56,7 +53,10 @@ public class SubscribeTopicTask extends TimerTask {
 
         if (!exceptionsText.isEmpty()) {
             results.forEach(r -> r.setSubscribed(false));
-            fail(getLangValue("kafka.fail.subscribe").formatted(topic, exceptionsText));
+
+            if (withFail) {
+                fail(getLangValue("kafka.fail.subscribe").formatted(topic, exceptionsText));
+            }
         }
 
         return results;
@@ -68,7 +68,7 @@ public class SubscribeTopicTask extends TimerTask {
             subscribeList.removeAll(subscribeList.parallelStream()
                     .peek(this::addRecords)
                     .filter(r -> !r.isSubscribed())
-                    .peek(r -> r.getConsumer().close())
+                    .peek(r -> r.getConnection().setFree(true))
                     .toList());
         }
     }
@@ -77,20 +77,12 @@ public class SubscribeTopicTask extends TimerTask {
         if (Objects.isNull(subscribeResult.getException())) {
             try {
                 subscribeResult.getRecords().addAll(StreamSupport
-                        .stream(subscribeResult.getConsumer().poll(DURATION)
+                        .stream(subscribeResult.getConnection().getConsumer().poll(DURATION_200)
                                 .records(subscribeResult.getTopic()).spliterator(), false)
                         .collect(Collectors.toList()));
             } catch (Exception ex) {
                 subscribeResult.setException(ex);
             }
-        }
-    }
-
-    public static void waitInMillis(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -12,6 +12,8 @@ import ru.origami.kafka.attachment.KafkaAttachment;
 import ru.origami.kafka.models.Properties;
 import ru.origami.kafka.models.Topic;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,6 +23,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.OrigamiHelper.getRandomFromList;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
+import static ru.origami.kafka.ConsumerSteps.DURATION_200;
+import static ru.origami.kafka.KafkaConnectionRegistry.getConsumerConnections;
+import static ru.origami.kafka.KafkaConnectionRegistry.getProducerConnections;
 
 @Slf4j
 public class CommonSteps {
@@ -29,36 +34,63 @@ public class CommonSteps {
 
     List<Integer> neededPartitions = new ArrayList<>();
 
-    Producer<String, String> getProducer() {
-        Producer<String, String> producer = null;
+    synchronized Producer<String, String> getProducer() {
+        ProducerConnection conn = null;
 
         if (properties == null) {
             fail(getLangValue("kafka.props.null"));
         }
 
         try {
-            producer = Connection.getProducer(properties);
+            conn = getProducerConnections(getCallerClass())
+                    .stream()
+                    .filter(c -> c.getClazz().equals(this.getClass()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (Objects.isNull(conn)) {
+                conn = new ProducerConnection(this.getClass(), getCallerClass())
+                        .setProducer(Connection.getProducer(properties));
+                KafkaConnectionRegistry.register(conn);
+            }
         } catch (Exception e) {
             fail(getLangValue("kafka.cannot.connect").formatted(e.getMessage()));
         }
 
-        return producer;
+        return conn.getProducer();
     }
 
-    Consumer<String, String> getConsumer(boolean isEarliest) {
-        Consumer<String, String> consumer = null;
+    synchronized ConsumerConnection getConsumer(boolean isEarliest) {
+        ConsumerConnection conn = null;
 
         if (properties == null) {
             fail(getLangValue("kafka.props.null"));
         }
 
         try {
-            consumer = Connection.getConsumer(properties, isEarliest);
+            if (!isEarliest) {
+                conn = getConsumerConnections(getCallerClass())
+                        .stream()
+                        .filter(c -> c.getClazz().equals(this.getClass()))
+                        .filter(ConsumerConnection::isFree)
+                        .filter(c -> Duration.between(c.getStartFreeTime(), LocalDateTime.now()).toMillis() >= 500L)
+                        .findFirst()
+                        .orElse(null);
+            }
+
+            if (Objects.isNull(conn)) {
+                conn = new ConsumerConnection(this.getClass(), getCallerClass())
+                        .setConsumer(Connection.getConsumer(properties, isEarliest));
+
+                if (!isEarliest) {
+                    KafkaConnectionRegistry.register(conn);
+                }
+            }
         } catch (Exception e) {
             fail(getLangValue("kafka.cannot.connect").formatted(e.getMessage()));
         }
 
-        return consumer;
+        return conn.setFree(false);
     }
 
     void send(Producer<String, String> producer, String topic, String key, String message, List<Header> headers) {
@@ -95,13 +127,12 @@ public class CommonSteps {
         }
     }
 
-    Consumer<String, String> subscribe(String topic, boolean isEarliest) {
-        Consumer<String, String> consumer = getConsumer(isEarliest);
+    ConsumerConnection subscribe(String topic, boolean isEarliest) {
+        ConsumerConnection conn = getConsumer(isEarliest);
 
         try {
-//            long epoch = new Date().getTime();
             List<TopicPartition> topicPartitions = null;
-            Set<Integer> existingPartitions = consumer.partitionsFor(topic)
+            Set<Integer> existingPartitions = conn.getConsumer().partitionsFor(topic)
                     .stream()
                     .map(PartitionInfo::partition)
                     .collect(Collectors.toSet());
@@ -111,7 +142,7 @@ public class CommonSteps {
             }
 
             if (neededPartitions.isEmpty()) {
-                topicPartitions = IntStream.range(0, consumer.partitionsFor(topic).size())
+                topicPartitions = IntStream.range(0, conn.getConsumer().partitionsFor(topic).size())
                         .mapToObj(i -> new TopicPartition(topic, i))
                         .collect(Collectors.toList());
             } else {
@@ -132,24 +163,22 @@ public class CommonSteps {
                 }
             }
 
-//            Map<TopicPartition, Long> offsets = topicPartitions.stream().collect(Collectors.toMap(k -> k, v -> epoch));
-//
-//            Map<TopicPartition, Long> filteredOffsets = consumer.offsetsForTimes(offsets)
-//                    .entrySet()
-//                    .stream()
-//                    .filter(offset -> offset.getValue() != null)
-//                    .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().offset()));
-
-            consumer.assign(topicPartitions);
+            conn.getConsumer().assign(topicPartitions);
 
             if (isEarliest) {
-                consumer.seekToBeginning(topicPartitions);
+                conn.getConsumer().seekToBeginning(topicPartitions);
             } else {
-                consumer.seekToEnd(Collections.emptySet());
-//                consumer.commitSync();
+                conn.getConsumer().seekToEnd(topicPartitions);
             }
-//            filteredOffsets.forEach(consumer::seek);
+
+            conn.getConsumer().poll(DURATION_200);
         } catch (Exception e) {
+            if (isEarliest) {
+                conn.close();
+            } else {
+                conn.setFree(true);
+            }
+
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
         }
 
@@ -164,11 +193,12 @@ public class CommonSteps {
             }
         }
 
-        return consumer;
+        return conn;
     }
 
     long getNumberOfMessages(String topic) {
-        Consumer<String, String> consumer = getConsumer(true);
+        ConsumerConnection conn = getConsumer(true);
+        Consumer<String, String> consumer = conn.getConsumer();
 
         try {
             List<TopicPartition> partitions = consumer.partitionsFor(topic)
@@ -185,6 +215,8 @@ public class CommonSteps {
             return partitions.stream().mapToLong(p -> endPartitions.get(p) - consumer.position(p)).sum();
         } catch (Exception e) {
             fail(getLangValue("kafka.fail.subscribe").formatted(topic, e.getMessage()));
+        } finally {
+            conn.close();
         }
 
         return 0;
@@ -204,5 +236,31 @@ public class CommonSteps {
         }
 
         return topicName.toString();
+    }
+
+    private Class<?> getCallerClass() {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+
+        for (int i = 2; i < stack.length; i++) {
+            StackTraceElement element = stack[i];
+            String className = element.getClassName();
+
+            if (className.startsWith("ru.origami.kafka.") ||
+                    className.startsWith("java.") ||
+                    className.startsWith("javax.") ||
+                    className.startsWith("sun.") ||
+                    className.startsWith("jdk.") ||
+                    className.startsWith("org.junit.") ||
+                    className.startsWith("org.apache.kafka.")) {
+                continue;
+            }
+
+            try {
+                return Class.forName(className);
+            } catch (ClassNotFoundException e) {
+            }
+        }
+
+        return Object.class;
     }
 }
