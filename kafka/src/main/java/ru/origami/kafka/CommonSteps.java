@@ -238,8 +238,6 @@ public class CommonSteps {
         return topicName.toString();
     }
 
-
-
     private Class<?> getCallerClass() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
