@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.OrigamiHelper.getRandomFromList;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
+import static ru.origami.kafka.ConsumerSteps.DURATION_200;
 import static ru.origami.kafka.KafkaConnectionRegistry.getConsumerConnections;
 import static ru.origami.kafka.KafkaConnectionRegistry.getProducerConnections;
 
@@ -170,7 +171,7 @@ public class CommonSteps {
                 conn.getConsumer().seekToEnd(topicPartitions);
             }
 
-            conn.getConsumer().poll(Duration.ofMillis(500));
+            conn.getConsumer().poll(DURATION_200);
         } catch (Exception e) {
             if (isEarliest) {
                 conn.close();
