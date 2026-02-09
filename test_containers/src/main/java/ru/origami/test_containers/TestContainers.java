@@ -463,7 +463,7 @@ public abstract class TestContainers {
                                 d.build();
                             }
                     )
-                    .withFileFromPath("app.jar", Path.of("%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName)));
+                    .withFileFromPath("app.jar", Path.of("%s/%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName, imageName)));
 
             genericContainer = new GenericContainer<>(appImage);
         }
