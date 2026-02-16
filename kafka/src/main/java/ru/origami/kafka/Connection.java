@@ -1,5 +1,6 @@
 package ru.origami.kafka;
 
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -25,7 +26,7 @@ public class Connection {
         try {
             final java.util.Properties props = new java.util.Properties();
 
-            props.put("security.protocol", properties.getSecurityProtocol());
+            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
             props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
             props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -49,9 +50,10 @@ public class Connection {
 //            props.put("enable.partition.eof", "false");
             props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
             props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
-            props.put("consumer.timeout.ms", "3000");
-            props.put("security.protocol", properties.getSecurityProtocol());
+//            props.put("consumer.timeout.ms", "3000"); для старых версий consumer
+            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
             props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.MAX_VALUE);
+            props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 15 * 60 * 1000);
             props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, Integer.MAX_VALUE);
             props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
             props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
