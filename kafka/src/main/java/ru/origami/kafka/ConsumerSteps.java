@@ -43,7 +43,7 @@ public class ConsumerSteps extends CommonSteps {
 
     public static final Duration DURATION_200 = Duration.ofMillis(200);
 
-    public static final Duration DURATION_500 = Duration.ofMillis(500);
+    public static final Duration DURATION_350 = Duration.ofMillis(350);
 
     public static final Duration DURATION_2_SECONDS = Duration.ofMillis(2000);
 
@@ -51,7 +51,7 @@ public class ConsumerSteps extends CommonSteps {
 
     private static final int RETRY_DEFAULT_MAX_ATTEMPTS = 10;
 
-    private static final long RETRY_DEFAULT_READ_TIMEOUT = 500;
+    private static final long RETRY_DEFAULT_READ_TIMEOUT = DURATION_350.toMillis();
 
     @Setter
     private Long retryWaitingTime = null;
@@ -338,11 +338,7 @@ public class ConsumerSteps extends CommonSteps {
 
         do {
             attempt++;
-
-            if (attempt > 1) {
-                waitInMillis(getRetryReadTimeout());
-            }
-
+            waitInMillis(getRetryReadTimeout());
             logAttempt(attempt);
 
             List<ConsumerRecord<String, String>> records = readRecords(conn.getConsumer(), topic);
@@ -855,11 +851,7 @@ public class ConsumerSteps extends CommonSteps {
 
         do {
             attempt++;
-
-            if (attempt > 1) {
-                waitInMillis(getRetryReadTimeout());
-            }
-
+            waitInMillis(getRetryReadTimeout());
             logAttempt(attempt);
 
             for (ConsumerRecord<String, String> record : readRecords(conn.getConsumer(), topic)) {
@@ -944,7 +936,7 @@ public class ConsumerSteps extends CommonSteps {
 
     private List<ConsumerRecord<String, String>> readRecords(Consumer<String, String> consumer, String topic) {
         long neededTimePeriod = Objects.isNull(period) ? 0 : Instant.now().toEpochMilli() - period;
-        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION_500);
+        ConsumerRecords<String, String> consumerRecords = consumer.poll(DURATION_350);
         List<ConsumerRecord<String, String>> records = StreamSupport
                 .stream(consumerRecords.records(topic).spliterator(), false)
                 .collect(Collectors.toList());
@@ -958,7 +950,7 @@ public class ConsumerSteps extends CommonSteps {
                     .count();
 
             if (recordsCount < countMessages) {
-                consumerRecords = consumer.poll(emptyReadCount > 5 ? DURATION_2_SECONDS : DURATION_500);
+                consumerRecords = consumer.poll(emptyReadCount > 1 ? DURATION_2_SECONDS : DURATION_350);
                 List<ConsumerRecord<String, String>> subRecords = StreamSupport
                         .stream(consumerRecords.records(topic).spliterator(), false)
                         .collect(Collectors.toList());

@@ -169,9 +169,8 @@ public class CommonSteps {
                 conn.getConsumer().seekToBeginning(topicPartitions);
             } else {
                 conn.getConsumer().seekToEnd(topicPartitions);
+                conn.getConsumer().poll(DURATION_200);
             }
-
-            conn.getConsumer().poll(DURATION_200);
         } catch (Exception e) {
             if (isEarliest) {
                 conn.close();
@@ -220,6 +219,25 @@ public class CommonSteps {
         }
 
         return 0;
+
+        // TODO рассмотреть переход на новый подход
+        // Map<TopicPartition, Long> endOffsets = consumer.endOffsets(consumer.assignment());
+        //Map<TopicPartition, Long> currentOffsets = consumer.committed(consumer.assignment());
+        //
+        //boolean done = false;
+        //while (!done) {
+        // ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
+        // processRecords(records);
+        //
+        // // Проверяем, дочитали ли до конца
+        // done = true;
+        // for (TopicPartition tp : consumer.assignment()) {
+        // if (consumer.position(tp) < endOffsets.get(tp)) {
+        // done = false;
+        // break;
+        // }
+        // }
+        //}
     }
 
     String getTopicFullName(Topic topic) {
