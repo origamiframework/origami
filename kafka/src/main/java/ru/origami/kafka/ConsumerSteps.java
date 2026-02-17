@@ -51,7 +51,7 @@ public class ConsumerSteps extends CommonSteps {
 
     private static final int RETRY_DEFAULT_MAX_ATTEMPTS = 10;
 
-    private static final long RETRY_DEFAULT_READ_TIMEOUT = 500;
+    private static final long RETRY_DEFAULT_READ_TIMEOUT = DURATION_350.toMillis();
 
     @Setter
     private Long retryWaitingTime = null;
