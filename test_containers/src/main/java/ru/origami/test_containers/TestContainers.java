@@ -423,19 +423,28 @@ public abstract class TestContainers {
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName) {
-        return buildDefaultAppContainer(imageName, null, containerName, null, null);
+        return buildDefaultAppContainer(imageName, null, containerName, null, "eclipse-temurin:17-jre", null);
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName, Integer startPriority) {
-        return buildDefaultAppContainer(imageName, null, containerName, startPriority, null);
+        return buildDefaultAppContainer(imageName, null, containerName, startPriority, "eclipse-temurin:17-jre", null);
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName) {
-        return buildDefaultAppContainer(imageName, imageVersion, containerName, null, null);
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null, "eclipse-temurin:17-jre", null);
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
                                                      Integer startPriority, String ciJavaOpts) {
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, startPriority, "eclipse-temurin:17-jre", ciJavaOpts);
+    }
+
+    protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName, String javaVersionDockerImage) {
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null, javaVersionDockerImage, null);
+    }
+
+    protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
+                                                     Integer startPriority, String javaVersionDockerImageName, String ciJavaOpts) {
         GenericContainer<?> genericContainer;
         int port = 8080;
 
@@ -450,10 +459,15 @@ public abstract class TestContainers {
 
             ImageFromDockerfile appImage = new ImageFromDockerfile(imageName, false)
                     .withDockerfileFromBuilder(d -> {
-                                d.from("eclipse-temurin:17-jre")
-                                        .copy("app.jar", "/app.jar")
-                                        .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
-
+                                if (Objects.nonNull(javaVersionDockerImageName)) {
+                                    d.from(javaVersionDockerImageName)
+                                            .copy("app.jar", "/app.jar")
+                                            .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
+                                } else {
+                                    d.from("eclipse-temurin:17-jre")
+                                            .copy("app.jar", "/app.jar")
+                                            .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
+                                }
                                 if (Objects.nonNull(ciJavaOpts)) {
                                     d.env("JAVA_OPTS", ciJavaOpts);
                                 } else {
