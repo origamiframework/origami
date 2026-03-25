@@ -425,59 +425,34 @@ public abstract class TestContainers {
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName) {
-        return buildDefaultAppContainer(
-                imageName,
-                null,
-                containerName,
-                null,
-                DEFAULT_JAVA_DOCKER_IMAGE_NAME,
-                null
+        return buildDefaultAppContainer(imageName, null, containerName, null,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
         );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName, Integer startPriority) {
-        return buildDefaultAppContainer(
-                imageName,
-                null,
-                containerName,
-                startPriority,
-                DEFAULT_JAVA_DOCKER_IMAGE_NAME,
-                null
+        return buildDefaultAppContainer(imageName, null, containerName, startPriority,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
         );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName) {
-        return buildDefaultAppContainer(
-                imageName,
-                imageVersion,
-                containerName,
-                null,
-                DEFAULT_JAVA_DOCKER_IMAGE_NAME,
-                null
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
         );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
                                                      Integer startPriority, String ciJavaOpts) {
-        return buildDefaultAppContainer(
-                imageName,
-                imageVersion,
-                containerName,
-                startPriority,
-                DEFAULT_JAVA_DOCKER_IMAGE_NAME,
-                ciJavaOpts
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, startPriority,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, ciJavaOpts
         );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
                                                      String javaDockerImageName) {
-        return buildDefaultAppContainer(
-                imageName,
-                imageVersion,
-                containerName,
-                null,
-                javaDockerImageName,
-                null
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null,
+                javaDockerImageName, null
         );
     }
 
