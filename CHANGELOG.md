@@ -2,7 +2,7 @@
 
 ### 1.5.2
 
-- Test Containers: добавлена возможность выбирать версию Java в buildDefaultAppContainer
+- Test Containers: добавлена возможность выбирать образ Java в buildDefaultAppContainer
 
 ### 1.5.1
 
