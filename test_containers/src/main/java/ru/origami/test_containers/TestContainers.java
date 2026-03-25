@@ -472,15 +472,11 @@ public abstract class TestContainers {
 
             ImageFromDockerfile appImage = new ImageFromDockerfile(imageName, false)
                     .withDockerfileFromBuilder(d -> {
-                                d.from(Objects.nonNull(javaDockerImageName) ?
-                                                javaDockerImageName : DEFAULT_JAVA_DOCKER_IMAGE_NAME
-                                        )
+                                d.from(Objects.nonNull(javaDockerImageName) ? javaDockerImageName : DEFAULT_JAVA_DOCKER_IMAGE_NAME)
                                     .copy("app.jar", "/app.jar")
-                                    .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
-
-                                d.env("JAVA_OPTS", Objects.nonNull(ciJavaOpts) ? ciJavaOpts : "");
-
-                                d.build();
+                                    .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar")
+                                    .env("JAVA_OPTS", Objects.nonNull(ciJavaOpts) ? ciJavaOpts : "")
+                                    .build();
                             }
                     )
                     .withFileFromPath("app.jar", Path.of("%s/%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName, imageName)));
