@@ -29,7 +29,6 @@ import java.util.stream.StreamSupport;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.fail;
-import static ru.origami.common.OrigamiHelper.waitInMillis;
 import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
 import static ru.origami.kafka.attachment.KafkaAttachment.attachConsumerMessageToAllure;
@@ -1710,6 +1709,14 @@ public class ConsumerSteps extends CommonSteps {
             return properties.getRetryReadTimeout();
         } else {
             return RETRY_DEFAULT_READ_TIMEOUT;
+        }
+    }
+
+    private static void waitInMillis(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

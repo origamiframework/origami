@@ -10,8 +10,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static ru.origami.common.OrigamiHelper.waitInMillis;
-
 @Getter
 @Setter
 @ToString
@@ -62,6 +60,14 @@ public class ConsumerConnection {
                 isClosed = true;
             } catch (Exception e) {
             }
+        }
+    }
+
+    private static void waitInMillis(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,5 +1,10 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.5.3
+
+- Переход на java 21
+- Kafka: убраны лишние шаги для аллюра
+
 ### 1.5.2
 
 - Test Containers: добавлена возможность выбирать образ Java в buildDefaultAppContainer

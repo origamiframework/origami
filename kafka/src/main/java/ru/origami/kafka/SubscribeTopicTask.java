@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static ru.origami.common.OrigamiHelper.waitInMillis;
 import static ru.origami.common.environment.Language.getLangValue;
 import static ru.origami.kafka.ConsumerSteps.DURATION_200;
 
@@ -83,6 +82,14 @@ public class SubscribeTopicTask extends TimerTask {
             } catch (Exception ex) {
                 subscribeResult.setException(ex);
             }
+        }
+    }
+
+    private static void waitInMillis(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
