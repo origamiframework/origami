@@ -1,5 +1,9 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.5.2
+
+- Test Containers: добавлена возможность выбирать образ Java в buildDefaultAppContainer
+
 ### 1.5.1
 
 - Kafka: правка и оптимизация вычитки для readFirst, readAll

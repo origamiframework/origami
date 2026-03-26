@@ -73,6 +73,8 @@ public abstract class TestContainers {
     private boolean withFixedPorts = false;
     private static int lastPort = 8080;
 
+    private static final String DEFAULT_JAVA_DOCKER_IMAGE_NAME = "eclipse-temurin:17-jre";
+
     static {
         Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
         logger.setLevel(Level.OFF);
@@ -423,19 +425,39 @@ public abstract class TestContainers {
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName) {
-        return buildDefaultAppContainer(imageName, null, containerName, null, null);
+        return buildDefaultAppContainer(imageName, null, containerName, null,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
+        );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String containerName, Integer startPriority) {
-        return buildDefaultAppContainer(imageName, null, containerName, startPriority, null);
+        return buildDefaultAppContainer(imageName, null, containerName, startPriority,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
+        );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName) {
-        return buildDefaultAppContainer(imageName, imageVersion, containerName, null, null);
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, null
+        );
     }
 
     protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
                                                      Integer startPriority, String ciJavaOpts) {
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, startPriority,
+                DEFAULT_JAVA_DOCKER_IMAGE_NAME, ciJavaOpts
+        );
+    }
+
+    protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
+                                                     String javaDockerImageName) {
+        return buildDefaultAppContainer(imageName, imageVersion, containerName, null,
+                javaDockerImageName, null
+        );
+    }
+
+    protected TestContainer buildDefaultAppContainer(String imageName, String imageVersion, String containerName,
+                                                     Integer startPriority, String javaDockerImageName, String ciJavaOpts) {
         GenericContainer<?> genericContainer;
         int port = 8080;
 
@@ -450,17 +472,11 @@ public abstract class TestContainers {
 
             ImageFromDockerfile appImage = new ImageFromDockerfile(imageName, false)
                     .withDockerfileFromBuilder(d -> {
-                                d.from("eclipse-temurin:17-jre")
-                                        .copy("app.jar", "/app.jar")
-                                        .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar");
-
-                                if (Objects.nonNull(ciJavaOpts)) {
-                                    d.env("JAVA_OPTS", ciJavaOpts);
-                                } else {
-                                    d.env("JAVA_OPTS", "");
-                                }
-
-                                d.build();
+                                d.from(Objects.nonNull(javaDockerImageName) ? javaDockerImageName : DEFAULT_JAVA_DOCKER_IMAGE_NAME)
+                                    .copy("app.jar", "/app.jar")
+                                    .entryPoint("sh", "-c", "java $JAVA_OPTS -jar /app.jar")
+                                    .env("JAVA_OPTS", Objects.nonNull(ciJavaOpts) ? ciJavaOpts : "")
+                                    .build();
                             }
                     )
                     .withFileFromPath("app.jar", Path.of("%s/%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName, imageName)));

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-dependency</artifactId>
-    <version>1.5.1</version>
+    <version>1.5.2</version>
     <packaging>pom</packaging>
     <name>Origami</name>
     <description>Origami Test Framework</description>
@@ -37,6 +37,14 @@
         <developer>
             <id>artem1992s</id>
             <name>Artem Senko</name>
+            <email>dev@origamiframework.ru</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>AlexPolugrudov</id>
+            <name>Aleksandr Polugrudov</name>
             <email>dev@origamiframework.ru</email>
             <roles>
                 <role>Developer</role>
