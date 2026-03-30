@@ -30,7 +30,7 @@
 
 Полное руководство по началу работы можно найти в разделе [С чего начать?](https://origamiframework.ru/start.html).
 
-Для работы с Origami Framework рекомендуется использовать версию Java 17+(автоматически устанавливается при подключении origami-framework-parent).
+Для работы с Origami Framework рекомендуется использовать версию Java 21(автоматически устанавливается при подключении origami-framework-parent).
 При работе с [Maven](https://maven.apache.org/) необходимо добавить родителя в pom.xml в Вашем тестовом проекте
 ```XML
     <parent>
