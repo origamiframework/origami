@@ -1,13 +1,23 @@
 package ru.origami.rest.models;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.restassured.config.ObjectMapperConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import io.restassured.specification.*;
+import ru.origami.rest.utils.PathTrackingFilter;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static io.restassured.RestAssured.given;
+import static ru.origami.rest.RestSteps.SKIP_FIELD_FILTER;
 
 public class RequestSpec {
 
@@ -155,5 +165,18 @@ public class RequestSpec {
 
     public Response options(String var1, Map<String, ?> var2) {
         return given().spec(spec).options(var1, var2);
+    }
+
+    public RequestSpec withSkipFields(String... fieldsToSkip) {
+        Set<String> skipSet = new HashSet<>(Arrays.asList(fieldsToSkip));
+        ObjectMapper mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .setFilterProvider(new SimpleFilterProvider().addFilter(SKIP_FIELD_FILTER, new PathTrackingFilter(skipSet)));
+        RestAssuredConfig config = RestAssuredConfig.config()
+                .objectMapperConfig(new ObjectMapperConfig().jackson2ObjectMapperFactory((type, s) -> mapper));
+
+        return new RequestSpecBuilder(spec)
+                .setConfig(config)
+                .build();
     }
 }

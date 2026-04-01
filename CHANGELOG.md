@@ -1,5 +1,10 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.5.4
+
+- Core: в OrigamiHelper добавлены методы удаления файлов
+- Rest: добавлен метод withSkipFields
+
 ### 1.5.3
 
 - Переход на java 21

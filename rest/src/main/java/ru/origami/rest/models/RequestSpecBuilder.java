@@ -36,6 +36,10 @@ public class RequestSpecBuilder {
         requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder().addFilter(allureRestAssured);
     }
 
+    public RequestSpecBuilder(RequestSpecification spec) {
+        requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder().addRequestSpecification(spec);
+    }
+
     public RequestSpecBuilder setBody(String body) {
         requestSpecBuilder.setBody(body);
 

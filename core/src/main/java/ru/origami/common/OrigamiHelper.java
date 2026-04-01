@@ -438,6 +438,19 @@ public class OrigamiHelper {
         }
     }
 
+    public static void deleteFile(String filename) {
+        deleteFile(getTestDataFile(filename));
+    }
+
+    public static void deleteFile(File file) {
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            fail(getLangValue("file.delete.error").formatted(file.getName(), exception.getMessage()));
+        }
+    }
+
 
     // Identifier Helper
 
