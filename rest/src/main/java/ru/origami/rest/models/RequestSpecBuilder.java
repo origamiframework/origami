@@ -1,6 +1,9 @@
 package ru.origami.rest.models;
 
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.authentication.AuthenticationScheme;
+import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.LogDetail;
@@ -15,6 +18,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.Getter;
 import lombok.ToString;
 import ru.origami.rest.AllureRestAssured;
+import ru.origami.rest.utils.PathTrackingFilter;
 
 import java.io.File;
 import java.io.InputStream;
@@ -25,6 +29,7 @@ import java.util.*;
 import static ru.origami.common.OrigamiHelper.getObjectAsXmlString;
 import static ru.origami.common.environment.Environment.SSL_VERIFICATION;
 import static ru.origami.common.environment.Environment.getWithNullValue;
+import static ru.origami.rest.RestSteps.SKIP_FIELD_FILTER;
 
 @Getter
 @ToString
@@ -34,10 +39,6 @@ public class RequestSpecBuilder {
 
     public RequestSpecBuilder(AllureRestAssured allureRestAssured) {
         requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder().addFilter(allureRestAssured);
-    }
-
-    public RequestSpecBuilder(RequestSpecification spec) {
-        requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder().addRequestSpecification(spec);
     }
 
     public RequestSpecBuilder setBody(String body) {
@@ -905,6 +906,20 @@ public class RequestSpecBuilder {
     }
 
     public RequestSpecBuilder and() {
+        return this;
+    }
+
+    public RequestSpecBuilder withSkipFields(String... fieldsToSkip) {
+        Set<String> skipSet = new HashSet<>(Arrays.asList(fieldsToSkip));
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .setFilterProvider(new SimpleFilterProvider().addFilter(SKIP_FIELD_FILTER, new PathTrackingFilter(skipSet)));
+
+        RestAssuredConfig config = RestAssuredConfig.config()
+                .objectMapperConfig(new ObjectMapperConfig().jackson2ObjectMapperFactory((type, s) -> mapper));
+
+        requestSpecBuilder.setConfig(config);
+
         return this;
     }
 }
