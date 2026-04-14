@@ -742,7 +742,7 @@ public class RequestSpecBuilder {
     }
 
     public RequestSpec build() {
-        if ("true".equals(getWithNullValue(SSL_VERIFICATION))) {
+        if ("true".equalsIgnoreCase(getWithNullValue(SSL_VERIFICATION))) {
             requestSpecBuilder.setRelaxedHTTPSValidation();
         }
 

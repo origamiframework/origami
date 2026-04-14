@@ -4,6 +4,7 @@
 
 - Core: в OrigamiHelper добавлены методы удаления файлов
 - Rest: добавлен метод withSkipFields
+- Test Containers: параллельный запуск тестов, реплики сервисов
 
 ### 1.5.3
 

@@ -3,6 +3,7 @@ package ru.origami.common.environment;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import ru.origami.common.parallel.EnvironmentContext;
 import ru.origami.common.utils.SslVerification;
 
 import java.io.*;
@@ -47,6 +48,11 @@ public final class Environment {
     private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
     public static final String TEST_CONTAINERS_ENABLED;
+
+    private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
+    private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_FIXED_PORTS";
+    public static final String EXECUTION_PARALLEL = Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
+            CI_CONTAINERS_EXECUTION_PARALLEL, "false");
 
     static {
         loadOrigamiProperties();
@@ -109,9 +115,18 @@ public final class Environment {
 
                 if (matcher.matches()) {
                     inputKey = matcher.group(1);
+
+                    if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+                        String end = "_thread_%d".formatted(EnvironmentContext.getCurrent().getId());
+
+                        if (!inputKey.endsWith(end)) {
+                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, EnvironmentContext.getCurrent().getId());
+                            formattedValue = getPropertyValue("${%s}".formatted(inputKeyThread), true);
+                        }
+                    }
                 }
 
-                if (Objects.nonNull(inputKey)) {
+                if (Objects.nonNull(inputKey) && Objects.isNull(formattedValue)) {
                     formattedValue = getSysEnvPropertyOrDefault(inputKey, inputKey, null);
                 }
             }
@@ -420,7 +435,7 @@ public final class Environment {
     }
 
     private static void disableSslVerification() {
-        if ("true".equals(getWithNullValue(SSL_VERIFICATION))) {
+        if ("true".equalsIgnoreCase(getWithNullValue(SSL_VERIFICATION))) {
             SslVerification.disableSslVerification();
         }
     }
