@@ -7,7 +7,6 @@ import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.testcontainers.containers.GenericContainer;
 import ru.origami.common.parallel.TestEnvironment;
-import ru.origami.test_containers.TestContainer;
 
 import java.util.*;
 import java.util.stream.Collectors;

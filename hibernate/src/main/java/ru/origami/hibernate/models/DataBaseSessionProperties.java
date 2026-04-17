@@ -1,8 +1,12 @@
 package ru.origami.hibernate.models;
 
 import lombok.Getter;
+import ru.origami.common.parallel.EnvironmentContext;
 
 import java.util.Objects;
+
+import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
+import static ru.origami.common.environment.Environment.TEST_CONTAINERS_ENABLED;
 
 @Getter
 public class DataBaseSessionProperties {
@@ -29,7 +33,7 @@ public class DataBaseSessionProperties {
         this.defaultSchema = builder.defaultSchema;
     }
 
-    public static class Builder {
+    public class Builder {
 
         private EHibernateResource hibernateResource;
         private String connectionUrl;
@@ -39,7 +43,6 @@ public class DataBaseSessionProperties {
         private String dbUserName;
         private String dbPassword;
         private String schema;
-
         private String defaultSchema;
 
         public Builder setHibernateResource(EHibernateResource hibernateResource) {
@@ -79,15 +82,27 @@ public class DataBaseSessionProperties {
         }
 
         public Builder setSchema(String schema) {
-            this.schema = schema;
+            this.schema = getSchemaName(schema);
 
             return this;
         }
 
         public Builder setDefaultSchema(String defaultSchema) {
-            this.defaultSchema = defaultSchema;
+            this.defaultSchema = getSchemaName(defaultSchema);
 
             return this;
+        }
+
+        private String getSchemaName(String schema) {
+            if (Objects.isNull(schema)) {
+                return null;
+            }
+
+            if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+                return "%s_thread_%d;".formatted(schema, EnvironmentContext.getCurrent().getId());
+            } else {
+                return schema;
+            }
         }
 
         public DataBaseSessionProperties build() {
@@ -97,7 +112,7 @@ public class DataBaseSessionProperties {
                 connectionString = new StringBuilder(connectionString)
                         .append(connectionString.contains("?") ? "&" : "?")
                         .append("currentSchema=")
-                        .append(defaultSchema)
+                        .append(getSchemaName(defaultSchema))
                         .toString();
             }
 

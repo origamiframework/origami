@@ -425,10 +425,10 @@ public abstract class TestContainers {
                 .setContainerReplicaSet(new GenericContainerReplicaSet(kafkaContainer, 1));
     }
 
-    protected NewTopic getTopic(String name, int partitions, short rf, boolean compact) {
+    protected NewTopic getTopic(String name, int partitions, short rf, boolean isCompact) {
         NewTopic t = new NewTopic(name, partitions, rf);
 
-        if (compact) {
+        if (isCompact) {
             Map<String, String> cfg = new HashMap<>();
             cfg.put(TopicConfig.CLEANUP_POLICY_CONFIG, TopicConfig.CLEANUP_POLICY_COMPACT);
             t.configs(cfg);
