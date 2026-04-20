@@ -35,15 +35,15 @@ public class TestContainer {
     private String postgreSQLSchema;
 
     public JdbcDatabaseContainer<?> getDatabaseContainer() {
-        return (JdbcDatabaseContainer<?>) containerReplicaSet.getContainers().getFirst();
+        return (JdbcDatabaseContainer<?>) containerReplicaSet.getGenericContainers().getFirst();
     }
 
     public KafkaContainer getKafkaContainer() {
-        return (KafkaContainer) containerReplicaSet.getContainers().getFirst();
+        return (KafkaContainer) containerReplicaSet.getGenericContainers().getFirst();
     }
 
     public GenericContainer<?> getIbmMqContainer() {
-        return (GenericContainer<?>) containerReplicaSet.getContainers().getFirst();
+        return containerReplicaSet.getGenericContainers().getFirst();
     }
 
     public Integer getPriorityOrDefault() {
