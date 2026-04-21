@@ -32,16 +32,17 @@ public final class KafkaInitializer {
 
             if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
                 for (int i = 1; i <= getExecutionParallelThreads(); i++) {
-                    NewTopic topic = topics.get(i);
-                    String newName = getTopicFullName(topic.name(), i);
-                    NewTopic cloned = new NewTopic(newName, topic.numPartitions(), topic.replicationFactor());
-                    Map<String, String> configs = topic.configs();
+                    for (NewTopic topic : topics) {
+                        String newName = getTopicFullName(topic.name(), i);
+                        NewTopic cloned = new NewTopic(newName, topic.numPartitions(), topic.replicationFactor());
+                        Map<String, String> configs = topic.configs();
 
-                    if (configs != null && !configs.isEmpty()) {
-                        cloned.configs(configs);
+                        if (configs != null && !configs.isEmpty()) {
+                            cloned.configs(configs);
+                        }
+
+                        finalTopics.add(cloned);
                     }
-
-                    finalTopics.add(topic);
                 }
             } else {
                 finalTopics = topics;
@@ -57,7 +58,7 @@ public final class KafkaInitializer {
     }
 
     public static String getTopicFullName(String topic, int threadNum) {
-        return "%s-thread-%d;".formatted(topic, threadNum);
+        return "%s-thread-%d".formatted(topic, threadNum);
     }
 
     public static void changeTopicNames(List<NewTopic> topics, Map<GenericContainer<?>, TestEnvironment> containerEnvironments) {

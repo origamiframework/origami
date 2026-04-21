@@ -62,6 +62,7 @@ public abstract class TestContainers {
     protected TestContainer clickhouse = null;
     protected TestContainer oracle = null;
     protected TestContainer kafka = null;
+    protected TestContainer kafkaUi = null;
     protected TestContainer ibmMq = null;
     protected List<TestContainer> containers = new ArrayList();
 
@@ -213,6 +214,22 @@ public abstract class TestContainers {
 
                 KafkaInitializer.createTopics(kafka.getKafkaContainer().getBootstrapServers(), kafkaTopics);
                 KafkaInitializer.changeTopicNames(kafkaTopics, containerEnvironments);
+
+                try {
+                    if (Objects.isNull(kafkaUi)) {
+                        kafkaUi = buildDefaultKafkaUiContainer("kafka-ui", kafka.getKafkaContainer());
+                    }
+
+                    kafkaUi.getKafkaUiContainer().start();
+// log.info(getLangValue("test.containers.kafka.started"), kafka.getName(),
+// kafka.getKafkaUiContainer().getDockerImageName(), kafka.getKafkaUiContainer().getBootstrapServers());
+
+// if (Objects.nonNull(kafka.getName())) {
+// System.setProperty(kafka.getName() + "_bootstrap_servers", kafka.getKafkaContainer().getBootstrapServers());
+// }
+                } catch (Exception e) {
+                    fail(getLangValue("test.containers.kafka.started.error").formatted(e.getMessage()));
+                }
             }
 
             if (withIbmMq) {
@@ -419,10 +436,32 @@ public abstract class TestContainers {
                     .withPortBindings(new PortBinding(Ports.Binding.bindPort(port), new ExposedPort(port))));
         }
 
+        kafkaUi = buildDefaultKafkaUiContainer("kafka-ui", kafkaContainer);
+
         return new TestContainer()
                 .setName(containerName)
                 .setOriginalPort(port)
                 .setContainerReplicaSet(new GenericContainerReplicaSet(kafkaContainer, 1));
+    }
+
+    protected TestContainer buildDefaultKafkaUiContainer(String containerName, KafkaContainer kafkaContainer) {
+        int kafkaUiPort = 9091;
+        GenericContainer<?> kafkaUiContainer = new GenericContainer<>(DockerImageName.parse("provectuslabs/kafka-ui:latest"))
+                .withNetwork(network)
+                .withNetworkAliases("kafka-ui")
+// .withExposedPorts(8080)
+                .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                        .withPortBindings(new PortBinding(Ports.Binding.bindPort(kafkaUiPort), new ExposedPort(8080))))
+                .withEnv("KAFKA_CLUSTERS_0_NAME", "local")
+                .withEnv("KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS", "broker:9093")
+// .withEnv("KAFKA_CLUSTERS_0_ZOOKEEPER", "broker:2181")
+// .withEnv("KAFKA_CLUSTERS_0_JMXPORT", "9991")
+                .dependsOn(kafkaContainer);
+
+        return new TestContainer()
+                .setName(containerName)
+                .setOriginalPort(8080)
+                .setContainerReplicaSet(new GenericContainerReplicaSet(kafkaUiContainer, 1));
     }
 
     protected NewTopic getTopic(String name, int partitions, short rf, boolean isCompact) {
@@ -629,8 +668,13 @@ public abstract class TestContainers {
 
             for (TestContainer container : containers) {
                 if (container.getAllContainers().size() > 1 && container.getPriorityOrDefault() < Integer.MAX_VALUE) {
-                    mapByPriority.get(container.getPriorityOrDefault()).add(container.getAllContainers().getFirst());
-                    mapByPriority.get(Integer.MAX_VALUE).addAll(container.getAllContainers().stream().skip(1).toList());
+                    if (container.getPriorityOrDefault() < Integer.MAX_VALUE) {
+                        mapByPriority.get(container.getPriorityOrDefault()).add(container.getAllContainers().getFirst());
+                        mapByPriority.computeIfAbsent(container.getPriorityOrDefault() + 1, k -> new ArrayList<>()).addAll(container.getAllContainers().stream().skip(1).toList());
+                    } else {
+                        mapByPriority.computeIfAbsent(Integer.MAX_VALUE - 1, k -> new ArrayList<>()).add(container.getAllContainers().getFirst());
+                        mapByPriority.computeIfAbsent(Integer.MAX_VALUE, k -> new ArrayList<>()).addAll(container.getAllContainers().stream().skip(1).toList());
+                    }
                 } else {
                     mapByPriority.get(container.getPriorityOrDefault()).addAll(container.getAllContainers());
                 }

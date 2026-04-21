@@ -50,21 +50,27 @@ public final class Environment {
     public static final String TEST_CONTAINERS_ENABLED;
 
     private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
-    private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_FIXED_PORTS";
-    public static final String EXECUTION_PARALLEL = Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
-            CI_CONTAINERS_EXECUTION_PARALLEL, "false");
+    private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_EXECUTION_PARALLEL";
+    public static final String EXECUTION_PARALLEL;
 
     static {
         loadOrigamiProperties();
 
         String testContainersEnabledFromProp = getWithNullValue(TEST_CONTAINERS_ENABLED_PROP);
+        String testContainersExecutionParallel = getWithNullValue(CONTAINERS_EXECUTION_PARALLEL);
 
         if (!"true".equalsIgnoreCase(testContainersEnabledFromProp)) {
             testContainersEnabledFromProp = "false";
         }
 
+        if (!"true".equalsIgnoreCase(testContainersExecutionParallel)) {
+            testContainersExecutionParallel = "false";
+        }
+
         TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
                 CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp);
+        EXECUTION_PARALLEL = Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
+                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel);
 
         loadLanguageProperties();
         loadCustomProperties();

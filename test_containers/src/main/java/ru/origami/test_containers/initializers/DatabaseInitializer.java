@@ -53,6 +53,6 @@ public final class DatabaseInitializer {
     }
 
     public static String getSchemaName(TestContainer testContainer, int threadNum) {
-        return "%s_thread_%d;".formatted(testContainer.getPostgreSQLSchema(), threadNum);
+        return "%s_thread_%d".formatted(testContainer.getPostgreSQLSchema(), threadNum);
     }
 }

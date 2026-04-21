@@ -42,6 +42,10 @@ public class TestContainer {
         return (KafkaContainer) containerReplicaSet.getGenericContainers().getFirst();
     }
 
+    public GenericContainer<?> getKafkaUiContainer() {
+        return containerReplicaSet.getGenericContainers().getFirst();
+    }
+
     public GenericContainer<?> getIbmMqContainer() {
         return containerReplicaSet.getGenericContainers().getFirst();
     }
