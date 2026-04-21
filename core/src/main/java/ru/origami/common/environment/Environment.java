@@ -2,8 +2,10 @@ package ru.origami.common.environment;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.origami.common.parallel.EnvironmentContext;
+import ru.origami.common.parallel.EnvironmentPool;
 import ru.origami.common.utils.SslVerification;
 
 import java.io.*;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.*;
+import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class Environment {
@@ -47,11 +50,16 @@ public final class Environment {
 
     private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
-    public static final String TEST_CONTAINERS_ENABLED;
+    public static final String TEST_CONTAINERS_ENABLED;private static final String EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
+    public static final String EXECUTION_PARALLEL_THREADS = Environment.getSysEnvPropertyOrDefault(EXECUTION_PARALLEL_CONFIG,
+            EXECUTION_PARALLEL_CONFIG, "1");
 
     private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
     private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_EXECUTION_PARALLEL";
     public static final String EXECUTION_PARALLEL;
+
+    @Getter
+    private static EnvironmentPool parallelEnvironmentPool;
 
     static {
         loadOrigamiProperties();
@@ -71,6 +79,10 @@ public final class Environment {
                 CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp);
         EXECUTION_PARALLEL = Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
                 CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel);
+
+        if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+            parallelEnvironmentPool = new EnvironmentPool(getExecutionParallelThreads());
+        }
 
         loadLanguageProperties();
         loadCustomProperties();
@@ -127,7 +139,7 @@ public final class Environment {
 
                         if (!inputKey.endsWith(end)) {
                             String inputKeyThread = "%s_thread_%d".formatted(inputKey, EnvironmentContext.getCurrent().getId());
-                            formattedValue = getPropertyValue("${%s}".formatted(inputKeyThread), true);
+                            formattedValue = getSysEnvPropertyOrDefault(inputKeyThread, inputKeyThread, null);
                         }
                     }
                 }
@@ -212,7 +224,7 @@ public final class Environment {
     }
 
     private static void loadOrigamiProperties() {
-        try (InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(ORIGAMI_PROPERTIES_FILE)) {
+        try (InputStream inputStream = Environment.class.getClassLoader().getResourceAsStream(ORIGAMI_PROPERTIES_FILE)) {
             if (inputStream == null) {
                 fail("Отсутствует файл конфигурации \"%s\"".formatted(ORIGAMI_PROPERTIES_FILE));
             } else if (inputStream.available() == 0) {

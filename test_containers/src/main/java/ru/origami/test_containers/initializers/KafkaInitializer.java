@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.test_containers.TestContainersLauncher.getExecutionParallelThreads;
+import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class KafkaInitializer {
@@ -58,7 +58,7 @@ public final class KafkaInitializer {
     }
 
     public static String getTopicFullName(String topic, int threadNum) {
-        return "%s-thread-%d".formatted(topic, threadNum);
+        return "%s_thread_%d".formatted(topic, threadNum);
     }
 
     public static void changeTopicNames(List<NewTopic> topics, Map<GenericContainer<?>, TestEnvironment> containerEnvironments) {

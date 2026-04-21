@@ -33,9 +33,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
 import static ru.origami.common.environment.Environment.getSysEnvPropertyOrDefault;
 import static ru.origami.common.environment.Language.getLangValue;
+import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 import static ru.origami.test_containers.CmdUtil.REPOSITORIES_DIR;
 import static ru.origami.test_containers.CmdUtil.ensureServiceJarBuilt;
-import static ru.origami.test_containers.TestContainersLauncher.getExecutionParallelThreads;
 import static ru.origami.test_containers.initializers.DatabaseInitializer.getSchemaName;
 
 @Slf4j
@@ -152,7 +152,7 @@ public abstract class TestContainers {
 
             if (!CollectionUtils.isEmpty(customContainers)) {
                 int num = 0;
-                List<TestEnvironment> testEnvironments = Arrays.asList(TestContainersLauncher.getEnvironmentPool().getEnvironments());
+                List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
 
                 for (GenericContainer<?> customContainer : customContainers) {
                     containerEnvironments.put(customContainer, testEnvironments.get(num++));
@@ -267,7 +267,7 @@ public abstract class TestContainers {
                                 String threadName = "";
 
                                 if ("true".equalsIgnoreCase(EXECUTION_PARALLEL) && !(container instanceof JdbcDatabaseContainer)) {
-                                    threadName = "-thread-%s".formatted(containerEnvironments.get(startableContainer).getId());
+                                    threadName = "_thread_%s".formatted(containerEnvironments.get(startableContainer).getId());
                                 }
 
                                 String mappedPorts = container.getExposedPorts().stream()
@@ -561,7 +561,7 @@ public abstract class TestContainers {
         }
 
         if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-            List<TestEnvironment> testEnvironments = Arrays.asList(TestContainersLauncher.getEnvironmentPool().getEnvironments());
+            List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
 
             for (int i = 0; i < getExecutionParallelThreads(); i++) {
                 containerEnvironments.put(containerReplicaSet.getGenericContainers().get(i), testEnvironments.get(i));

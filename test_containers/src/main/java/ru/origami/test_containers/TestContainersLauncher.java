@@ -1,6 +1,5 @@
 package ru.origami.test_containers;
 
-import lombok.Getter;
 import org.junit.jupiter.api.extension.ExtensionConfigurationException;
 import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.LauncherSessionListener;
@@ -10,7 +9,6 @@ import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import ru.origami.common.environment.Environment;
-import ru.origami.test_containers.parallel.EnvironmentPool;
 
 import java.lang.reflect.Constructor;
 import java.util.LinkedHashSet;
@@ -31,16 +29,9 @@ public class TestContainersLauncher implements LauncherSessionListener {
     private static final String CONTAINERS_NAME = "test.containers.name";
     private static final String CI_CONTAINERS_NAME = "TEST_CONTAINERS_NAME";
 
-    private static final String EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
-    private static final String EXECUTION_PARALLEL_THREADS = Environment.getSysEnvPropertyOrDefault(EXECUTION_PARALLEL_CONFIG,
-            EXECUTION_PARALLEL_CONFIG, "1");
-
     private static final AtomicBoolean STARTED = new AtomicBoolean(false);
 
     private static AssertionFailedError error = null;
-
-    @Getter
-    private static EnvironmentPool environmentPool;
 
     @Override
     public void launcherSessionOpened(LauncherSession session) throws AssertionFailedError {
@@ -55,7 +46,6 @@ public class TestContainersLauncher implements LauncherSessionListener {
 
             if ("true".equalsIgnoreCase(Environment.TEST_CONTAINERS_ENABLED)) {
                 try {
-                    environmentPool = new EnvironmentPool(getExecutionParallelThreads());
                     TestContainers impl = selectImplementation();
                     impl.startIfNeeded();
                 } catch (AssertionFailedError ex) {
@@ -175,16 +165,6 @@ public class TestContainersLauncher implements LauncherSessionListener {
         } catch (Exception e) {
             throw new ExtensionConfigurationException(
                     getLangValue("test.containers.new.instance.error").formatted(cls.getName(), e.getMessage()), e);
-        }
-    }
-
-    public static int getExecutionParallelThreads() {
-        try {
-            int threads = Integer.parseInt(EXECUTION_PARALLEL_THREADS);
-
-            return threads > 0 ? threads : 1;
-        } catch (NumberFormatException e) {
-            return 1;
         }
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.test_containers.TestContainersLauncher.getExecutionParallelThreads;
+import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class DatabaseInitializer {

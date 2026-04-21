@@ -5,6 +5,7 @@
 - Core: в OrigamiHelper добавлены методы удаления файлов
 - Rest: добавлен метод withSkipFields
 - Test Containers: параллельный запуск тестов, реплики сервисов
+- Test Containers: при наличии контейнера с kafka поднимается kafka ui
 
 ### 1.5.3
 
