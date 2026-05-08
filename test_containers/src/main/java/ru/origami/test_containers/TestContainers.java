@@ -83,6 +83,8 @@ public abstract class TestContainers {
 
     private Map<GenericContainer<?>, TestEnvironment> containerEnvironments = new HashMap<>();
 
+    private static int containerNum = 1;
+
     static {
         Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
         logger.setLevel(Level.OFF);
@@ -146,7 +148,8 @@ public abstract class TestContainers {
             List<GenericContainer<?>> allContainers = containers.stream()
                     .flatMap(c -> c.getContainerReplicaSet().getGenericContainers().stream())
                     .toList();
-            List<GenericContainer<?>> customContainers = containerEnvironments.keySet().stream()
+            List<GenericContainer<?>> customContainers = containerEnvironments.keySet()
+                    .stream()
                     .filter(key -> !allContainers.contains(key))
                     .toList();
 
@@ -329,6 +332,7 @@ public abstract class TestContainers {
         PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16"))
                 .withNetwork(network)
                 .withNetworkAliases("postgres-db")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
                 .withDatabaseName("testdb")
                 .withUsername("postgres")
                 .withPassword("postgres");
@@ -357,6 +361,7 @@ public abstract class TestContainers {
                 .withNetwork(network)
                 .withNetworkAliases("oracle-db")
                 .withDatabaseName("testdb")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
                 .withUsername("test")
                 .withPassword("test");
 
@@ -382,7 +387,8 @@ public abstract class TestContainers {
                 DockerImageName.parse("mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04"))
                 .acceptLicense()
                 .withNetwork(network)
-                .withNetworkAliases("mssql-db");
+                .withNetworkAliases("mssql-db")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
 
         if (getWithFixedPorts()) {
             mssqlContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -405,7 +411,8 @@ public abstract class TestContainers {
         ClickHouseContainer clickHouseContainer = new ClickHouseContainer(
                 DockerImageName.parse("clickhouse/clickhouse-server:23.8-alpine"))
                 .withNetwork(network)
-                .withNetworkAliases("clickhouse-db");
+                .withNetworkAliases("clickhouse-db")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
 
         if (getWithFixedPorts()) {
             clickHouseContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -429,6 +436,7 @@ public abstract class TestContainers {
                 .withNetwork(network)
                 .withNetworkAliases("broker")
                 .withListener("broker:19092")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
                 .withExposedPorts(port);
 
         if (getWithFixedPorts()) {
@@ -449,13 +457,14 @@ public abstract class TestContainers {
         GenericContainer<?> kafkaUiContainer = new GenericContainer<>(DockerImageName.parse("provectuslabs/kafka-ui:latest"))
                 .withNetwork(network)
                 .withNetworkAliases("kafka-ui")
-// .withExposedPorts(8080)
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+//                  .withExposedPorts(8080)
                 .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                         .withPortBindings(new PortBinding(Ports.Binding.bindPort(kafkaUiPort), new ExposedPort(8080))))
                 .withEnv("KAFKA_CLUSTERS_0_NAME", "local")
                 .withEnv("KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS", "broker:9093")
-// .withEnv("KAFKA_CLUSTERS_0_ZOOKEEPER", "broker:2181")
-// .withEnv("KAFKA_CLUSTERS_0_JMXPORT", "9991")
+//                  .withEnv("KAFKA_CLUSTERS_0_ZOOKEEPER", "broker:2181")
+//                  .withEnv("KAFKA_CLUSTERS_0_JMXPORT", "9991")
                 .dependsOn(kafkaContainer);
 
         return new TestContainer()
@@ -485,6 +494,7 @@ public abstract class TestContainers {
         int secondPort = 9443;
         GenericContainer<?> ibmMqContainer = new GenericContainer<>(DockerImageName.parse("icr.io/ibm-messaging/mq:9.3.0.0-r1"))
                 .withEnv("LICENSE", "accept")
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
                 .withEnv("MQ_QMGR_NAME", "QM1")
                 .withEnv("MQ_APP_USER", "app")
                 .withEnv("MQ_APP_PASSWORD", "passw0rd")
@@ -560,10 +570,12 @@ public abstract class TestContainers {
             containerReplicaSet = new GenericContainerReplicaSet(appImage, getExecutionParallelThreads());
         }
 
+        containerReplicaSet.withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
+
         if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
             List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
 
-            for (int i = 0; i < getExecutionParallelThreads(); i++) {
+            for (int i = 0; i < testEnvironments.size(); i++) {
                 containerEnvironments.put(containerReplicaSet.getGenericContainers().get(i), testEnvironments.get(i));
             }
         }
@@ -583,7 +595,7 @@ public abstract class TestContainers {
                     container.withEnv("DATASOURCE_SCHEMA", getSchemaName(postgres, testEnvironment.getId()));
                 }
             } else {
-                containerReplicaSet.dependsOn(postgres.getDatabaseContainer()).withEnv("DATASOURCE_SCHEMA", "public");
+                containerReplicaSet.withEnv("DATASOURCE_SCHEMA", "public");
             }
         }
 

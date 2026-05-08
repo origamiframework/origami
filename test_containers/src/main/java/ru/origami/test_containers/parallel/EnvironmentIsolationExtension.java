@@ -8,7 +8,7 @@ import ru.origami.test_containers.TestContainersLauncher;
 import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
 import static ru.origami.common.environment.Environment.TEST_CONTAINERS_ENABLED;
 
-public class EnvironmentIsolationExtension implements AfterEachCallback {
+public class EnvironmentIsolationExtension implements AfterAllCallback {
 
 //    @Override
 //    public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> context,
@@ -38,15 +38,21 @@ public class EnvironmentIsolationExtension implements AfterEachCallback {
 //        }
 //    }
 
+//    @Override
+//    public void afterEach(ExtensionContext context) {
+//        if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+////            TestEnvironment env = EnvironmentContext.getCurrent();
+////
+////            if (env != null) {
+//                EnvironmentContext.clear();
+////                TestContainersLauncher.getEnvironmentPool().release(env);
+////            }
+//        }
+//    }
+
     @Override
-    public void afterEach(ExtensionContext context) {
-        if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-//            TestEnvironment env = EnvironmentContext.getCurrent();
-//
-//            if (env != null) {
-                EnvironmentContext.clear();
-//                TestContainersLauncher.getEnvironmentPool().release(env);
-//            }
-        }
+    public void afterAll(ExtensionContext context) {
+        Class<?> testClass = context.getRequiredTestClass();
+        EnvironmentContext.releaseForClass(testClass);
     }
 }

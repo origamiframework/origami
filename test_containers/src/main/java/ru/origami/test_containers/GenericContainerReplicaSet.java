@@ -240,7 +240,30 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet withEnv(String key, String value) {
-        genericContainers.forEach(c -> c.withEnv(key, value));
+        if (List.of("KAFKA_CONSUMER_GROUP_ID", "SPRING_KAFKA_CONSUMER_GROUP_ID",
+                "KAFKA_APPLICATION_ID", "SPRING_KAFKA_STREAMS_APPLICATION_ID").contains(key) && genericContainers.size() > 1) {
+            int i = 1;
+
+            for (GenericContainer<?> container : genericContainers) {
+                container.withEnv(key, "%s-%d".formatted(value, i++));
+            }
+        } else {
+            genericContainers.forEach(c -> c.withEnv(key, value));
+        }
+
+        return this;
+    }
+
+    public GenericContainerReplicaSet withKafkaConsumerGroup(String key, String value) {
+        if (genericContainers.size() > 1) {
+            int i = 1;
+
+            for (GenericContainer<?> container : genericContainers) {
+                container.withEnv(key, "%s-%d".formatted(value, i++));
+            }
+        } else {
+            genericContainers.forEach(c -> c.withEnv(key, value));
+        }
 
         return this;
     }
