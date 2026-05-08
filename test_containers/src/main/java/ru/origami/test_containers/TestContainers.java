@@ -25,6 +25,7 @@ import ru.origami.test_containers.initializers.DatabaseInitializer;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -83,7 +84,7 @@ public abstract class TestContainers {
 
     private Map<GenericContainer<?>, TestEnvironment> containerEnvironments = new HashMap<>();
 
-    private static int containerNum = 1;
+    private static final AtomicInteger containerNum = new AtomicInteger(1);
 
     static {
         Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
@@ -332,10 +333,11 @@ public abstract class TestContainers {
         PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16"))
                 .withNetwork(network)
                 .withNetworkAliases("postgres-db")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()))
                 .withDatabaseName("testdb")
                 .withUsername("postgres")
-                .withPassword("postgres");
+                .withPassword("postgres")
+                .withCommand("postgres -c max_connections=300");;
 
         if (getWithFixedPorts()) {
             postgreSQLContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -361,7 +363,7 @@ public abstract class TestContainers {
                 .withNetwork(network)
                 .withNetworkAliases("oracle-db")
                 .withDatabaseName("testdb")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()))
                 .withUsername("test")
                 .withPassword("test");
 
@@ -388,7 +390,7 @@ public abstract class TestContainers {
                 .acceptLicense()
                 .withNetwork(network)
                 .withNetworkAliases("mssql-db")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()));
 
         if (getWithFixedPorts()) {
             mssqlContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -412,7 +414,7 @@ public abstract class TestContainers {
                 DockerImageName.parse("clickhouse/clickhouse-server:23.8-alpine"))
                 .withNetwork(network)
                 .withNetworkAliases("clickhouse-db")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()));
 
         if (getWithFixedPorts()) {
             clickHouseContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -436,7 +438,7 @@ public abstract class TestContainers {
                 .withNetwork(network)
                 .withNetworkAliases("broker")
                 .withListener("broker:19092")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()))
                 .withExposedPorts(port);
 
         if (getWithFixedPorts()) {
@@ -457,7 +459,7 @@ public abstract class TestContainers {
         GenericContainer<?> kafkaUiContainer = new GenericContainer<>(DockerImageName.parse("provectuslabs/kafka-ui:latest"))
                 .withNetwork(network)
                 .withNetworkAliases("kafka-ui")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()))
 //                  .withExposedPorts(8080)
                 .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                         .withPortBindings(new PortBinding(Ports.Binding.bindPort(kafkaUiPort), new ExposedPort(8080))))
@@ -494,7 +496,7 @@ public abstract class TestContainers {
         int secondPort = 9443;
         GenericContainer<?> ibmMqContainer = new GenericContainer<>(DockerImageName.parse("icr.io/ibm-messaging/mq:9.3.0.0-r1"))
                 .withEnv("LICENSE", "accept")
-                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++))
+                .withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement()))
                 .withEnv("MQ_QMGR_NAME", "QM1")
                 .withEnv("MQ_APP_USER", "app")
                 .withEnv("MQ_APP_PASSWORD", "passw0rd")
@@ -570,7 +572,8 @@ public abstract class TestContainers {
             containerReplicaSet = new GenericContainerReplicaSet(appImage, getExecutionParallelThreads());
         }
 
-        containerReplicaSet.withCreateContainerCmdModifier(cmd -> cmd.withName(containerName+ "-" + containerNum++));
+        containerReplicaSet.getGenericContainers()
+                .forEach(c -> c.withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement())));
 
         if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
             List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
@@ -699,7 +702,10 @@ public abstract class TestContainers {
                     .toList();
 
             for (List<Startable> toStartList : groupsByPriority) {
-                Startables.deepStart(toStartList).join();
+                for (int i = 0; i < toStartList.size(); i += 20) {
+                    List<Startable> batch = toStartList.subList(i, Math.min(i + 20, toStartList.size()));
+                    Startables.deepStart(batch).join();
+                }
             }
         }
     }

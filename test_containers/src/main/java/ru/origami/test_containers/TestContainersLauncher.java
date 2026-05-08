@@ -48,11 +48,6 @@ public class TestContainersLauncher implements LauncherSessionListener {
                 try {
                     TestContainers impl = selectImplementation();
                     impl.startIfNeeded();
-
-                    try {
-                        Thread.sleep(500);
-                    } catch (Exception e) {
-                    }
                 } catch (AssertionFailedError ex) {
                     error = ex;
                     throw ex;
