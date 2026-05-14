@@ -337,7 +337,8 @@ public abstract class TestContainers {
                 .withDatabaseName("testdb")
                 .withUsername("postgres")
                 .withPassword("postgres")
-                .withCommand("postgres -c max_connections=300");;
+                .withCommand("postgres -c max_connections=300");
+        ;
 
         if (getWithFixedPorts()) {
             postgreSQLContainer.withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
@@ -682,17 +683,7 @@ public abstract class TestContainers {
                     .collect(Collectors.toMap(p -> p, p -> new ArrayList<>()));
 
             for (TestContainer container : containers) {
-                if (container.getAllContainers().size() > 1 && container.getPriorityOrDefault() < Integer.MAX_VALUE) {
-                    if (container.getPriorityOrDefault() < Integer.MAX_VALUE) {
-                        mapByPriority.get(container.getPriorityOrDefault()).add(container.getAllContainers().getFirst());
-                        mapByPriority.computeIfAbsent(container.getPriorityOrDefault() + 1, k -> new ArrayList<>()).addAll(container.getAllContainers().stream().skip(1).toList());
-                    } else {
-                        mapByPriority.computeIfAbsent(Integer.MAX_VALUE - 1, k -> new ArrayList<>()).add(container.getAllContainers().getFirst());
-                        mapByPriority.computeIfAbsent(Integer.MAX_VALUE, k -> new ArrayList<>()).addAll(container.getAllContainers().stream().skip(1).toList());
-                    }
-                } else {
-                    mapByPriority.get(container.getPriorityOrDefault()).addAll(container.getAllContainers());
-                }
+                mapByPriority.get(container.getPriorityOrDefault()).addAll(container.getAllContainers());
             }
 
             List<List<Startable>> groupsByPriority = mapByPriority.entrySet()
