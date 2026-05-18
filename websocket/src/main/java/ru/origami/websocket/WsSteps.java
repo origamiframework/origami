@@ -35,7 +35,7 @@ public class WsSteps {
 
     private Map<WsTopic, WsStompSessionHandler> handlers = new HashMap<>();
 
-    private static final Long DEFAULT_WAITING_TIME = 5000L;
+    private static final Long DEFAULT_WAITING_TIME = 2000L;
 
     private StompSession connect(WsTopic wsTopic, StompSessionHandler sessionHandler, String token) {
         if (properties == null) {
@@ -174,7 +174,7 @@ public class WsSteps {
 
     /**
      * Метод для осуществления отписки от топика при получении сообщения
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param wsTopic название топика
      * @return В случае нахождения сообщений возвращается список Class<T> clazz
@@ -185,7 +185,7 @@ public class WsSteps {
 
     /**
      * Метод для осуществления отписки от топика при получении сообщения
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param wsTopic название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -197,7 +197,7 @@ public class WsSteps {
 
     /**
      * Метод для осуществления отписки от топика при получении сообщения
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param wsTopic название топика
      * @return В случае нахождения сообщений возвращается список Class<T> clazz
@@ -208,7 +208,7 @@ public class WsSteps {
 
     /**
      * Метод для осуществления отписки от топика при получении сообщения
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param wsTopic название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
