@@ -31,10 +31,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
-import static ru.origami.common.environment.Environment.getSysEnvPropertyOrDefault;
+import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 import static ru.origami.test_containers.CmdUtil.REPOSITORIES_DIR;
 import static ru.origami.test_containers.CmdUtil.ensureServiceJarBuilt;
 import static ru.origami.test_containers.initializers.DatabaseInitializer.getSchemaName;
@@ -156,12 +154,12 @@ public abstract class TestContainers {
 
             if (!CollectionUtils.isEmpty(customContainers)) {
                 int num = 0;
-                List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
+                List<TestEnvironment> testEnvironments = Arrays.asList(PARALLEL_ENVIRONMENT_POOL.getEnvironments());
 
                 for (GenericContainer<?> customContainer : customContainers) {
                     containerEnvironments.put(customContainer, testEnvironments.get(num++));
 
-                    if (num == getExecutionParallelThreads()) {
+                    if (num == EXECUTION_PARALLEL_THREADS) {
                         num = 0;
                     }
                 }
@@ -225,12 +223,7 @@ public abstract class TestContainers {
                     }
 
                     kafkaUi.getKafkaUiContainer().start();
-// log.info(getLangValue("test.containers.kafka.started"), kafka.getName(),
-// kafka.getKafkaUiContainer().getDockerImageName(), kafka.getKafkaUiContainer().getBootstrapServers());
-
-// if (Objects.nonNull(kafka.getName())) {
-// System.setProperty(kafka.getName() + "_bootstrap_servers", kafka.getKafkaContainer().getBootstrapServers());
-// }
+                    log.info(getLangValue("test.containers.kafka.ui.started"));
                 } catch (Exception e) {
                     fail(getLangValue("test.containers.kafka.started.error").formatted(e.getMessage()));
                 }
@@ -270,7 +263,7 @@ public abstract class TestContainers {
                             if (container.isRunning()) {
                                 String threadName = "";
 
-                                if ("true".equalsIgnoreCase(EXECUTION_PARALLEL) && !(container instanceof JdbcDatabaseContainer)) {
+                                if (EXECUTION_PARALLEL && !(container instanceof JdbcDatabaseContainer)) {
                                     threadName = "_thread_%s".formatted(containerEnvironments.get(startableContainer).getId());
                                 }
 
@@ -557,7 +550,7 @@ public abstract class TestContainers {
                 imageName = "%s:%s".formatted(imageName, imageVersion);
             }
 
-            containerReplicaSet = new GenericContainerReplicaSet(DockerImageName.parse(imageName), getExecutionParallelThreads());
+            containerReplicaSet = new GenericContainerReplicaSet(DockerImageName.parse(imageName), EXECUTION_PARALLEL_THREADS);
         } else {
             ensureServiceJarBuilt(imageName);
 
@@ -570,14 +563,14 @@ public abstract class TestContainers {
                                     .build())
                     .withFileFromPath("app.jar", Path.of("%s/%s/target/%s.jar".formatted(REPOSITORIES_DIR, imageName, imageName)));
 
-            containerReplicaSet = new GenericContainerReplicaSet(appImage, getExecutionParallelThreads());
+            containerReplicaSet = new GenericContainerReplicaSet(appImage, EXECUTION_PARALLEL_THREADS);
         }
 
         containerReplicaSet.getGenericContainers()
                 .forEach(c -> c.withCreateContainerCmdModifier(cmd -> cmd.withName(containerName + "-" + containerNum.getAndIncrement())));
 
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-            List<TestEnvironment> testEnvironments = Arrays.asList(Environment.getParallelEnvironmentPool().getEnvironments());
+        if (EXECUTION_PARALLEL) {
+            List<TestEnvironment> testEnvironments = Arrays.asList(PARALLEL_ENVIRONMENT_POOL.getEnvironments());
 
             for (int i = 0; i < testEnvironments.size(); i++) {
                 containerEnvironments.put(containerReplicaSet.getGenericContainers().get(i), testEnvironments.get(i));
@@ -591,8 +584,8 @@ public abstract class TestContainers {
                     .withEnv("DATASOURCE_USER", "postgres")
                     .withEnv("DATASOURCE_PASSWORD", "postgres");
 
-            if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-                for (int i = 0; i < getExecutionParallelThreads(); i++) {
+            if (EXECUTION_PARALLEL) {
+                for (int i = 0; i < EXECUTION_PARALLEL_THREADS; i++) {
                     GenericContainer<?> container = containerReplicaSet.getGenericContainers().get(i);
                     TestEnvironment testEnvironment = containerEnvironments.get(container);
 
@@ -633,8 +626,8 @@ public abstract class TestContainers {
         }
 
         if (getWithFixedPorts()) {
-            if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-                for (int i = 0; i < getExecutionParallelThreads(); i++) {
+            if (EXECUTION_PARALLEL) {
+                for (int i = 0; i < EXECUTION_PARALLEL_THREADS; i++) {
                     GenericContainer<?> container = containerReplicaSet.getGenericContainers().get(i);
 
                     int bindPort = getLastPort();
@@ -713,7 +706,7 @@ public abstract class TestContainers {
 
         DatabaseInitializer.migrate(testContainer.getDatabaseContainer(), testContainer.getDatabaseScriptLocations());
 
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             DatabaseInitializer.createPostgreSQLSchemas(testContainer);
         }
     }

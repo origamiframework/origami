@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.concurrent.Semaphore;
 import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL_THREADS;
+import static ru.origami.common.environment.Language.getLangValue;
 
 public class EnvironmentPool {
 
@@ -32,24 +33,14 @@ public class EnvironmentPool {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllegalStateException(getLangValue("test.containers.fail.get.free.test.env"));
         }
 
-        throw new IllegalStateException("No free environment despite semaphore");
+        throw new IllegalStateException(getLangValue("test.containers.no.free.test.env"));
     }
 
     public void release(TestEnvironment env) {
         env.release();
         semaphore.release();
-    }
-
-    public static int getExecutionParallelThreads() {
-        try {
-            int threads = Integer.parseInt(EXECUTION_PARALLEL_THREADS);
-
-            return threads > 0 ? threads : 1;
-        } catch (NumberFormatException e) {
-            return 1;
-        }
     }
 }

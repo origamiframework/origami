@@ -12,8 +12,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
 
+import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL_THREADS;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class DatabaseInitializer {
@@ -39,11 +39,10 @@ public final class DatabaseInitializer {
     public static void createPostgreSQLSchemas(TestContainer testContainer) {
         if (Objects.nonNull(testContainer.getPostgreSQLSchema())) {
             JdbcDatabaseContainer<?> container = testContainer.getDatabaseContainer();
-            int threads = getExecutionParallelThreads();
 
             try (Connection conn = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
                  Statement stmt = conn.createStatement()) {
-                for (int i = 1; i <= threads; i++) {
+                for (int i = 1; i <= EXECUTION_PARALLEL_THREADS; i++) {
                     stmt.execute("CREATE SCHEMA IF NOT EXISTS %s;".formatted(getSchemaName(testContainer, i)));
                 }
             } catch (Exception e) {

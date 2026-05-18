@@ -2,7 +2,6 @@ package ru.origami.common.environment;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.origami.common.parallel.EnvironmentContext;
 import ru.origami.common.parallel.EnvironmentPool;
@@ -17,7 +16,6 @@ import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.*;
-import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class Environment {
@@ -50,16 +48,16 @@ public final class Environment {
 
     private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
-    public static final String TEST_CONTAINERS_ENABLED;private static final String EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
-    public static final String EXECUTION_PARALLEL_THREADS = Environment.getSysEnvPropertyOrDefault(EXECUTION_PARALLEL_CONFIG,
-            EXECUTION_PARALLEL_CONFIG, "1");
+    public static final Boolean TEST_CONTAINERS_ENABLED;
+
+    private static final String EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
+    public static final int EXECUTION_PARALLEL_THREADS;
 
     private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
     private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_EXECUTION_PARALLEL";
-    public static final String EXECUTION_PARALLEL;
+    public static final Boolean EXECUTION_PARALLEL;
 
-    @Getter
-    private static EnvironmentPool parallelEnvironmentPool;
+    public static final EnvironmentPool PARALLEL_ENVIRONMENT_POOL;
 
     static {
         loadOrigamiProperties();
@@ -75,13 +73,18 @@ public final class Environment {
             testContainersExecutionParallel = "false";
         }
 
-        TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
-                CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp);
-        EXECUTION_PARALLEL = Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
-                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel);
+        TEST_CONTAINERS_ENABLED = "true".equalsIgnoreCase(getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
+                CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp));
+        EXECUTION_PARALLEL = "true".equalsIgnoreCase(Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
+                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel));
 
-        if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-            parallelEnvironmentPool = new EnvironmentPool(getExecutionParallelThreads());
+        if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+            EXECUTION_PARALLEL_THREADS = getExecutionParallelThreads(Environment.getSysEnvPropertyOrDefault(EXECUTION_PARALLEL_CONFIG,
+                    EXECUTION_PARALLEL_CONFIG, "1"));
+            PARALLEL_ENVIRONMENT_POOL = new EnvironmentPool(EXECUTION_PARALLEL_THREADS);
+        } else {
+            EXECUTION_PARALLEL_THREADS = 0;
+            PARALLEL_ENVIRONMENT_POOL = null;
         }
 
         loadLanguageProperties();
@@ -126,7 +129,7 @@ public final class Environment {
         try {
             propertyValue = new String(PROPERTIES.getProperty(key).getBytes(StandardCharsets.UTF_8));
 
-            if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED)) {
+            if (TEST_CONTAINERS_ENABLED) {
                 Pattern pattern = Pattern.compile("\\$\\{(.+)\\}");
                 Matcher matcher = pattern.matcher(propertyValue);
                 String inputKey = null;
@@ -134,7 +137,7 @@ public final class Environment {
                 if (matcher.matches()) {
                     inputKey = matcher.group(1);
 
-                    if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+                    if (EXECUTION_PARALLEL) {
                         String end = "_thread_%d".formatted(EnvironmentContext.getCurrent().getId());
 
                         if (!inputKey.endsWith(end)) {
@@ -461,6 +464,16 @@ public final class Environment {
     private static void setAllureProperties() {
         if (Objects.nonNull(getWithNullValue(ALLURE_LINK_ISSUE_PATTERN))) {
             System.setProperty(ALLURE_LINK_ISSUE_PATTERN, get(ALLURE_LINK_ISSUE_PATTERN));
+        }
+    }
+
+    private static int getExecutionParallelThreads(String parallelThreads) {
+        try {
+            int threads = Integer.parseInt(parallelThreads);
+
+            return threads > 0 ? threads : 1;
+        } catch (NumberFormatException e) {
+            return 1;
         }
     }
 }

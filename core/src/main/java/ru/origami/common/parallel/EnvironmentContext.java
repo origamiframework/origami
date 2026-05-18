@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static ru.origami.common.environment.Environment.PARALLEL_ENVIRONMENT_POOL;
+import static ru.origami.common.environment.Language.getLangValue;
+
 public class EnvironmentContext {
 
     private static final Map<Class<?>, TestEnvironment> CLASS_ENV_MAP = new ConcurrentHashMap<>();
@@ -30,12 +33,10 @@ public class EnvironmentContext {
         Class<?> testClass = findTestClassFromStackTrace();
 
         if (testClass == null) {
-            throw new IllegalStateException("Cannot determine test class from stack trace. " +
-                    "Make sure test classes have @Test, @ParameterizedTest, etc.");
+            throw new IllegalStateException(getLangValue("test.containers.fail.get.current.test.env"));
         }
 
-        return CLASS_ENV_MAP.computeIfAbsent(testClass, clazz ->
-                Environment.getParallelEnvironmentPool().acquire());
+        return CLASS_ENV_MAP.computeIfAbsent(testClass, clazz -> PARALLEL_ENVIRONMENT_POOL.acquire());
     }
 
     private static Class<?> findTestClassFromStackTrace() {
@@ -103,7 +104,7 @@ public class EnvironmentContext {
         TestEnvironment env = CLASS_ENV_MAP.remove(testClass);
 
         if (env != null) {
-            Environment.getParallelEnvironmentPool().release(env);
+            PARALLEL_ENVIRONMENT_POOL.release(env);
         }
     }
 }

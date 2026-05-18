@@ -30,7 +30,7 @@ public class GenericContainerReplicaSet {
     private List<GenericContainer<?>> genericContainers = new ArrayList<>();
 
     public GenericContainerReplicaSet(Startable container, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 containers.add(container);
             }
@@ -40,7 +40,7 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet(GenericContainer<?> container, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 genericContainers.add(container);
             }
@@ -50,7 +50,7 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet(DockerImageName dockerImageName, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 genericContainers.add(new GenericContainer<>(dockerImageName));
             }
@@ -60,7 +60,7 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet(Future<String> image, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 genericContainers.add(new GenericContainer<>(image));
             }
@@ -70,7 +70,7 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet(RemoteDockerImage image, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 genericContainers.add(new GenericContainer<>(image));
             }
@@ -80,7 +80,7 @@ public class GenericContainerReplicaSet {
     }
 
     public GenericContainerReplicaSet(String dockerImageName, int replicaCount) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             for (int i = 0; i < replicaCount; i++) {
                 genericContainers.add(new GenericContainer<>(dockerImageName));
             }

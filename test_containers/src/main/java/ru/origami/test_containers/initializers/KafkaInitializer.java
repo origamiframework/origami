@@ -12,8 +12,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
+import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL_THREADS;
 import static ru.origami.common.environment.Language.getLangValue;
-import static ru.origami.common.parallel.EnvironmentPool.getExecutionParallelThreads;
 
 @Slf4j
 public final class KafkaInitializer {
@@ -30,8 +30,8 @@ public final class KafkaInitializer {
 
             List<NewTopic> finalTopics = new ArrayList<>();
 
-            if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
-                for (int i = 1; i <= getExecutionParallelThreads(); i++) {
+            if (EXECUTION_PARALLEL) {
+                for (int i = 1; i <= EXECUTION_PARALLEL_THREADS; i++) {
                     for (NewTopic topic : topics) {
                         String newName = getTopicFullName(topic.name(), i);
                         NewTopic cloned = new NewTopic(newName, topic.numPartitions(), topic.replicationFactor());
@@ -62,7 +62,7 @@ public final class KafkaInitializer {
     }
 
     public static void changeTopicNames(List<NewTopic> topics, Map<GenericContainer<?>, TestEnvironment> containerEnvironments) {
-        if ("true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+        if (EXECUTION_PARALLEL) {
             Set<String> topicNames = topics.stream()
                     .map(NewTopic::name)
                     .collect(Collectors.toSet());

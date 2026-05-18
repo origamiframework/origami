@@ -98,7 +98,7 @@ public class DataBaseSessionProperties {
                 return null;
             }
 
-            if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED) && "true".equalsIgnoreCase(EXECUTION_PARALLEL)) {
+            if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
                 return "%s_thread_%d;".formatted(schema, EnvironmentContext.getCurrent().getId());
             } else {
                 return schema;
