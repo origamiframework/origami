@@ -11,6 +11,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import ru.origami.common.OrigamiHelper;
+import ru.origami.common.environment.Environment;
 import ru.origami.kafka.models.*;
 import ru.origami.testit_allure.annotations.Step;
 
@@ -916,6 +917,12 @@ public class ConsumerSteps extends CommonSteps {
             }
 
             log.info("{}", String.join("", formattedErrors));
+
+            if (!"false".equalsIgnoreCase(Environment.getWithNullValue("fail.on.unparsed.kafka.records"))) {
+                fail("Kafka. %s\n%s".formatted(
+                        getLangValue("kafka.not.parsed.records").replaceAll("\\{}", String.join("; ", errKeys)),
+                        String.join("", formattedErrors)));
+            }
         }
 
         return objRecords;
