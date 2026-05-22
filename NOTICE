@@ -1,0 +1,18 @@
+Origami Framework
+Copyright 2025 Zhigarev Maksim
+
+This product includes software developed by:
+- Qameta Software Inc (Allure Framework)
+  https://github.com/allure-framework/allure-java
+  Copyright (c) Qameta Software Inc. All rights reserved.
+  Modified by Zhigarev Maksim.
+- Test IT (adapters-java and api-client-java)
+  https://github.com/testit-tms/adapters-java
+  https://github.com/testit-tms/api-client-java
+  Copyright 2022 Test IT.
+  Modified by Zhigarev Maksim.
+
+All the above components are licensed under the Apache License, Version 2.0.
+Copies of the license are included in the "licenses" directory of this distribution.
+
+Modifications made by Zhigarev Maksim are also released under the Apache License, Version 2.0.
