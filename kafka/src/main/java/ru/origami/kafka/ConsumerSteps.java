@@ -1018,7 +1018,7 @@ public class ConsumerSteps extends CommonSteps {
      * @param clazz тип для возвращаемого значения при осуществлении отписки
      */
     public void subscribe(Topic topic, Class clazz) {
-        subscribe(topic, clazz);
+        subscribe(getTopicFullName(topic), clazz);
     }
 
     /**
