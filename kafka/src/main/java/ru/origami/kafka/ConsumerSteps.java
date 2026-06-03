@@ -1017,6 +1017,16 @@ public class ConsumerSteps extends CommonSteps {
      * @param topic название топика
      * @param clazz тип для возвращаемого значения при осуществлении отписки
      */
+    public void subscribe(Topic topic, Class clazz) {
+        subscribe(topic, clazz);
+    }
+
+    /**
+     * Метод для подписки на топик с возможностью отписаться в нужный момент(unsubscribeAndGetResults, unsubscribeWhenGetMessage)
+     *
+     * @param topic название топика
+     * @param clazz тип для возвращаемого значения при осуществлении отписки
+     */
     @Step("getLangValue:kafka.step.consumer.subscribe")
     public void subscribe(String topic, Class clazz) {
         ConsumerConnection conn = subscribe(topic, false).setTopic(topic);
