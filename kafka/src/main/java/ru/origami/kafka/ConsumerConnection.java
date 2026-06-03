@@ -27,7 +27,7 @@ public class ConsumerConnection {
 
     private boolean isClosed;
 
-    private Topic topic;
+    private String topic;
 
     private SubscribeTopicTask subscribeTopicTask;
 
@@ -51,7 +51,7 @@ public class ConsumerConnection {
     public void close() {
         if (!isClosed && Objects.nonNull(consumer)) {
             if (Objects.nonNull(topic) && Objects.nonNull(subscribeTopicTask)) {
-                subscribeTopicTask.unsubscribe(topic.getTopic(), true, false);
+                subscribeTopicTask.unsubscribe(topic, true, false);
                 waitInMillis(520);
             }
 

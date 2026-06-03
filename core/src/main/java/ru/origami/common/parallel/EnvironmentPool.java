@@ -3,7 +3,6 @@ package ru.origami.common.parallel;
 import lombok.Getter;
 
 import java.util.concurrent.Semaphore;
-import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL_THREADS;
 import static ru.origami.common.environment.Language.getLangValue;
 
 public class EnvironmentPool {

@@ -1008,7 +1008,7 @@ public class ConsumerSteps extends CommonSteps {
      * @param topic название топика
      */
     public void subscribe(Topic topic) {
-        subscribe(topic, null);
+        subscribe(getTopicFullName(topic), null);
     }
 
     /**
@@ -1018,9 +1018,9 @@ public class ConsumerSteps extends CommonSteps {
      * @param clazz тип для возвращаемого значения при осуществлении отписки
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
-    public void subscribe(Topic topic, Class clazz) {
-        ConsumerConnection conn = subscribe(getTopicFullName(topic), false).setTopic(topic);
-        this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
+    public void subscribe(String topic, Class clazz) {
+        ConsumerConnection conn = subscribe(topic, false).setTopic(topic);
+        this.subscribeTopicTask.addSubscribe(conn, clazz, topic);
     }
 
     /**

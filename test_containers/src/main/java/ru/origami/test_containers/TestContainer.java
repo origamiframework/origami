@@ -32,7 +32,19 @@ public class TestContainer {
 
     protected List<String> databaseScriptLocations = new ArrayList<>();
 
+    private String kafkaBootstrapServerProperty = "KAFKA_BOOTSTRAP_SERVERS";
+
     private String postgreSQLSchema;
+
+    private String postgreSQLSchemaProperty = "DATASOURCE_SCHEMA";
+
+    private String oracleSchema;
+
+    private String oracleSchemaProperty = "DATASOURCE_SCHEMA";
+
+    private String msSQLSchema;
+
+    private String msSQLSchemaProperty = "DATASOURCE_SCHEMA";
 
     public JdbcDatabaseContainer<?> getDatabaseContainer() {
         return (JdbcDatabaseContainer<?>) containerReplicaSet.getGenericContainers().getFirst();

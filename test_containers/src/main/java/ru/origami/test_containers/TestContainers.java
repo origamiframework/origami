@@ -370,7 +370,8 @@ public abstract class TestContainers {
         return new TestContainer()
                 .setName(containerName)
                 .setOriginalPort(port)
-                .setContainerReplicaSet(new GenericContainerReplicaSet(oracleContainer, 1));
+                .setContainerReplicaSet(new GenericContainerReplicaSet(oracleContainer, 1))
+                .setOracleSchema("TEST");
     }
 
     protected TestContainer buildDefaultMSSQLServerContainer() {
@@ -394,7 +395,8 @@ public abstract class TestContainers {
         return new TestContainer()
                 .setName(containerName)
                 .setOriginalPort(port)
-                .setContainerReplicaSet(new GenericContainerReplicaSet(mssqlContainer, 1));
+                .setContainerReplicaSet(new GenericContainerReplicaSet(mssqlContainer, 1))
+                .setMsSQLSchema("dbo");
     }
 
     protected TestContainer buildDefaultClickhouseContainer() {
@@ -590,40 +592,66 @@ public abstract class TestContainers {
                     GenericContainer<?> container = containerReplicaSet.getGenericContainers().get(i);
                     TestEnvironment testEnvironment = containerEnvironments.get(container);
 
-                    container.withEnv("DATASOURCE_SCHEMA", getSchemaName(postgres, testEnvironment.getId()));
+                    container.withEnv(postgres.getPostgreSQLSchemaProperty(),
+                            getSchemaName(postgres.getPostgreSQLSchema(), testEnvironment.getId()));
                 }
             } else {
-                containerReplicaSet.withEnv("DATASOURCE_SCHEMA", "public");
+                containerReplicaSet.withEnv(postgres.getPostgreSQLSchemaProperty(), postgres.getPostgreSQLSchema());
             }
         }
 
         if (withOracle) {
             containerReplicaSet.dependsOn(oracle.getDatabaseContainer())
                     .withEnv("DATASOURCE_URL", "jdbc:oracle:thin://oracle-db:1521/testdb")
-                    .withEnv("DATASOURCE_SCHEMA", "TEST")
+//                    .withEnv("DATASOURCE_SCHEMA", "TEST")
                     .withEnv("DATASOURCE_USER", "test")
+                    .withEnv("DATASOURCE_USERNAME", "test")
                     .withEnv("DATASOURCE_PASSWORD", "test");
+
+            if (EXECUTION_PARALLEL) {
+                for (int i = 0; i < EXECUTION_PARALLEL_THREADS; i++) {
+                    GenericContainer<?> container = containerReplicaSet.getGenericContainers().get(i);
+                    TestEnvironment testEnvironment = containerEnvironments.get(container);
+
+                    container.withEnv(oracle.getOracleSchemaProperty(), getSchemaName(oracle.getOracleSchema(), testEnvironment.getId()));
+                }
+            } else {
+                containerReplicaSet.withEnv(oracle.getOracleSchemaProperty(), oracle.getOracleSchema());
+            }
         }
 
         if (withClickhouse) {
             containerReplicaSet.dependsOn(clickhouse.getDatabaseContainer())
                     .withEnv("DATASOURCE_URL", "jdbc:clickhouse://clickhouse-db:8123/default")
                     .withEnv("DATASOURCE_USER", "test")
+                    .withEnv("DATASOURCE_USERNAME", "test")
                     .withEnv("DATASOURCE_PASSWORD", "test");
         }
 
         if (withMSSQL) {
             containerReplicaSet.dependsOn(mssql.getDatabaseContainer())
                     .withEnv("DATASOURCE_URL", "jdbc:sqlserver://mssql-db:1433;databaseName=master;encrypt=false")
-                    .withEnv("DATASOURCE_SCHEMA", "dbo")
+//                    .withEnv("DATASOURCE_SCHEMA", "dbo")
                     .withEnv("DATASOURCE_USER", "sa")
+                    .withEnv("DATASOURCE_USERNAME", "sa")
                     .withEnv("DATASOURCE_PASSWORD", "A_Str0ng_Required_Password");
+
+            if (EXECUTION_PARALLEL) {
+                for (int i = 0; i < EXECUTION_PARALLEL_THREADS; i++) {
+                    GenericContainer<?> container = containerReplicaSet.getGenericContainers().get(i);
+                    TestEnvironment testEnvironment = containerEnvironments.get(container);
+
+                    container.withEnv(mssql.getMsSQLSchemaProperty(), getSchemaName(mssql.getMsSQLSchema(), testEnvironment.getId()));
+                }
+            } else {
+                containerReplicaSet.withEnv(mssql.getMsSQLSchemaProperty(), mssql.getMsSQLSchema());
+            }
         }
 
         if (withKafka) {
             containerReplicaSet.dependsOn(kafka.getKafkaContainer())
                     .withEnv("KAFKA_BROKERS", "broker:19092")
-                    .withEnv("KAFKA_BOOTSTRAP_SERVERS", "broker:19092");
+                    .withEnv(kafka.getKafkaBootstrapServerProperty(), "broker:19092");
         }
 
         if (getWithFixedPorts()) {

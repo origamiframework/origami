@@ -43,7 +43,7 @@ public final class DatabaseInitializer {
             try (Connection conn = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
                  Statement stmt = conn.createStatement()) {
                 for (int i = 1; i <= EXECUTION_PARALLEL_THREADS; i++) {
-                    stmt.execute("CREATE SCHEMA IF NOT EXISTS %s;".formatted(getSchemaName(testContainer, i)));
+                    stmt.execute("CREATE SCHEMA IF NOT EXISTS %s;".formatted(getSchemaName(testContainer.getPostgreSQLSchema(), i)));
                 }
             } catch (Exception e) {
                 throw new RuntimeException(getLangValue("test.containers.fail.create.db.schema"), e);
@@ -51,7 +51,7 @@ public final class DatabaseInitializer {
         }
     }
 
-    public static String getSchemaName(TestContainer testContainer, int threadNum) {
-        return "%s_thread_%d".formatted(testContainer.getPostgreSQLSchema(), threadNum);
+    public static String getSchemaName(String schema, int threadNum) {
+        return "%s_thread_%d".formatted(schema, threadNum);
     }
 }
