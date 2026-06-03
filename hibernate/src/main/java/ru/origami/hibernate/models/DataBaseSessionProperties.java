@@ -33,7 +33,7 @@ public class DataBaseSessionProperties {
         this.defaultSchema = builder.defaultSchema;
     }
 
-    public class Builder {
+    public static class Builder {
 
         private EHibernateResource hibernateResource;
         private String connectionUrl;
@@ -99,7 +99,7 @@ public class DataBaseSessionProperties {
             }
 
             if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
-                return "%s_thread_%d;".formatted(schema, EnvironmentContext.getCurrent().getId());
+                return "%s_thread_%d".formatted(schema, EnvironmentContext.getCurrent().getId());
             } else {
                 return schema;
             }
@@ -112,7 +112,7 @@ public class DataBaseSessionProperties {
                 connectionString = new StringBuilder(connectionString)
                         .append(connectionString.contains("?") ? "&" : "?")
                         .append("currentSchema=")
-                        .append(getSchemaName(defaultSchema))
+                        .append(defaultSchema)
                         .toString();
             }
 

@@ -68,7 +68,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
     @Override
     public void interceptBeforeAllMethod(Invocation<Void> invocation,
                                          ReflectiveInvocationContext<Method> invocationContext,
-                                         ExtensionContext extensionContext) {
+                                         ExtensionContext extensionContext) throws Throwable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Intercept before all: {}", invocationContext.getExecutable().getName());
         }
@@ -90,6 +90,12 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 adapterManager.updateFixture(uuid, result -> result.setItemStatus(ItemStatus.FAILED));
             }
+
+            if (adapterManager != null) {
+                adapterManager.stopFixture(uuid);
+            }
+
+            throw throwable;
         }
 
         if (adapterManager != null) {
@@ -108,7 +114,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
     @Override
     public void interceptBeforeEachMethod(Invocation<Void> invocation,
                                           ReflectiveInvocationContext<Method> invocationContext,
-                                          ExtensionContext extensionContext) {
+                                          ExtensionContext extensionContext) throws Throwable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Intercept before each: {}", invocationContext.getExecutable().getName());
         }
@@ -137,6 +143,12 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 adapterManager.updateFixture(uuid, result -> result.setItemStatus(ItemStatus.FAILED));
             }
+
+            if (adapterManager != null) {
+                adapterManager.stopFixture(uuid);
+            }
+
+            throw throwable;
         }
 
         if (adapterManager != null) {
@@ -175,6 +187,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 stopTestCase(executableTest.getUuid(), throwable, ItemStatus.FAILED);
             }
+
             throw throwable;
         }
     }
@@ -229,6 +242,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 stopTestCase(executableTest.getUuid(), throwable, ItemStatus.FAILED);
             }
+
             throw throwable;
         }
     }
@@ -321,7 +335,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
     @Override
     public void interceptAfterEachMethod(Invocation<Void> invocation,
                                          ReflectiveInvocationContext<Method> invocationContext,
-                                         ExtensionContext extensionContext) {
+                                         ExtensionContext extensionContext) throws Throwable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Intercept after each: {}", invocationContext.getExecutable().getName());
         }
@@ -343,6 +357,12 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 adapterManager.updateFixture(uuid, result -> result.setItemStatus(ItemStatus.FAILED));
             }
+
+            if (adapterManager != null) {
+                adapterManager.stopFixture(uuid);
+            }
+
+            throw throwable;
         }
 
         if (adapterManager != null) {
@@ -353,7 +373,7 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
     @Override
     public void interceptAfterAllMethod(Invocation<Void> invocation,
                                         ReflectiveInvocationContext<Method> invocationContext,
-                                        ExtensionContext extensionContext) {
+                                        ExtensionContext extensionContext) throws Throwable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Intercept after all: {}", invocationContext.getExecutable().getName());
         }
@@ -375,6 +395,12 @@ public class BaseJunit5Listener implements Extension, BeforeAllCallback, AfterAl
             if (adapterManager != null) {
                 adapterManager.updateFixture(uuid, result -> result.setItemStatus(ItemStatus.FAILED));
             }
+
+            if (adapterManager != null) {
+                adapterManager.stopFixture(uuid);
+            }
+
+            throw throwable;
         }
 
         if (adapterManager != null) {

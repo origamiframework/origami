@@ -21,9 +21,12 @@ public class DBSession {
 
     DBCommonQuery query;
 
-    public DBSession(Session session, EHibernateResource resource) {
+    String schema;
+
+    public DBSession(Session session, EHibernateResource resource, String schema) {
         this.session = session;
         this.resource = resource;
+        this.schema = schema;
     }
 
     protected synchronized void beginTransaction() {
@@ -48,7 +51,7 @@ public class DBSession {
         }
 
         try {
-            attachSqlQueryToAllure(null, null);
+            attachSqlQueryToAllure(null, null, schema);
         } catch (Exception ex) {
         }
     }
@@ -59,28 +62,28 @@ public class DBSession {
 
     public <T> DBCommonQuery<T> createQuery(String queryString) {
         beginTransaction();
-        query = new DBQuery(session, queryString, resource);
+        query = new DBQuery(session, queryString, resource, schema);
 
         return query;
     }
 
     public <T> DBCommonQuery<T> createQuery(String queryString, Class<T> resultType) {
         beginTransaction();
-        query = new DBQuery(session, queryString, resultType, resource);
+        query = new DBQuery(session, queryString, resultType, resource, schema);
 
         return query;
     }
 
     public <R> DBCommonQuery<R> createNativeQuery(String sqlString) {
         beginTransaction();
-        query = new DBNativeQuery(session, sqlString, resource);
+        query = new DBNativeQuery(session, sqlString, resource, schema);
 
         return query;
     }
 
     public <R> DBCommonQuery<R> createNativeQuery(String sqlString, Class<R> resultType) {
         beginTransaction();
-        query = new DBNativeQuery(session, sqlString, resultType, resource);
+        query = new DBNativeQuery(session, sqlString, resultType, resource, schema);
 
         return query;
     }

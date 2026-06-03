@@ -53,6 +53,8 @@ public class ConsumerSteps extends CommonSteps {
 
     private static final long RETRY_DEFAULT_READ_TIMEOUT = DURATION_350.toMillis();
 
+    private static final String FAIL_ON_UNPARSED_KAFKA_RECORDS = "fail.on.unparsed.kafka.records";
+
     @Setter
     private Long retryWaitingTime = null;
 
@@ -918,7 +920,7 @@ public class ConsumerSteps extends CommonSteps {
 
             log.info("{}", String.join("", formattedErrors));
 
-            if (!"false".equalsIgnoreCase(Environment.getWithNullValue("fail.on.unparsed.kafka.records"))) {
+            if (!"false".equalsIgnoreCase(Environment.getWithNullValue(FAIL_ON_UNPARSED_KAFKA_RECORDS))) {
                 fail("Kafka. %s\n%s".formatted(
                         getLangValue("kafka.not.parsed.records").replaceAll("\\{}", String.join("; ", errKeys)),
                         String.join("", formattedErrors)));

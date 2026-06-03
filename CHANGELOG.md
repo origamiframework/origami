@@ -3,14 +3,16 @@
 ### 1.5.4
 
 - Core: в OrigamiHelper добавлены методы удаления файлов
+- Core: реализовано прокидывание ошибок из before/after методов после перехвата Test IT
 - Rest: добавлен метод withSkipFields
 - Test Containers: параллельный запуск тестов, реплики сервисов
 - Test Containers: при наличии контейнера с kafka поднимается kafka ui
 - Kafka: время по умолчанию при ожидании сообщений уменьшено до 2 сек
 - WebSocket: время по умолчанию при ожидании сообщений уменьшено до 2 сек
-- Kafka: добавлено падение теста при ошибке парсинга сообщения
-- Добавил copyright allure. Добавил лицензии allure и testit-tms
-- Добавил NOTICE
+- Kafka: добавлено падение теста при ошибке парсинга сообщения "fail.on.unparsed.kafka.records"
+- Hibernate: добавлен вывод схемы
+- Добавлены copyright allure. Добавлены лицензии allure и testit-tms
+- Добавлен NOTICE
 
 ### 1.5.3
 

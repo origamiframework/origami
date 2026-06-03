@@ -47,14 +47,20 @@ public class CommonFixtureSteps {
         try {
             SessionFactory sessionFactory = DataBaseConnection.getSessionFactory(sessionProperties);
             Session currSession;
+            String schema = null;
 
             if (Objects.nonNull(sessionProperties.getSchema())) {
                 currSession = sessionFactory.withOptions().statementInspector(new SchemaInspector(sessionProperties.getSchema())).openSession();
+                schema = sessionProperties.getSchema();
             } else {
                 currSession = sessionFactory.openSession();
             }
 
-            return new DBSession(currSession, sessionProperties.getHibernateResource());
+            if (Objects.isNull(schema) && Objects.nonNull(sessionProperties.getDefaultSchema())) {
+                schema = sessionProperties.getDefaultSchema();
+            }
+
+            return new DBSession(currSession, sessionProperties.getHibernateResource(), schema);
         } catch (NullPointerException e) {
             e.printStackTrace();
             fail(getLangValue("hibernate.connect.to.db.error").formatted(e.getMessage()));

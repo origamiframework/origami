@@ -582,6 +582,7 @@ public abstract class TestContainers {
                     .withEnv("DATASOURCE_URL", "jdbc:postgresql://postgres-db:5432/testdb")
 //                    .withEnv("DATASOURCE_SCHEMA", "public")
                     .withEnv("DATASOURCE_USER", "postgres")
+                    .withEnv("DATASOURCE_USERNAME", "postgres")
                     .withEnv("DATASOURCE_PASSWORD", "postgres");
 
             if (EXECUTION_PARALLEL) {

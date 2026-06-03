@@ -58,15 +58,18 @@ public class DBCommonQuery<R> {
 
     protected Class<?> resultType;
 
-    protected DBCommonQuery(Session session, String query, EHibernateResource resource) {
+    protected String schema;
+
+    protected DBCommonQuery(Session session, String query, EHibernateResource resource, String schema) {
         this.queryString = query;
         this.session = session;
         this.resource = resource;
+        this.schema = schema;
         initRetry(resource);
     }
 
-    protected DBCommonQuery(Session session, String query, Class<?> resultType, EHibernateResource resource) {
-        this(session, query, resource);
+    protected DBCommonQuery(Session session, String query, Class<?> resultType, EHibernateResource resource, String schema) {
+        this(session, query, resource, schema);
         this.resultType = resultType;
     }
 
@@ -482,7 +485,7 @@ public class DBCommonQuery<R> {
         }
 
         try {
-            attachSqlQueryToAllure(queryString, parameters);
+            attachSqlQueryToAllure(queryString, parameters, schema);
         } catch (Exception e) {
         }
 
