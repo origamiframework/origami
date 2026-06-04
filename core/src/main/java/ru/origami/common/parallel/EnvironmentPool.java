@@ -3,6 +3,8 @@ package ru.origami.common.parallel;
 import lombok.Getter;
 
 import java.util.concurrent.Semaphore;
+
+import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Language.getLangValue;
 
 public class EnvironmentPool {
@@ -32,10 +34,12 @@ public class EnvironmentPool {
                 }
             }
         } catch (Exception e) {
-            throw new IllegalStateException(getLangValue("test.containers.fail.get.free.test.env"));
+            fail(getLangValue("test.containers.fail.get.free.test.env"));
         }
 
-        throw new IllegalStateException(getLangValue("test.containers.no.free.test.env"));
+        fail(getLangValue("test.containers.no.free.test.env"));
+
+        return null;
     }
 
     public void release(TestEnvironment env) {

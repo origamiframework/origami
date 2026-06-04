@@ -21,7 +21,7 @@ public class CommonFixtureSteps {
 
     protected DBSession session;
 
-    private static Map<Thread, Map<Class, DBSession>> dbSessions = new HashMap<>();
+    private static Map<Thread, Map<DataBaseSessionProperties, DBSession>> dbSessions = new HashMap<>();
 
     protected void initSession() {
         Thread currentThread = Thread.currentThread();
@@ -31,12 +31,12 @@ public class CommonFixtureSteps {
                 dbSessions.put(currentThread, new HashMap<>());
             }
 
-            if (!dbSessions.get(currentThread).containsKey(this.getClass())) {
-                dbSessions.get(currentThread).put(this.getClass(), openDataBaseConnection());
+            if (!dbSessions.get(currentThread).containsKey(sessionProperties)) {
+                dbSessions.get(currentThread).put(sessionProperties, openDataBaseConnection());
             }
         }
 
-        session = dbSessions.get(currentThread).get(this.getClass());
+        session = dbSessions.get(currentThread).get(sessionProperties);
     }
 
     private DBSession openDataBaseConnection() {

@@ -50,7 +50,7 @@ public final class KafkaInitializer {
 
             try (AdminClient admin = AdminClient.create(props)) {
                 admin.createTopics(finalTopics).all().get();
-                log.info(getLangValue("test.containers.kafka.topics.created"), topics.stream().map(NewTopic::name).toList());
+                log.info(getLangValue("test.containers.kafka.topics.created"), finalTopics.stream().map(NewTopic::name).toList());
             } catch (Exception e) {
                 throw new RuntimeException(getLangValue("test.containers.kafka.topics.created.error").formatted(bootstrapServers), e);
             }

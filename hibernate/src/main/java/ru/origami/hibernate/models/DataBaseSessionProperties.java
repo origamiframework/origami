@@ -1,5 +1,6 @@
 package ru.origami.hibernate.models;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import ru.origami.common.parallel.EnvironmentContext;
 
@@ -9,6 +10,7 @@ import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
 import static ru.origami.common.environment.Environment.TEST_CONTAINERS_ENABLED;
 
 @Getter
+@EqualsAndHashCode
 public class DataBaseSessionProperties {
 
     private EHibernateResource hibernateResource;

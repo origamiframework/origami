@@ -1,12 +1,17 @@
 package ru.origami.common.parallel;
 
-import ru.origami.common.environment.Environment;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static ru.origami.common.environment.Environment.PARALLEL_ENVIRONMENT_POOL;
 import static ru.origami.common.environment.Language.getLangValue;
 
@@ -15,6 +20,8 @@ public class EnvironmentContext {
     private static final Map<Class<?>, TestEnvironment> CLASS_ENV_MAP = new ConcurrentHashMap<>();
 
     private static final Map<Class<?>, Boolean> IS_TEST_CLASS_CACHE = new ConcurrentHashMap<>();
+
+    private static final Map<String, Class<?>> STACK_CLASS_CACHE = new ConcurrentHashMap<>();
 
     private static final Set<String> EXCLUDED_PACKAGE_PREFIXES = Set.of(
             "ru.origami.",
@@ -32,8 +39,8 @@ public class EnvironmentContext {
     public static TestEnvironment getCurrent() {
         Class<?> testClass = findTestClassFromStackTrace();
 
-        if (testClass == null) {
-            throw new IllegalStateException(getLangValue("test.containers.fail.get.current.test.env"));
+        if (Objects.isNull(testClass)) {
+            fail(getLangValue("test.containers.fail.get.current.test.env"));
         }
 
         return CLASS_ENV_MAP.computeIfAbsent(testClass, clazz -> PARALLEL_ENVIRONMENT_POOL.acquire());
@@ -51,7 +58,7 @@ public class EnvironmentContext {
 
             Class<?> clazz = loadClass(className);
 
-            if (clazz == null) {
+            if (Objects.isNull(clazz)) {
                 continue;
             }
 
@@ -74,26 +81,33 @@ public class EnvironmentContext {
     }
 
     private static Class<?> loadClass(String className) {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
+        return STACK_CLASS_CACHE.computeIfAbsent(className, cn -> {
+            try {
+                return Class.forName(cn);
+            } catch (ClassNotFoundException e) {
+                return null;
+            }
+        });
     }
 
     private static boolean isTestClass(Class<?> clazz) {
         return IS_TEST_CLASS_CACHE.computeIfAbsent(clazz, cls -> {
+            // Игнорируем абстрактные классы (они обычно базовые)
+            if (Modifier.isAbstract(cls.getModifiers())) {
+                return false;
+            }
+
             for (Method method : cls.getDeclaredMethods()) {
-                if (method.isAnnotationPresent(org.junit.jupiter.api.Test.class) ||
-                        method.isAnnotationPresent(org.junit.jupiter.params.ParameterizedTest.class) ||
-                        method.isAnnotationPresent(org.junit.jupiter.api.RepeatedTest.class) ||
-                        method.isAnnotationPresent(org.junit.jupiter.api.TestFactory.class)) {
+                if (method.isAnnotationPresent(Test.class) ||
+                        method.isAnnotationPresent(ParameterizedTest.class) ||
+                        method.isAnnotationPresent(RepeatedTest.class) ||
+                        method.isAnnotationPresent(TestFactory.class)) {
                     return true;
                 }
             }
 
-            if (java.lang.reflect.Modifier.isAbstract(cls.getModifiers())) {
-                return false;
+            if (cls.isAnnotationPresent(Nested.class)) {
+                return true;
             }
 
             return false;
@@ -103,7 +117,7 @@ public class EnvironmentContext {
     public static void releaseForClass(Class<?> testClass) {
         TestEnvironment env = CLASS_ENV_MAP.remove(testClass);
 
-        if (env != null) {
+        if (Objects.nonNull(env)) {
             PARALLEL_ENVIRONMENT_POOL.release(env);
         }
     }
