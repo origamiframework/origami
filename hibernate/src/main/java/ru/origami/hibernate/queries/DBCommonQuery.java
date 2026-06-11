@@ -73,6 +73,15 @@ public class DBCommonQuery<R> {
         this.resultType = resultType;
     }
 
+    private synchronized void beginTransaction() {
+        if (!session.getTransaction().getStatus().isOneOf(TransactionStatus.ACTIVE)) {
+            try {
+                session.beginTransaction();
+            } catch (Exception ex) {
+            }
+        }
+    }
+
     public DBCommonQuery<R> setParameter(String name, Object value) {
         if (value == null) {
             queryString = replaceNullValue(queryString, name);
@@ -684,6 +693,8 @@ public class DBCommonQuery<R> {
 
     protected void createQuery() {
         try {
+            beginTransaction();
+
             if (this instanceof DBNativeQuery) {
                 if (resultType != null) {
                     query = session.createNativeQuery(queryString, resultType);
