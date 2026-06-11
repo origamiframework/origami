@@ -50,7 +50,8 @@ public final class Environment {
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
     public static final Boolean TEST_CONTAINERS_ENABLED;
 
-    private static final String EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
+    private static final String JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG = "junit.jupiter.execution.parallel.enabled";
+    private static final String JUNIT_EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
     public static final int EXECUTION_PARALLEL_THREADS;
 
     private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
@@ -76,11 +77,13 @@ public final class Environment {
         TEST_CONTAINERS_ENABLED = "true".equalsIgnoreCase(getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
                 CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp));
         EXECUTION_PARALLEL = "true".equalsIgnoreCase(Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
-                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel));
+                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel))
+                && "true".equalsIgnoreCase(Environment.getSysEnvPropertyOrDefault(JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG,
+                JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG, testContainersExecutionParallel));
 
         if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
-            EXECUTION_PARALLEL_THREADS = getExecutionParallelThreads(Environment.getSysEnvPropertyOrDefault(EXECUTION_PARALLEL_CONFIG,
-                    EXECUTION_PARALLEL_CONFIG, "1"));
+            EXECUTION_PARALLEL_THREADS = getExecutionParallelThreads(Environment.getSysEnvPropertyOrDefault(JUNIT_EXECUTION_PARALLEL_CONFIG,
+                    JUNIT_EXECUTION_PARALLEL_CONFIG, "1"));
             PARALLEL_ENVIRONMENT_POOL = new EnvironmentPool(EXECUTION_PARALLEL_THREADS);
         } else {
             EXECUTION_PARALLEL_THREADS = 0;
