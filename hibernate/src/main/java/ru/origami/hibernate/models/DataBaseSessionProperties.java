@@ -37,6 +37,7 @@ public class DataBaseSessionProperties {
 
     public static class Builder {
 
+        private Class<?> testClass = null;
         private EHibernateResource hibernateResource;
         private String connectionUrl;
         private String dbHost;
@@ -46,6 +47,12 @@ public class DataBaseSessionProperties {
         private String dbPassword;
         private String schema;
         private String defaultSchema;
+
+        public Builder withTestClass(Class<?> testClass) {
+            this.testClass = testClass;
+
+            return this;
+        }
 
         public Builder setHibernateResource(EHibernateResource hibernateResource) {
             this.hibernateResource = hibernateResource;
@@ -101,7 +108,7 @@ public class DataBaseSessionProperties {
             }
 
             if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
-                return "%s_thread_%d".formatted(schema, EnvironmentContext.getCurrent().getId());
+                return "%s_thread_%d".formatted(schema, EnvironmentContext.getCurrent(testClass).getId());
             } else {
                 return schema;
             }

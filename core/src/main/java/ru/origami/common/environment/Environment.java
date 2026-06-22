@@ -104,19 +104,35 @@ public final class Environment {
     }
 
     public static String get(String key) {
-        return getPropertyValue(key, false);
+        return get(key, null);
+    }
+
+    public static String get(String key, Class<?> testClass) {
+        return getPropertyValue(key, false, testClass);
     }
 
     public static int getInt(String key) {
-        return Integer.parseInt(getPropertyValue(key, false));
+        return getInt(key, null);
+    }
+
+    public static int getInt(String key, Class<?> testClass) {
+        return Integer.parseInt(getPropertyValue(key, false, testClass));
     }
 
     public static String getWithNullValue(String key) {
-        return getPropertyValue(key, true);
+        return getWithNullValue(key, null);
+    }
+
+    public static String getWithNullValue(String key, Class<?> testClass) {
+        return getPropertyValue(key, true, testClass);
     }
 
     public static Integer getIntWithNullValue(String key) {
-        String value = getPropertyValue(key, true);
+        return getIntWithNullValue(key, null);
+    }
+
+    public static Integer getIntWithNullValue(String key, Class<?> testClass) {
+        String value = getPropertyValue(key, true, testClass);
 
         if (Objects.nonNull(value)) {
             return Integer.parseInt(value);
@@ -125,7 +141,7 @@ public final class Environment {
         return null;
     }
 
-    private static String getPropertyValue(String key, boolean withNullValue) {
+    private static String getPropertyValue(String key, boolean withNullValue, Class<?> testClass) {
         String propertyValue = null;
         String formattedValue = null;
 
@@ -141,10 +157,10 @@ public final class Environment {
                     inputKey = matcher.group(1);
 
                     if (EXECUTION_PARALLEL) {
-                        String end = "_thread_%d".formatted(EnvironmentContext.getCurrent().getId());
+                        String end = "_thread_%d".formatted(EnvironmentContext.getCurrent(testClass).getId());
 
                         if (!inputKey.endsWith(end)) {
-                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, EnvironmentContext.getCurrent().getId());
+                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, EnvironmentContext.getCurrent(testClass).getId());
                             formattedValue = getSysEnvPropertyOrDefault(inputKeyThread, inputKeyThread, null);
                         }
                     }
@@ -416,7 +432,7 @@ public final class Environment {
     private static void setSystemProperties() {
         for (String prop : PROPERTIES.stringPropertyNames()) {
             if (Objects.isNull(System.getProperty(prop))) {
-                System.setProperty(prop, getPropertyValue(prop, false));
+                System.setProperty(prop, PROPERTIES.getProperty(prop));
             }
         }
     }

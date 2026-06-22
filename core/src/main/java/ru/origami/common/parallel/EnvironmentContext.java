@@ -46,6 +46,14 @@ public class EnvironmentContext {
         return CLASS_ENV_MAP.computeIfAbsent(testClass, clazz -> PARALLEL_ENVIRONMENT_POOL.acquire());
     }
 
+    public static TestEnvironment getCurrent(Class<?> testClass) {
+        if (Objects.nonNull(testClass)) {
+            return CLASS_ENV_MAP.computeIfAbsent(testClass, clazz -> PARALLEL_ENVIRONMENT_POOL.acquire());
+        } else {
+            return getCurrent();
+        }
+    }
+
     private static Class<?> findTestClassFromStackTrace() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
