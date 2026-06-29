@@ -255,7 +255,7 @@ public class CommonSteps {
         }
 
         if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
-            topicName.append( "_thread_").append(EnvironmentContext.getCurrent().getId());
+            topicName.append( "_thread_").append(EnvironmentContext.getCurrent(properties.getTestClass()).getId());
         }
 
         return topicName.toString();

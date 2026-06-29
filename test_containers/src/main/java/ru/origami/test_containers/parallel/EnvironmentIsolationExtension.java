@@ -5,7 +5,12 @@ import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import ru.origami.common.parallel.EnvironmentContext;
 
-public class EnvironmentIsolationExtension implements AfterAllCallback, TestExecutionListener {
+public class EnvironmentIsolationExtension implements BeforeAllCallback, AfterAllCallback, TestExecutionListener {
+
+    @Override
+    public void beforeAll(ExtensionContext context) {
+        EnvironmentContext.getCurrent(context.getRequiredTestClass());
+    }
 
     @Override
     public void executionSkipped(TestIdentifier testIdentifier, String reason) {
@@ -22,7 +27,6 @@ public class EnvironmentIsolationExtension implements AfterAllCallback, TestExec
 
     @Override
     public void afterAll(ExtensionContext context) {
-        Class<?> testClass = context.getRequiredTestClass();
-        EnvironmentContext.releaseForClass(testClass);
+        EnvironmentContext.releaseForClass(context.getRequiredTestClass());
     }
 }

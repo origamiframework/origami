@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import ru.origami.common.environment.Environment;
+import ru.origami.common.parallel.EnvironmentContext;
+import ru.origami.common.parallel.TestEnvironment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static ru.origami.common.environment.Environment.STAND;
+import static ru.origami.common.environment.Environment.*;
 import static ru.origami.common.environment.Language.getLangValue;
 import static ru.origami.kafka.models.ESaslMechanism.GSSAPI;
 import static ru.origami.kafka.models.ESaslMechanism.OAUTHBEARER;
@@ -20,6 +22,10 @@ import static ru.origami.kafka.models.ESaslMechanism.OAUTHBEARER;
 @Getter
 @Slf4j
 public class Properties {
+
+    private boolean disabled;
+
+    private Class<?> testClass;
 
     private String bootstrapServers;
 
@@ -66,6 +72,8 @@ public class Properties {
     private Long retryReadTimeout;
 
     public Properties(Builder builder) {
+        this.disabled = builder.disabled;
+        this.testClass = builder.testClass;
         this.bootstrapServers = builder.bootstrapServers;
         this.groupId = builder.groupId;
         this.username = builder.username;
@@ -89,6 +97,12 @@ public class Properties {
     }
 
     public static class Builder {
+
+        private boolean disabled = false;
+
+        private TestEnvironment testEnvironment = null;
+
+        private Class<?> testClass = null;
 
         @Setter
         private String bootstrapServers;
@@ -158,6 +172,12 @@ public class Properties {
         private Long retryReadTimeout;
 
         private final String ALL_STAND_REGEXP = ".*";
+
+        public Builder withTestClass(Class<?> testClass) {
+            this.testClass = testClass;
+
+            return this;
+        }
 
         public Builder addSecurityProtocol(ESecurityProtocol securityProtocol) {
             this.securityProtocols.put(ALL_STAND_REGEXP, securityProtocol);
@@ -264,6 +284,16 @@ public class Properties {
 
             if (this.saslMechanism == GSSAPI) {
                 // для инфо - необходимо задать внешний конфиг -Djava.security.auth.login.config=/path/to/jaas.conf
+            }
+
+            if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+                if (Objects.isNull(testEnvironment)) {
+                    testEnvironment = EnvironmentContext.getCurrent(testClass);
+                }
+
+                if (testEnvironment.getId() == -1) {
+                    disabled = true;
+                }
             }
 
             return new Properties(this);

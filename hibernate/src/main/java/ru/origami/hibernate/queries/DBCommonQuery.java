@@ -298,148 +298,168 @@ public class DBCommonQuery<R> {
     }
 
     public R getSingleResult() {
-        createQuery();
-        Object result = null;
-        Exception exception = null;
+        if (Objects.nonNull(session)) {
+            createQuery();
+            Object result = null;
+            Exception exception = null;
 
-        try {
-            if (retry != null) {
-                waitBeforeExecute();
+            try {
+                if (retry != null) {
+                    waitBeforeExecute();
 
-                do {
-                    attempt++;
-                    logAttempt(attempt);
+                    do {
+                        attempt++;
+                        logAttempt(attempt);
 
-                    try {
-                        result = query.getSingleResult();
-                    } catch (NoResultException ex) {
-                    }
-                } while (result == null && possibleToFulfillRequest());
-            } else {
-                result = query.getSingleResult();
+                        try {
+                            result = query.getSingleResult();
+                        } catch (NoResultException ex) {
+                        }
+                    } while (result == null && possibleToFulfillRequest());
+                } else {
+                    result = query.getSingleResult();
+                }
+            } catch (Exception ex) {
+                exception = ex;
             }
-        } catch (Exception ex) {
-            exception = ex;
+
+            checkResult(result, exception);
+
+            return (R) result;
+        } else {
+            return null;
         }
-
-        checkResult(result, exception);
-
-        return (R) result;
     }
 
     public R uniqueResult() {
-        createQuery();
-        Object result = null;
-        Exception exception = null;
+        if (Objects.nonNull(session)) {
+            createQuery();
+            Object result = null;
+            Exception exception = null;
 
-        try {
-            if (retry != null) {
-                waitBeforeExecute();
+            try {
+                if (retry != null) {
+                    waitBeforeExecute();
 
-                do {
-                    attempt++;
-                    logAttempt(attempt);
+                    do {
+                        attempt++;
+                        logAttempt(attempt);
 
-                    try {
-                        result = query.uniqueResult();
-                    } catch (NoResultException ex) {
-                    }
-                } while (result == null && possibleToFulfillRequest());
-            } else {
-                result = query.uniqueResult();
+                        try {
+                            result = query.uniqueResult();
+                        } catch (NoResultException ex) {
+                        }
+                    } while (result == null && possibleToFulfillRequest());
+                } else {
+                    result = query.uniqueResult();
+                }
+            } catch (Exception ex) {
+                exception = ex;
             }
-        } catch (Exception ex) {
-            exception = ex;
+
+            checkResult(result, exception);
+
+            return (R) result;
+        } else {
+            return null;
         }
-
-        checkResult(result, exception);
-
-        return (R) result;
     }
 
     public Optional<R> uniqueResultOptional() {
-        createQuery();
-        Optional<Object> result = null;
-        Exception exception = null;
+        if (Objects.nonNull(session)) {
+            createQuery();
+            Optional<Object> result = null;
+            Exception exception = null;
 
-        try {
-            if (retry != null) {
-                waitBeforeExecute();
+            try {
+                if (retry != null) {
+                    waitBeforeExecute();
 
-                do {
-                    attempt++;
-                    logAttempt(attempt);
+                    do {
+                        attempt++;
+                        logAttempt(attempt);
 
-                    try {
-                        result = query.uniqueResultOptional();
-                    } catch (NoResultException ex) {
-                    }
-                } while (result == null && possibleToFulfillRequest());
-            } else {
-                result = query.uniqueResultOptional();
+                        try {
+                            result = query.uniqueResultOptional();
+                        } catch (NoResultException ex) {
+                        }
+                    } while (result == null && possibleToFulfillRequest());
+                } else {
+                    result = query.uniqueResultOptional();
+                }
+            } catch (Exception ex) {
+                exception = ex;
             }
-        } catch (Exception ex) {
-            exception = ex;
+
+            checkResult(result == null ? null : result.orElse(null), exception);
+
+            return (Optional<R>) result;
+        } else {
+            return Optional.empty();
         }
-
-        checkResult(result == null ? null : result.orElse(null), exception);
-
-        return (Optional<R>) result;
     }
 
     public Stream<R> getResultStream() {
-        createQuery();
-        Stream<Object> result = null;
-        Exception exception = null;
+        if (Objects.nonNull(session)) {
+            createQuery();
+            Stream<Object> result = null;
+            Exception exception = null;
 
-        try {
-            if (retry != null) {
-                waitBeforeExecute();
+            try {
+                if (retry != null) {
+                    waitBeforeExecute();
 
-                do {
-                    attempt++;
-                    logAttempt(attempt);
+                    do {
+                        attempt++;
+                        logAttempt(attempt);
 
+                        result = query.getResultStream();
+                    } while (result == null && possibleToFulfillRequest());
+                } else {
                     result = query.getResultStream();
-                } while (result == null && possibleToFulfillRequest());
-            } else {
-                result = query.getResultStream();
+                }
+            } catch (Exception ex) {
+                exception = ex;
             }
-        } catch (Exception ex) {
-            exception = ex;
+
+            List<Object> resultList = result == null ? null : result.collect(Collectors.toList());
+            checkResultForList(resultList, result == null ? 0 : result.count(), exception);
+
+            return (Stream<R>) result;
+        } else {
+            return Stream.empty();
         }
-
-        List<Object> resultList = result == null ? null : result.collect(Collectors.toList());
-        checkResultForList(resultList, result == null ? 0 : result.count(), exception);
-
-        return (Stream<R>) result;
     }
 
     public List<R> getResultList() {
-        createQuery();
-        List<Object> result = null;
-        Exception exception = null;
+        if (Objects.nonNull(session)) {
+            createQuery();
+            List<Object> result = null;
+            Exception exception = null;
 
-        try {
-            if (retry != null) {
-                waitBeforeExecute();
+            try {
+                if (retry != null) {
+                    waitBeforeExecute();
 
-                do {
-                    attempt++;
-                    logAttempt(attempt);
+                    do {
+                        attempt++;
+                        logAttempt(attempt);
 
+                        result = query.getResultList();
+                    } while (result == null && possibleToFulfillRequest());
+                } else {
                     result = query.getResultList();
-                } while (result == null && possibleToFulfillRequest());
-            } else {
-                result = query.getResultList();
+                }
+            } catch (Exception ex) {
+                exception = ex;
             }
-        } catch (Exception ex) {
-            exception = ex;
+
+            checkResultForList(result, result == null ? 0 : result.size(), exception);
+
+            return (List<R>) result;
+        } else {
+            return Collections.emptyList();
         }
-
-        checkResultForList(result, result == null ? 0 : result.size(), exception);
-
-        return (List<R>) result;
     }
 
     public List<R> getNotEmptyResultList() {
@@ -449,18 +469,20 @@ public class DBCommonQuery<R> {
     }
 
     public void executeUpdate() {
-        createQuery();
+        if (Objects.nonNull(session)) {
+            createQuery();
 
-        try {
-            int result = query.executeUpdate();
-            endTransaction();
-            String lowerQuery = query.getQueryString().toLowerCase();
+            try {
+                int result = query.executeUpdate();
+                endTransaction();
+                String lowerQuery = query.getQueryString().toLowerCase();
 
-            if (lowerQuery.startsWith("update") || lowerQuery.startsWith("delete") || lowerQuery.startsWith("insert")) {
-                attachSqlResultToAllure(lowerQuery, result);
+                if (lowerQuery.startsWith("update") || lowerQuery.startsWith("delete") || lowerQuery.startsWith("insert")) {
+                    attachSqlResultToAllure(lowerQuery, result);
+                }
+            } catch (Exception ex) {
+                executeUpdateFail(ex);
             }
-        } catch (Exception ex) {
-            executeUpdateFail(ex);
         }
     }
 

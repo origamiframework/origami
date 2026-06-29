@@ -23,53 +23,61 @@ public class Connection {
     }
 
     private static Producer<String, String> initProducer(Properties properties) {
-        try {
-            final java.util.Properties props = new java.util.Properties();
+        if (!properties.isDisabled()) {
+            try {
+                final java.util.Properties props = new java.util.Properties();
 
-            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
-            props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
-            props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-            props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 60000);
+                props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
+                props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
+                props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+                props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+                props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 60000);
 
-            buildProps(props, properties);
+                buildProps(props, properties);
 
-            return new KafkaProducer<>(props);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                return new KafkaProducer<>(props);
+            } catch (Exception ex) {
+                ex.printStackTrace();
 
-            return null;
+                return null;
+            }
         }
+
+        return null;
     }
 
     private static Consumer<String, String> initConsumer(Properties properties, boolean isEarliest) {
-        try {
-            final java.util.Properties props = new java.util.Properties();
+        if (!properties.isDisabled()) {
+            try {
+                final java.util.Properties props = new java.util.Properties();
 
-            props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, isEarliest ? "earliest" : "latest");
-//            props.put("enable.partition.eof", "false");
-            props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
-            props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
-//            props.put("consumer.timeout.ms", "3000"); для старых версий consumer
-            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
-            props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.MAX_VALUE);
-            props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 15 * 60 * 1000);
-            props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, Integer.MAX_VALUE);
-            props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
-            props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-            props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-            props.put(ConsumerConfig.GROUP_ID_CONFIG, Objects.isNull(properties.getGroupId())
-                    ? UUID.randomUUID().toString()
-                    : properties.getGroupId());
+                props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, isEarliest ? "earliest" : "latest");
+                // props.put("enable.partition.eof", "false");
+                props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+                props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
+                // props.put("consumer.timeout.ms", "3000"); для старых версий consumer
+                props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
+                props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.MAX_VALUE);
+                props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 15 * 60 * 1000);
+                props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, Integer.MAX_VALUE);
+                props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
+                props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+                props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+                props.put(ConsumerConfig.GROUP_ID_CONFIG, Objects.isNull(properties.getGroupId())
+                        ? UUID.randomUUID().toString()
+                        : properties.getGroupId());
 
-            buildProps(props, properties);
+                buildProps(props, properties);
 
-            return new KafkaConsumer<>(props);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                return new KafkaConsumer<>(props);
+            } catch (Exception ex) {
+                ex.printStackTrace();
 
-            return null;
+                return null;
+            }
         }
+
+        return null;
     }
 
     private static void buildProps(java.util.Properties props, Properties properties) {

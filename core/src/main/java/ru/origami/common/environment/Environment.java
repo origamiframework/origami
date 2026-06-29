@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import ru.origami.common.parallel.EnvironmentContext;
 import ru.origami.common.parallel.EnvironmentPool;
+import ru.origami.common.parallel.TestEnvironment;
 import ru.origami.common.utils.SslVerification;
 
 import java.io.*;
@@ -157,10 +158,16 @@ public final class Environment {
                     inputKey = matcher.group(1);
 
                     if (EXECUTION_PARALLEL) {
-                        String end = "_thread_%d".formatted(EnvironmentContext.getCurrent(testClass).getId());
+                        TestEnvironment testEnvironment = EnvironmentContext.getCurrent(testClass);
+
+                        if (testEnvironment.getId() == -1) {
+                            return "-1";
+                        }
+
+                        String end = "_thread_%d".formatted(testEnvironment.getId());
 
                         if (!inputKey.endsWith(end)) {
-                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, EnvironmentContext.getCurrent(testClass).getId());
+                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, testEnvironment.getId());
                             formattedValue = getSysEnvPropertyOrDefault(inputKeyThread, inputKeyThread, null);
                         }
                     }
