@@ -381,7 +381,18 @@ public class OrigamiHelper {
     public static void setLineInFile(String fileName, int lineNumber, String lineToSet) {
         File file = getTestDataFile(fileName);
         List<String> fileLines = readFromFile(file);
-        fileLines.set(lineNumber - 1, lineToSet);
+        int currentSize = fileLines.size();
+
+        if (lineNumber > currentSize) {
+            for (int i = currentSize; i < lineNumber - 1; i++) {
+                fileLines.add("");
+            }
+
+            fileLines.add(lineToSet);
+        } else {
+            fileLines.set(lineNumber - 1, lineToSet);
+        }
+
         writeInFile(file, fileLines);
     }
 

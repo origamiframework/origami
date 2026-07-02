@@ -4,6 +4,8 @@
 
 - Core: в OrigamiHelper добавлены методы удаления файлов
 - Core: реализовано прокидывание ошибок из before/after методов после перехвата Test IT
+- Core: расширен список паттернов EDateFormat
+- Core: в OrigamiHelper изменена логика работы setLineInFile, при отсутствии строки предыдущие будут дополнены пустым значением
 - Rest: добавлен метод withSkipFields
 - Test Containers: параллельный запуск тестов, реплики сервисов, создание изолированных сред
 - Test Containers: при наличии контейнера с kafka поднимается kafka ui
