@@ -356,13 +356,6 @@ public class OrigamiHelper {
         return records;
     }
 
-    public static void changeSourceIdInFile(String fileName, String sourceId) {
-        File file = getTestDataFile(fileName);
-        List<String> fileLines = readFromFile(file);
-        fileLines.set(0, fileLines.get(0).replaceAll(";.+;", format(";%s;", sourceId)));
-        writeInFile(file, fileLines);
-    }
-
     public static List<String> skipLinesInFile(List<String> fileLines, int linesToSkip) {
         return fileLines.subList(linesToSkip, fileLines.size());
     }
