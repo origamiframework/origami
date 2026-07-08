@@ -1,12 +1,20 @@
 package ru.origami.hibernate.models;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import ru.origami.common.parallel.EnvironmentContext;
+import ru.origami.common.parallel.TestEnvironment;
 
 import java.util.Objects;
 
+import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL;
+import static ru.origami.common.environment.Environment.TEST_CONTAINERS_ENABLED;
+
 @Getter
+@EqualsAndHashCode
 public class DataBaseSessionProperties {
 
+    private boolean disabled;
     private EHibernateResource hibernateResource;
     private String connectionUrl;
     private String dbHost;
@@ -18,6 +26,7 @@ public class DataBaseSessionProperties {
     private String defaultSchema;
 
     private DataBaseSessionProperties(Builder builder) {
+        this.disabled = builder.disabled;
         this.hibernateResource = builder.hibernateResource;
         this.connectionUrl = builder.connectionUrl;
         this.dbHost = builder.dbHost;
@@ -31,6 +40,9 @@ public class DataBaseSessionProperties {
 
     public static class Builder {
 
+        private boolean disabled = false;
+        private TestEnvironment testEnvironment = null;
+        private Class<?> testClass = null;
         private EHibernateResource hibernateResource;
         private String connectionUrl;
         private String dbHost;
@@ -39,8 +51,13 @@ public class DataBaseSessionProperties {
         private String dbUserName;
         private String dbPassword;
         private String schema;
-
         private String defaultSchema;
+
+        public Builder withTestClass(Class<?> testClass) {
+            this.testClass = testClass;
+
+            return this;
+        }
 
         public Builder setHibernateResource(EHibernateResource hibernateResource) {
             this.hibernateResource = hibernateResource;
@@ -79,15 +96,29 @@ public class DataBaseSessionProperties {
         }
 
         public Builder setSchema(String schema) {
-            this.schema = schema;
+            this.schema = getSchemaName(schema);
 
             return this;
         }
 
         public Builder setDefaultSchema(String defaultSchema) {
-            this.defaultSchema = defaultSchema;
+            this.defaultSchema = getSchemaName(defaultSchema);
 
             return this;
+        }
+
+        private String getSchemaName(String schema) {
+            if (Objects.isNull(schema)) {
+                return null;
+            }
+
+            if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+                testEnvironment = EnvironmentContext.getCurrent(testClass);
+
+                return "%s_thread_%d".formatted(schema, testEnvironment.getId());
+            } else {
+                return schema;
+            }
         }
 
         public DataBaseSessionProperties build() {
@@ -102,6 +133,16 @@ public class DataBaseSessionProperties {
             }
 
             connectionUrl = String.format(connectionString, dbHost, dbPort, dbName);
+
+            if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+                if (Objects.isNull(testEnvironment)) {
+                    testEnvironment = EnvironmentContext.getCurrent(testClass);
+                }
+
+                if (testEnvironment.getId() == -1) {
+                    disabled = true;
+                }
+            }
 
             return new DataBaseSessionProperties(this);
         }

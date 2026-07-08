@@ -21,20 +21,26 @@ public class CommonFixtureSteps {
 
     protected DBSession session;
 
-    private static Map<Thread, Map<Class, DBSession>> dbSessions = new HashMap<>();
+    private static Map<Thread, Map<DataBaseSessionProperties, DBSession>> dbSessions = new HashMap<>();
 
     protected void initSession() {
-        synchronized (dbSessions) {
-            if (!dbSessions.containsKey(Thread.currentThread())) {
-                dbSessions.put(Thread.currentThread(), new HashMap<>());
+        if (sessionProperties.isDisabled()) {
+            session = new DBSession(null, null, null);
+        } else {
+            Thread currentThread = Thread.currentThread();
+
+            synchronized (dbSessions) {
+                if (!dbSessions.containsKey(currentThread)) {
+                    dbSessions.put(currentThread, new HashMap<>());
+                }
+
+                if (!dbSessions.get(currentThread).containsKey(sessionProperties)) {
+                    dbSessions.get(currentThread).put(sessionProperties, openDataBaseConnection());
+                }
             }
 
-            if (!dbSessions.get(Thread.currentThread()).containsKey(this.getClass())) {
-                dbSessions.get(Thread.currentThread()).put(this.getClass(), openDataBaseConnection());
-            }
+            session = dbSessions.get(currentThread).get(sessionProperties);
         }
-
-        session = dbSessions.get(Thread.currentThread()).get(this.getClass());
     }
 
     private DBSession openDataBaseConnection() {
@@ -45,14 +51,20 @@ public class CommonFixtureSteps {
         try {
             SessionFactory sessionFactory = DataBaseConnection.getSessionFactory(sessionProperties);
             Session currSession;
+            String schema = null;
 
             if (Objects.nonNull(sessionProperties.getSchema())) {
                 currSession = sessionFactory.withOptions().statementInspector(new SchemaInspector(sessionProperties.getSchema())).openSession();
+                schema = sessionProperties.getSchema();
             } else {
                 currSession = sessionFactory.openSession();
             }
 
-            return new DBSession(currSession, sessionProperties.getHibernateResource());
+            if (Objects.isNull(schema) && Objects.nonNull(sessionProperties.getDefaultSchema())) {
+                schema = sessionProperties.getDefaultSchema();
+            }
+
+            return new DBSession(currSession, sessionProperties.getHibernateResource(), schema);
         } catch (NullPointerException e) {
             e.printStackTrace();
             fail(getLangValue("hibernate.connect.to.db.error").formatted(e.getMessage()));

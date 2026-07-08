@@ -19,11 +19,28 @@ import static ru.origami.testit_allure.test_it.testit.aspects.StepAspect.TEST_IT
 @Slf4j
 public class HibernateAttachment {
 
+    public static void attachSqlQueryToAllure(String queryString, List<QueryParameter> parameters, String schema) {
+        if (Objects.isNull(schema)) {
+            attachSqlQueryToAllureWithoutSchema(queryString, parameters);
+        } else {
+            attachSqlQueryToAllureWithSchema(queryString, parameters, schema);
+        }
+    }
+
     @Attachment(value = "sql.query")
-    public static byte[] attachSqlQueryToAllure(String queryString, List<QueryParameter> parameters) {
+    public static byte[] attachSqlQueryToAllureWithoutSchema(String queryString, List<QueryParameter> parameters) {
         String query = Objects.requireNonNull(getSqlQuery(queryString, parameters), getLangValue("hibernate.null.attachment"));
         attachQueryToTestIT(query);
-        showSql(query);
+        showSql(query, null);
+
+        return query.getBytes();
+    }
+
+    @Attachment(value = "sql.query. schema: {schema}")
+    public static byte[] attachSqlQueryToAllureWithSchema(String queryString, List<QueryParameter> parameters, String schema) {
+        String query = Objects.requireNonNull(getSqlQuery(queryString, parameters), getLangValue("hibernate.null.attachment"));
+        attachQueryToTestIT(query);
+        showSql(query, schema);
 
         return query.getBytes();
     }
@@ -58,9 +75,14 @@ public class HibernateAttachment {
         return stackTrace;
     }
 
-    public static void showSql(String query) {
+    public static void showSql(String query, String schema) {
         if (isLocal() || isLoggingEnabled()) {
-            log.info("{}:\n{}\n", getLangValue("hibernate.query.word"), query);
+            if (Objects.nonNull(schema)) {
+                log.info("{}: {}. {}:\n{}\n", getLangValue("hibernate.query.schema"), schema,
+                        getLangValue("hibernate.query.word"), query);
+            } else {
+                log.info("{}:\n{}\n", getLangValue("hibernate.query.word"), query);
+            }
         }
     }
 

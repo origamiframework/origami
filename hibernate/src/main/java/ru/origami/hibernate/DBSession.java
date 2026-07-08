@@ -9,8 +9,6 @@ import ru.origami.hibernate.queries.DBCommonQuery;
 import ru.origami.hibernate.queries.DBNativeQuery;
 import ru.origami.hibernate.queries.DBQuery;
 
-import java.io.Serializable;
-
 import static ru.origami.hibernate.attachment.HibernateAttachment.attachSqlQueryToAllure;
 
 public class DBSession {
@@ -19,16 +17,17 @@ public class DBSession {
 
     EHibernateResource resource;
 
-    DBCommonQuery query;
+    String schema;
 
-    public DBSession(Session session, EHibernateResource resource) {
-        this.session = session;
-        this.resource = resource;
-    }
-
-    protected synchronized void beginTransaction() {
+    public DBSession(Session session, EHibernateResource resource, String schema) {
         ThreadContext.put("logFileName", Thread.currentThread().getName());
 
+        this.session = session;
+        this.resource = resource;
+        this.schema = schema;
+    }
+
+    private synchronized void beginTransaction() {
         if (!session.getTransaction().getStatus().isOneOf(TransactionStatus.ACTIVE)) {
             try {
                 session.beginTransaction();
@@ -48,7 +47,7 @@ public class DBSession {
         }
 
         try {
-            attachSqlQueryToAllure(null, null);
+            attachSqlQueryToAllure(null, null, schema);
         } catch (Exception ex) {
         }
     }
@@ -58,31 +57,19 @@ public class DBSession {
     }
 
     public <T> DBCommonQuery<T> createQuery(String queryString) {
-        beginTransaction();
-        query = new DBQuery(session, queryString, resource);
-
-        return query;
+        return new DBQuery(session, queryString, resource, schema);
     }
 
     public <T> DBCommonQuery<T> createQuery(String queryString, Class<T> resultType) {
-        beginTransaction();
-        query = new DBQuery(session, queryString, resultType, resource);
-
-        return query;
+        return new DBQuery(session, queryString, resultType, resource, schema);
     }
 
     public <R> DBCommonQuery<R> createNativeQuery(String sqlString) {
-        beginTransaction();
-        query = new DBNativeQuery(session, sqlString, resource);
-
-        return query;
+        return new DBNativeQuery(session, sqlString, resource, schema);
     }
 
     public <R> DBCommonQuery<R> createNativeQuery(String sqlString, Class<R> resultType) {
-        beginTransaction();
-        query = new DBNativeQuery(session, sqlString, resultType, resource);
-
-        return query;
+        return new DBNativeQuery(session, sqlString, resultType, resource, schema);
     }
 
     private Object save(Object object) {

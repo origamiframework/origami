@@ -3,6 +3,9 @@ package ru.origami.common.environment;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import ru.origami.common.parallel.EnvironmentContext;
+import ru.origami.common.parallel.EnvironmentPool;
+import ru.origami.common.parallel.TestEnvironment;
 import ru.origami.common.utils.SslVerification;
 
 import java.io.*;
@@ -46,19 +49,47 @@ public final class Environment {
 
     private static final String TEST_CONTAINERS_ENABLED_PROP = "test.containers.enabled";
     private static final String CI_TEST_CONTAINERS_ENABLED_PROP = "TEST_CONTAINERS_ENABLED";
-    public static final String TEST_CONTAINERS_ENABLED;
+    public static final Boolean TEST_CONTAINERS_ENABLED;
+
+    private static final String JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG = "junit.jupiter.execution.parallel.enabled";
+    private static final String JUNIT_EXECUTION_PARALLEL_CONFIG = "junit.jupiter.execution.parallel.config.fixed.parallelism";
+    public static final int EXECUTION_PARALLEL_THREADS;
+
+    private static final String CONTAINERS_EXECUTION_PARALLEL = "test.containers.execution.parallel";
+    private static final String CI_CONTAINERS_EXECUTION_PARALLEL = "TEST_CONTAINERS_EXECUTION_PARALLEL";
+    public static final Boolean EXECUTION_PARALLEL;
+
+    public static final EnvironmentPool PARALLEL_ENVIRONMENT_POOL;
 
     static {
         loadOrigamiProperties();
 
         String testContainersEnabledFromProp = getWithNullValue(TEST_CONTAINERS_ENABLED_PROP);
+        String testContainersExecutionParallel = getWithNullValue(CONTAINERS_EXECUTION_PARALLEL);
 
         if (!"true".equalsIgnoreCase(testContainersEnabledFromProp)) {
             testContainersEnabledFromProp = "false";
         }
 
-        TEST_CONTAINERS_ENABLED = getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
-                CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp);
+        if (!"true".equalsIgnoreCase(testContainersExecutionParallel)) {
+            testContainersExecutionParallel = "false";
+        }
+
+        TEST_CONTAINERS_ENABLED = "true".equalsIgnoreCase(getSysEnvPropertyOrDefault(TEST_CONTAINERS_ENABLED_PROP,
+                CI_TEST_CONTAINERS_ENABLED_PROP, testContainersEnabledFromProp));
+        EXECUTION_PARALLEL = "true".equalsIgnoreCase(Environment.getSysEnvPropertyOrDefault(CONTAINERS_EXECUTION_PARALLEL,
+                CI_CONTAINERS_EXECUTION_PARALLEL, testContainersExecutionParallel))
+                && "true".equalsIgnoreCase(Environment.getSysEnvPropertyOrDefault(JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG,
+                JUNIT_EXECUTION_PARALLEL_ENABLED_CONFIG, testContainersExecutionParallel));
+
+        if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+            EXECUTION_PARALLEL_THREADS = getExecutionParallelThreads(Environment.getSysEnvPropertyOrDefault(JUNIT_EXECUTION_PARALLEL_CONFIG,
+                    JUNIT_EXECUTION_PARALLEL_CONFIG, "1"));
+            PARALLEL_ENVIRONMENT_POOL = new EnvironmentPool(EXECUTION_PARALLEL_THREADS);
+        } else {
+            EXECUTION_PARALLEL_THREADS = 0;
+            PARALLEL_ENVIRONMENT_POOL = null;
+        }
 
         loadLanguageProperties();
         loadCustomProperties();
@@ -74,19 +105,35 @@ public final class Environment {
     }
 
     public static String get(String key) {
-        return getPropertyValue(key, false);
+        return get(key, null);
+    }
+
+    public static String get(String key, Class<?> testClass) {
+        return getPropertyValue(key, false, testClass);
     }
 
     public static int getInt(String key) {
-        return Integer.parseInt(getPropertyValue(key, false));
+        return getInt(key, null);
+    }
+
+    public static int getInt(String key, Class<?> testClass) {
+        return Integer.parseInt(getPropertyValue(key, false, testClass));
     }
 
     public static String getWithNullValue(String key) {
-        return getPropertyValue(key, true);
+        return getWithNullValue(key, null);
+    }
+
+    public static String getWithNullValue(String key, Class<?> testClass) {
+        return getPropertyValue(key, true, testClass);
     }
 
     public static Integer getIntWithNullValue(String key) {
-        String value = getPropertyValue(key, true);
+        return getIntWithNullValue(key, null);
+    }
+
+    public static Integer getIntWithNullValue(String key, Class<?> testClass) {
+        String value = getPropertyValue(key, true, testClass);
 
         if (Objects.nonNull(value)) {
             return Integer.parseInt(value);
@@ -95,23 +142,38 @@ public final class Environment {
         return null;
     }
 
-    private static String getPropertyValue(String key, boolean withNullValue) {
+    private static String getPropertyValue(String key, boolean withNullValue, Class<?> testClass) {
         String propertyValue = null;
         String formattedValue = null;
 
         try {
             propertyValue = new String(PROPERTIES.getProperty(key).getBytes(StandardCharsets.UTF_8));
 
-            if ("true".equalsIgnoreCase(TEST_CONTAINERS_ENABLED)) {
+            if (TEST_CONTAINERS_ENABLED) {
                 Pattern pattern = Pattern.compile("\\$\\{(.+)\\}");
                 Matcher matcher = pattern.matcher(propertyValue);
                 String inputKey = null;
 
                 if (matcher.matches()) {
                     inputKey = matcher.group(1);
+
+                    if (EXECUTION_PARALLEL) {
+                        TestEnvironment testEnvironment = EnvironmentContext.getCurrent(testClass);
+
+                        if (testEnvironment.getId() == -1) {
+                            return "-1";
+                        }
+
+                        String end = "_thread_%d".formatted(testEnvironment.getId());
+
+                        if (!inputKey.endsWith(end)) {
+                            String inputKeyThread = "%s_thread_%d".formatted(inputKey, testEnvironment.getId());
+                            formattedValue = getSysEnvPropertyOrDefault(inputKeyThread, inputKeyThread, null);
+                        }
+                    }
                 }
 
-                if (Objects.nonNull(inputKey)) {
+                if (Objects.nonNull(inputKey) && Objects.isNull(formattedValue)) {
                     formattedValue = getSysEnvPropertyOrDefault(inputKey, inputKey, null);
                 }
             }
@@ -191,7 +253,7 @@ public final class Environment {
     }
 
     private static void loadOrigamiProperties() {
-        try (InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(ORIGAMI_PROPERTIES_FILE)) {
+        try (InputStream inputStream = Environment.class.getClassLoader().getResourceAsStream(ORIGAMI_PROPERTIES_FILE)) {
             if (inputStream == null) {
                 fail("Отсутствует файл конфигурации \"%s\"".formatted(ORIGAMI_PROPERTIES_FILE));
             } else if (inputStream.available() == 0) {
@@ -377,7 +439,7 @@ public final class Environment {
     private static void setSystemProperties() {
         for (String prop : PROPERTIES.stringPropertyNames()) {
             if (Objects.isNull(System.getProperty(prop))) {
-                System.setProperty(prop, getPropertyValue(prop, false));
+                System.setProperty(prop, PROPERTIES.getProperty(prop));
             }
         }
     }
@@ -420,7 +482,7 @@ public final class Environment {
     }
 
     private static void disableSslVerification() {
-        if ("true".equals(getWithNullValue(SSL_VERIFICATION))) {
+        if ("true".equalsIgnoreCase(getWithNullValue(SSL_VERIFICATION))) {
             SslVerification.disableSslVerification();
         }
     }
@@ -428,6 +490,16 @@ public final class Environment {
     private static void setAllureProperties() {
         if (Objects.nonNull(getWithNullValue(ALLURE_LINK_ISSUE_PATTERN))) {
             System.setProperty(ALLURE_LINK_ISSUE_PATTERN, get(ALLURE_LINK_ISSUE_PATTERN));
+        }
+    }
+
+    private static int getExecutionParallelThreads(String parallelThreads) {
+        try {
+            int threads = Integer.parseInt(parallelThreads);
+
+            return threads > 0 ? threads : 1;
+        } catch (NumberFormatException e) {
+            return 1;
         }
     }
 }

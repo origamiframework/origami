@@ -17,4 +17,5 @@ node_modules/
 /.nb-gradle/
 .gradle/
 .vscode/
+.koda/
 /.mvn/

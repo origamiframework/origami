@@ -356,13 +356,6 @@ public class OrigamiHelper {
         return records;
     }
 
-    public static void changeSourceIdInFile(String fileName, String sourceId) {
-        File file = getTestDataFile(fileName);
-        List<String> fileLines = readFromFile(file);
-        fileLines.set(0, fileLines.get(0).replaceAll(";.+;", format(";%s;", sourceId)));
-        writeInFile(file, fileLines);
-    }
-
     public static List<String> skipLinesInFile(List<String> fileLines, int linesToSkip) {
         return fileLines.subList(linesToSkip, fileLines.size());
     }
@@ -381,7 +374,18 @@ public class OrigamiHelper {
     public static void setLineInFile(String fileName, int lineNumber, String lineToSet) {
         File file = getTestDataFile(fileName);
         List<String> fileLines = readFromFile(file);
-        fileLines.set(lineNumber - 1, lineToSet);
+        int currentSize = fileLines.size();
+
+        if (lineNumber > currentSize) {
+            for (int i = currentSize; i < lineNumber - 1; i++) {
+                fileLines.add("");
+            }
+
+            fileLines.add(lineToSet);
+        } else {
+            fileLines.set(lineNumber - 1, lineToSet);
+        }
+
         writeInFile(file, fileLines);
     }
 
@@ -435,6 +439,19 @@ public class OrigamiHelper {
         } catch (IOException exception) {
             exception.printStackTrace();
             fail(getLangValue("file.write.error").formatted(file.getName(), exception.getMessage()));
+        }
+    }
+
+    public static void deleteFile(String filename) {
+        deleteFile(getTestDataFile(filename));
+    }
+
+    public static void deleteFile(File file) {
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            fail(getLangValue("file.delete.error").formatted(file.getName(), exception.getMessage()));
         }
     }
 

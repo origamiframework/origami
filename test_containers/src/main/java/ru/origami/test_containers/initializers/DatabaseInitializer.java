@@ -4,8 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.flywaydb.core.Flyway;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import ru.origami.test_containers.TestContainer;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
+
+import static ru.origami.common.environment.Environment.EXECUTION_PARALLEL_THREADS;
+import static ru.origami.common.environment.Language.getLangValue;
 
 @Slf4j
 public final class DatabaseInitializer {
@@ -26,5 +34,24 @@ public final class DatabaseInitializer {
 
             flyway.migrate();
         }
+    }
+
+    public static void createPostgreSQLSchemas(TestContainer testContainer) {
+        if (Objects.nonNull(testContainer.getPostgreSQLSchema())) {
+            JdbcDatabaseContainer<?> container = testContainer.getDatabaseContainer();
+
+            try (Connection conn = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
+                 Statement stmt = conn.createStatement()) {
+                for (int i = 1; i <= EXECUTION_PARALLEL_THREADS; i++) {
+                    stmt.execute("CREATE SCHEMA IF NOT EXISTS %s;".formatted(getSchemaName(testContainer.getPostgreSQLSchema(), i)));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(getLangValue("test.containers.fail.create.db.schema"), e);
+            }
+        }
+    }
+
+    public static String getSchemaName(String schema, int threadNum) {
+        return "%s_thread_%d".formatted(schema, threadNum);
     }
 }

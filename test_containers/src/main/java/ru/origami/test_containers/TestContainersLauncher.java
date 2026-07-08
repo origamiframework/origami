@@ -8,7 +8,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import ru.origami.common.environment.Environment;
 
 import java.lang.reflect.Constructor;
 import java.util.LinkedHashSet;
@@ -44,7 +43,7 @@ public class TestContainersLauncher implements LauncherSessionListener {
                 return;
             }
 
-            if ("true".equalsIgnoreCase(Environment.TEST_CONTAINERS_ENABLED)) {
+            if (TEST_CONTAINERS_ENABLED) {
                 try {
                     TestContainers impl = selectImplementation();
                     impl.startIfNeeded();

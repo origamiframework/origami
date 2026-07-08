@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.header.Header;
+import ru.origami.common.parallel.EnvironmentContext;
 import ru.origami.kafka.attachment.KafkaAttachment;
 import ru.origami.kafka.models.Properties;
 import ru.origami.kafka.models.Topic;
@@ -251,6 +252,10 @@ public class CommonSteps {
 
         if (Objects.nonNull(properties.getTopicPostfix())) {
             topicName.append(properties.getTopicPostfix());
+        }
+
+        if (TEST_CONTAINERS_ENABLED && EXECUTION_PARALLEL) {
+            topicName.append( "_thread_").append(EnvironmentContext.getCurrent(properties.getTestClass()).getId());
         }
 
         return topicName.toString();

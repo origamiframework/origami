@@ -58,6 +58,8 @@ import static ru.origami.common.environment.Language.getLangValue;
  */
 public class RestSteps {
 
+    public static final String SKIP_FIELD_FILTER = "skipFieldFilter";
+
     private AllureRestAssured allureRestAssured = new AllureRestAssured();
 
     /**

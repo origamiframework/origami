@@ -40,7 +40,7 @@ public final class IbmMqInitializer {
                         .append(user)
                         .append("') AUTHADD(ALL)\n"));
 
-                result = ibmMqContainer.getGenericContainer().execInContainer(
+                result = ibmMqContainer.getIbmMqContainer().execInContainer(
                         "/bin/bash",
                         "-c",
                         "echo \"" + mqscScript + "\" | runmqsc " + name);

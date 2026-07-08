@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.lifecycle.Startable;
 
@@ -21,7 +20,9 @@ import static ru.origami.common.environment.Language.getLangValue;
 @ToString
 public class TestContainer {
 
-    private Startable container;
+    private GenericContainerReplicaSet containerReplicaSet;
+
+    private int replicaCount;
     
     private String name;
 
@@ -31,16 +32,34 @@ public class TestContainer {
 
     protected List<String> databaseScriptLocations = new ArrayList<>();
 
-    public GenericContainer<?> getGenericContainer() {
-        return (GenericContainer<?>) container;
-    }
+    private String kafkaBootstrapServerProperty = "KAFKA_BOOTSTRAP_SERVERS";
+
+    private String postgreSQLSchema;
+
+    private String postgreSQLSchemaProperty = "DATASOURCE_SCHEMA";
+
+    private String oracleSchema;
+
+    private String oracleSchemaProperty = "DATASOURCE_SCHEMA";
+
+    private String msSQLSchema;
+
+    private String msSQLSchemaProperty = "DATASOURCE_SCHEMA";
 
     public JdbcDatabaseContainer<?> getDatabaseContainer() {
-        return (JdbcDatabaseContainer<?>) container;
+        return (JdbcDatabaseContainer<?>) containerReplicaSet.getGenericContainers().getFirst();
     }
 
     public KafkaContainer getKafkaContainer() {
-        return (KafkaContainer) container;
+        return (KafkaContainer) containerReplicaSet.getGenericContainers().getFirst();
+    }
+
+    public GenericContainer<?> getKafkaUiContainer() {
+        return containerReplicaSet.getGenericContainers().getFirst();
+    }
+
+    public GenericContainer<?> getIbmMqContainer() {
+        return containerReplicaSet.getGenericContainers().getFirst();
     }
 
     public Integer getPriorityOrDefault() {
@@ -53,5 +72,16 @@ public class TestContainer {
         }
 
         return originalPort;
+    }
+
+    public List<Startable> getAllContainers() {
+        List<Startable> allContainers = new ArrayList<>();
+
+        if (Objects.nonNull(containerReplicaSet)) {
+            allContainers.addAll(containerReplicaSet.getGenericContainers());
+            allContainers.addAll(containerReplicaSet.getContainers());
+        }
+
+        return allContainers;
     }
 }

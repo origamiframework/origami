@@ -11,6 +11,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import ru.origami.common.OrigamiHelper;
+import ru.origami.common.environment.Environment;
 import ru.origami.kafka.models.*;
 import ru.origami.testit_allure.annotations.Step;
 
@@ -46,11 +47,13 @@ public class ConsumerSteps extends CommonSteps {
 
     public static final Duration DURATION_2_SECONDS = Duration.ofMillis(2000);
 
-    private static final long RETRY_DEFAULT_WAITING_TIME = 5000L;
+    private static final long RETRY_DEFAULT_WAITING_TIME = 2000L;
 
     private static final int RETRY_DEFAULT_MAX_ATTEMPTS = 10;
 
     private static final long RETRY_DEFAULT_READ_TIMEOUT = DURATION_350.toMillis();
+
+    private static final String FAIL_ON_UNPARSED_KAFKA_RECORDS = "fail.on.unparsed.kafka.records";
 
     @Setter
     private Long retryWaitingTime = null;
@@ -916,6 +919,12 @@ public class ConsumerSteps extends CommonSteps {
             }
 
             log.info("{}", String.join("", formattedErrors));
+
+            if (!"false".equalsIgnoreCase(Environment.getWithNullValue(FAIL_ON_UNPARSED_KAFKA_RECORDS))) {
+                fail("Kafka. %s\n%s".formatted(
+                        getLangValue("kafka.not.parsed.records").replaceAll("\\{}", String.join("; ", errKeys)),
+                        String.join("", formattedErrors)));
+            }
         }
 
         return objRecords;
@@ -999,7 +1008,17 @@ public class ConsumerSteps extends CommonSteps {
      * @param topic название топика
      */
     public void subscribe(Topic topic) {
-        subscribe(topic, null);
+        subscribe(getTopicFullName(topic), null);
+    }
+
+    /**
+     * Метод для подписки на топик с возможностью отписаться в нужный момент(unsubscribeAndGetResults, unsubscribeWhenGetMessage)
+     *
+     * @param topic название топика
+     * @param clazz тип для возвращаемого значения при осуществлении отписки
+     */
+    public void subscribe(Topic topic, Class clazz) {
+        subscribe(getTopicFullName(topic), clazz);
     }
 
     /**
@@ -1009,9 +1028,9 @@ public class ConsumerSteps extends CommonSteps {
      * @param clazz тип для возвращаемого значения при осуществлении отписки
      */
     @Step("getLangValue:kafka.step.consumer.subscribe")
-    public void subscribe(Topic topic, Class clazz) {
-        ConsumerConnection conn = subscribe(getTopicFullName(topic), false).setTopic(topic);
-        this.subscribeTopicTask.addSubscribe(conn, clazz, getTopicFullName(topic));
+    public void subscribe(String topic, Class clazz) {
+        ConsumerConnection conn = subscribe(topic, false).setTopic(topic);
+        this.subscribeTopicTask.addSubscribe(conn, clazz, topic);
     }
 
     /**
@@ -1112,7 +1131,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список строк List<String>
@@ -1123,7 +1142,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1135,7 +1154,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1147,7 +1166,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
@@ -1158,7 +1177,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1170,7 +1189,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1182,7 +1201,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
@@ -1193,7 +1212,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1205,7 +1224,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1217,7 +1236,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1229,7 +1248,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1242,7 +1261,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1255,7 +1274,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1267,7 +1286,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1280,7 +1299,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1293,7 +1312,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1305,7 +1324,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1318,7 +1337,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1331,7 +1350,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список строк List<String>
@@ -1342,7 +1361,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1354,7 +1373,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1366,7 +1385,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
@@ -1377,7 +1396,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1389,7 +1408,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1401,7 +1420,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic название топика
      * @return В случае нахождения сообщений возвращается список List<T> (класс переданный в subscribe)
@@ -1412,7 +1431,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданному слову поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic      название топика
      * @param searchWord слово поиска
@@ -1424,7 +1443,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданным словам поиска
-     * При неполучении сообщения в течении 5 сек тест не будет провален
+     * При неполучении сообщения в течение времени по умолчанию тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1436,7 +1455,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1448,7 +1467,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1461,7 +1480,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1474,7 +1493,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1486,7 +1505,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1499,7 +1518,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате json по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
@@ -1512,7 +1531,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param waitingTime максимальное время ожидания сообщения(мс)
@@ -1524,7 +1543,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданному слову поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWord  ключ сообщения
@@ -1537,7 +1556,7 @@ public class ConsumerSteps extends CommonSteps {
 
     /**
      * Метод для отписки от топика кафки при получении сообщения или списка сообщений в формате xml по заданным словам поиска
-     * При неполучении сообщения в течении waitingTime (мс) тест не будет провален
+     * При неполучении сообщения в течение waitingTime (мс) тест не будет провален
      *
      * @param topic       название топика
      * @param searchWords слова поиска
