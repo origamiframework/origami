@@ -1612,7 +1612,10 @@ public class ConsumerSteps extends CommonSteps {
         } while (!needUnsubscribed && System.currentTimeMillis() - startTime < waitingTime);
 
         neededPartitions.clear();
-        this.subscribeTopicTask.unsubscribe(topic, true, true);
+
+        if (!needUnsubscribed) {
+            this.subscribeTopicTask.unsubscribe(topic, true, true);
+        }
 
         if (records.isEmpty()) {
             String message = getLangValue("kafka.no.records.while.subscribe").formatted(topic, logValue);
