@@ -20,10 +20,10 @@ public class SubscribeTopicTask extends TimerTask {
 
     void addSubscribe(ConsumerConnection conn, Class mappingClass, String topic) {
         // TODO ошибку fail(getLangValue("kafka.fail.unsubscribe.no.subscribe").formatted(topic)) вынести сюда и отменять прошлые подписки
-//        subscribeList.stream()
-//                .filter(r -> r.getTopic().equals(topic))
-//                .filter(SubscribeResult::isSubscribed)
-//                .forEach(r -> r.setSubscribed(false));
+        subscribeList.stream()
+                .filter(r -> r.getTopic().equals(topic))
+                .filter(SubscribeResult::isSubscribed)
+                .forEach(r -> r.setSubscribed(false));
         subscribeList.add(new SubscribeResult(conn.setSubscribeTopicTask(this), mappingClass, topic));
     }
 
