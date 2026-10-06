@@ -110,4 +110,32 @@ public class HibernateTests extends QueryFormatter {
 
         assertEquals("query", expectedQuery, formatQuery(inputQuery, null, true, null));
     }
+
+    @Test
+    public void successCount() {
+        String inputQuery = """
+                SELECT COUNT(*) FROM regress_fx_orders.deal_requests dr WHERE dr.id LIKE 'E2E_LO_%'
+                """;
+        String expectedQuery = """
+                SELECT COUNT(*)\s
+                FROM regress_fx_orders.deal_requests dea\s
+                WHERE dea.id LIKE 'E2E_LO_%'
+                """;
+
+        assertEquals("query", expectedQuery, formatQuery(inputQuery, null, true, null));
+    }
+
+    @Test
+    public void successCountWithName() {
+        String inputQuery = """
+                SELECT COUNT(dr.*) FROM regress_fx_orders.deal_requests dr WHERE dr.id LIKE 'E2E_LO_%'
+                """;
+        String expectedQuery = """
+                SELECT COUNT(dea.*)\s
+                FROM regress_fx_orders.deal_requests dea\s
+                WHERE dea.id LIKE 'E2E_LO_%'
+                """;
+
+        assertEquals("query", expectedQuery, formatQuery(inputQuery, null, true, null));
+    }
 }
