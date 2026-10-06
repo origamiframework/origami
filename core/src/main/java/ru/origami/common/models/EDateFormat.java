@@ -40,7 +40,10 @@ public enum EDateFormat implements IDateFormat {
     PATTERN_29("yyyy-MM-dd HH:mm:ss:SSS X"),
     PATTERN_30("yyyy-MM-dd HH:mm:ss:SSSX"),
     PATTERN_31("dd.MM.yyyy_HH.mm"),
-    PATTERN_32("YYYYMMDD_HHmmss");
+    PATTERN_32("YYYYMMDD_HHmmss"),
+    PATTERN_33("HH:mm"),
+    PATTERN_34("yyyy-MM-dd HH:mm:ss:SSS xxx"),
+    PATTERN_35("dd.MM.yyyy HH:mm:ss.SSS XXX");
 
     private final String pattern;
 }
