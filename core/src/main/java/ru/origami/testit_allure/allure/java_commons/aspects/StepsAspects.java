@@ -16,6 +16,7 @@
 
 package ru.origami.testit_allure.allure.java_commons.aspects;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -41,6 +42,7 @@ import static ru.origami.testit_allure.allure.java_commons.util.ResultsUtils.get
 import static ru.origami.testit_allure.test_it.testit.aspects.StepAspect.TEST_IT_ATTACHMENT_TECH_STEP_VALUE;
 
 @Aspect
+@Slf4j
 public class StepsAspects {
 
     private static final InheritableThreadLocal<AllureLifecycle> LIFECYCLE
@@ -79,6 +81,10 @@ public class StepsAspects {
                     .setParameters(parameters);
 
             getLifecycle().startStep(uuid, result);
+
+            if (step.value() != null && !step.value().startsWith("getLangValue:asserts")) {
+                log.info(name);
+            }
         } else {
             isTestItAttachTechStep = true;
             testItAttachTechPreviousStep = getLifecycle().getCurrentTestCaseOrStep().orElse(null);

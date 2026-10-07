@@ -328,7 +328,7 @@ public class ConsumerSteps extends CommonSteps {
                 : searchWords.stream().filter(w -> Objects.nonNull(w) && !w.isEmpty()).toList();
 
         return readFirstBySearchWords(getTopicFullName(topic), formattedSearchList,
-                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining("; ")),
+                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining(", ")),
                 withEmptyResult);
     }
 
@@ -841,7 +841,7 @@ public class ConsumerSteps extends CommonSteps {
                 : searchWords.stream().filter(w -> Objects.nonNull(w) && !w.isEmpty()).toList();
 
         return readAllBySearchWords(getTopicFullName(topic), formattedSearchList,
-                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining("; ")),
+                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining(", ")),
                 withEmptyResult);
     }
 
@@ -1573,7 +1573,7 @@ public class ConsumerSteps extends CommonSteps {
                 : searchWords.stream().filter(w -> Objects.nonNull(w) && !w.isEmpty()).toList();
 
         return unsubscribeWhenGetResult(getTopicFullName(topic), isJson, formattedSearchList,
-                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining("; ")),
+                formattedSearchList.stream().map("'%s'"::formatted).collect(Collectors.joining(", ")),
                 waitingTime, withEmptyResult);
     }
 
@@ -1613,8 +1613,11 @@ public class ConsumerSteps extends CommonSteps {
 
         neededPartitions.clear();
 
-        if (records.isEmpty()) {
+        if (!needUnsubscribed) {
             this.subscribeTopicTask.unsubscribe(topic, true, true);
+        }
+
+        if (records.isEmpty()) {
             String message = getLangValue("kafka.no.records.while.subscribe").formatted(topic, logValue);
 
             attachConsumerMessageToAllure(topic, message, 0);
@@ -1632,7 +1635,7 @@ public class ConsumerSteps extends CommonSteps {
             attachConsumerMessageToAllure(topic, result, records.size());
 
             if (!notFoundedSearchWords.isEmpty()){
-                String notFoundedWords = notFoundedSearchWords.stream().map("'%s'"::formatted).collect(Collectors.joining("; "));
+                String notFoundedWords = notFoundedSearchWords.stream().map("'%s'"::formatted).collect(Collectors.joining(", "));
                 String message = getLangValue("kafka.no.records.while.subscribe").formatted(topic, notFoundedWords);
 
                 log.info(message);

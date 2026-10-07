@@ -5,16 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-parent</artifactId>
-    <version>1.5.4</version>
+    <version>1.5.5</version>
     <packaging>pom</packaging>
 
     <name>Origami Framework Parent</name>
-    <description>Origami Framework Parent</description>
+    <description>
+        Open-source Java framework for test automation of distributed and microservice applications.
+        Provides reusable tools and integrations for REST API, databases, Kafka, WebSocket,
+        IBM MQ, web UI, Testcontainers and Allure.
+    </description>
 
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-dependency</artifactId>
-        <version>1.5.4</version>
+        <version>1.5.5</version>
     </parent>
 
     <properties>
@@ -29,7 +33,7 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.5.4</version>
+            <version>1.5.5</version>
         </dependency>
     </dependencies>
 
@@ -38,37 +42,37 @@
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-hibernate</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-rest</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-kafka</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-websocket</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-ibm-mq</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-selenide</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-test-containers</artifactId>
-                <version>1.5.4</version>
+                <version>1.5.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

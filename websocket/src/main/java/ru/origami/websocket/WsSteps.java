@@ -233,6 +233,8 @@ public class WsSteps {
                 fail(getLangValue("websocket.read.error").formatted(wsTopic.getTopic(), handler.getException().getMessage()));
             }
 
+            waitInMillis(1);
+
             results = handler.getResults();
         } while (System.currentTimeMillis() - startTime < waitingTime && results.isEmpty());
 
@@ -272,5 +274,13 @@ public class WsSteps {
     private void rewriteStepName(WsTopic wsTopic) {
         getLifecycle().updateStep(getLifecycle().getCurrentTestCaseOrStep().get(),
                 step -> step.setName(step.getName().replaceAll("%wsTopic%", wsTopic.getTopic())));
+    }
+
+    private static void waitInMillis(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

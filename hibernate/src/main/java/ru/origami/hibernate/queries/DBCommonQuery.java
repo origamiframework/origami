@@ -15,6 +15,8 @@ import ru.origami.hibernate.utils.Retry;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -172,19 +174,23 @@ public class DBCommonQuery<R> {
     }
 
     private DBCommonQuery<R> changeParameter(String name, Object value, boolean withEmptyValue) {
-        if (!queryString.contains(String.format(":%s", name))) {
+        String parameterRegex = String.format(":%s(?![\\w$])", Pattern.quote(name));
+
+        if (!Pattern.compile(parameterRegex).matcher(queryString).find()) {
             fail(getLangValue("hibernate.change.param.not.found").formatted(name));
         }
 
         try {
             if (value == null) {
                 if (withEmptyValue) {
-                    queryString = queryString.replaceAll(String.format("(AND|OR) [\\w\\d\\.']+ (=)?(\s)?(')?:%s(')?", name), "");
+                    queryString = queryString.replaceAll(
+                            String.format("(AND|OR) [\\w\\d\\.']+ (=)?(\\s)?(')?:%s(?![\\w$])(')?", Pattern.quote(name)),
+                            "");
                 } else {
                     queryString = replaceNullValue(queryString, name);
                 }
             } else {
-                queryString = queryString.replaceAll(String.format(":(\s)?%s", name), String.valueOf(value));
+                queryString = queryString.replaceAll(parameterRegex, Matcher.quoteReplacement(String.valueOf(value)));
             }
         } catch (Exception ex) {
             changeParameterFail(name, ex);
@@ -696,21 +702,24 @@ public class DBCommonQuery<R> {
     }
 
     protected String replaceNullValue(String query, String name) {
+        String parameterRegex = String.format(":%s(?![\\w$])", Pattern.quote(name));
+
         if (query.toUpperCase().startsWith("INSERT")) {
-            return query.replaceAll(String.format("(')?:%s(')?", name), "NULL");
-        } else if (query.toUpperCase().startsWith("SELECT") || query.toUpperCase().startsWith("DELETE")) {
-            return query.replaceAll(String.format("=(\\s)?(')?(\\s)?:%s(')?", name), "IS NULL")
-                    .replaceAll(String.format("(')?:%s(')?", name), "NULL");
+            return query.replaceAll(String.format("(')?%s(')?", parameterRegex), "NULL");
+        } else if (query.toUpperCase().startsWith("SELECT")
+                || query.toUpperCase().startsWith("DELETE")) {
+            return query.replaceAll(String.format("=(\\s)?(')?(\\s)?%s(')?", parameterRegex), "IS NULL")
+                    .replaceAll(String.format("(')?%s(')?", parameterRegex), "NULL");
         } else if (query.toUpperCase().startsWith("UPDATE")) {
             String beforeWhere = query.substring(0, query.toUpperCase().indexOf("WHERE"))
-                    .replaceAll(String.format(":%s", name), "NULL");
+                    .replaceAll(parameterRegex, "NULL");
             String afterWhere = query.substring(query.toUpperCase().indexOf("WHERE"))
-                    .replaceAll(String.format("=(\\s)?:%s", name), "IS NULL");
+                    .replaceAll(String.format("=(\\s)?%s", parameterRegex), "IS NULL");
 
             return beforeWhere + afterWhere;
         }
 
-        return query.replaceAll(String.format("(')?:%s(')?", name), "NULL");
+        return query.replaceAll(String.format("(')?%s(')?", parameterRegex), "NULL");
     }
 
     protected void createQuery() {

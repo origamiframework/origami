@@ -237,7 +237,11 @@ public class QueryFormatter {
             Pattern pattern = Pattern.compile("^(\\w+) (.*)\nfrom (.*) (\\w+).*");
             Matcher matcher = pattern.matcher(query.toLowerCase());
 
-            if (matcher.find()) { // TODO обработать ситуацию, когда у нас (select *)
+            List<String> aggregates = List.of("count(", "min(", "max(", "sum(", "avg(");
+            String finalSelectStr = selectStr;
+
+            if (aggregates.stream().noneMatch(a -> finalSelectStr.toLowerCase().contains(a))
+                    && !finalSelectStr.contains("*") && matcher.find()) {
                 selectStr = String.format("%s.*", selectStr.substring(0, selectStr.indexOf(".")));
             }
         }

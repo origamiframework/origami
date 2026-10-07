@@ -64,7 +64,7 @@ public class Connection {
                 props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
                 props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
                 props.put(ConsumerConfig.GROUP_ID_CONFIG, Objects.isNull(properties.getGroupId())
-                        ? UUID.randomUUID().toString()
+                        ? "autotests"
                         : properties.getGroupId());
 
                 buildProps(props, properties);

@@ -14,6 +14,11 @@
 
 С подробным руководством по Origami Framework можно ознакомиться на официальном сайте https://origamiframework.ru/.
 
+Origami Framework is an open-source Java framework for test automation of
+web services, databases, messaging systems, WebSocket applications and web UI.
+It provides reusable tools and integrations for REST API, Kafka, IBM MQ,
+Hibernate, Selenide, Testcontainers and Allure.
+
 ## Описание
 
 Фреймворк включает в себя:
@@ -30,13 +35,15 @@
 
 Полное руководство по началу работы можно найти в разделе [С чего начать?](https://origamiframework.ru/start.html).
 
-Для работы с Origami Framework рекомендуется использовать версию Java 21(автоматически устанавливается при подключении origami-framework-parent).
+Для работы с Origami Framework рекомендуется использовать Java 21.
+Версия Java автоматически устанавливается при подключении `origami-framework-parent`.
+
 При работе с [Maven](https://maven.apache.org/) необходимо добавить родителя в pom.xml в Вашем тестовом проекте
 ```XML
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.5.4</version>
+        <version>1.5.5</version>
         <relativePath/>
     </parent>
 ```
