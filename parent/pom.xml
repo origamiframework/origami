@@ -9,7 +9,11 @@
     <packaging>pom</packaging>
 
     <name>Origami Framework Parent</name>
-    <description>Origami Framework Parent</description>
+    <description>
+        Open-source Java framework for test automation of distributed and microservice applications.
+        Provides reusable tools and integrations for REST API, databases, Kafka, WebSocket,
+        IBM MQ, web UI, Testcontainers and Allure.
+    </description>
 
     <parent>
         <groupId>ru.origamiframework</groupId>

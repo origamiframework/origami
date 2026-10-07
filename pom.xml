@@ -7,8 +7,12 @@
     <artifactId>origami-framework-dependency</artifactId>
     <version>1.5.5</version>
     <packaging>pom</packaging>
-    <name>Origami</name>
-    <description>Origami Test Framework</description>
+    <name>Origami Framework</name>
+    <description>
+        Open-source Java framework for test automation of distributed and microservice applications.
+        Provides reusable tools and integrations for REST API, databases, Kafka, WebSocket,
+        IBM MQ, web UI, Testcontainers and Allure.
+    </description>
     <url>https://origamiframework.ru/</url>
 
     <licenses>
