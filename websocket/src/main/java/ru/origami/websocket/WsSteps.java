@@ -73,7 +73,7 @@ public class WsSteps {
             WebSocketStompClient stompClient = new WebSocketStompClient(new SockJsClient(transports));
 
             List<MessageConverter> converters = new ArrayList<>();
-            converters.add(new MappingJackson2MessageConverter());
+            converters.add(new JacksonJsonMessageConverter());
             converters.add(new StringMessageConverter());
             converters.add(new SimpleMessageConverter());
             stompClient.setMessageConverter(new CompositeMessageConverter(converters));
@@ -88,7 +88,7 @@ public class WsSteps {
                 headers.add("Authorization", String.format("Bearer %s", token));
             }
 
-            return stompClient.connect(connectionString, headers, sessionHandler).get();
+            return stompClient.connectAsync(connectionString, headers, sessionHandler).get();
         } catch (Exception e) {
             e.printStackTrace();
             handlers.remove(wsTopic);

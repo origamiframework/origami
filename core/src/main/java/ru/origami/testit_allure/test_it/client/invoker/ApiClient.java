@@ -1,6 +1,6 @@
 package ru.origami.testit_allure.test_it.client.invoker;
 
-import com.fasterxml.jackson.core.util.JacksonFeature;
+import org.glassfish.jersey.jackson3.JacksonFeature;
 import ru.origami.testit_allure.test_it.client.invoker.auth.ApiKeyAuth;
 import ru.origami.testit_allure.test_it.client.invoker.auth.Authentication;
 import ru.origami.testit_allure.test_it.client.invoker.auth.HttpBasicAuth;

@@ -7,13 +7,12 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.config.SslConfigs;
-import org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler;
+import org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import ru.origami.kafka.models.Properties;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import static ru.origami.kafka.models.ESaslMechanism.OAUTHBEARER;
 

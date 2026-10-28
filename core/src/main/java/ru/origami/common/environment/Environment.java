@@ -1,7 +1,8 @@
 package ru.origami.common.environment;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import ru.origami.common.parallel.EnvironmentContext;
 import ru.origami.common.parallel.EnvironmentPool;
@@ -22,6 +23,8 @@ import static ru.origami.common.environment.Language.*;
 public final class Environment {
 
     private static final Properties PROPERTIES = new Properties();
+
+    private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 
     public static final String ORIGAMI_PROPERTIES_FILE = "origami.properties";
 
@@ -390,16 +393,17 @@ public final class Environment {
                     prop.putAll(getProperties(arrayElement, prefix + "[" + i++ + "]"));
                 }
             } else if (node.isObject()) {
-                Iterator<String> fieldNames = node.fieldNames();
-                String curPrefixWithDot = (prefix == null || prefix.trim().isEmpty()) ? "" : String.format("%s.", prefix);
+                String curPrefixWithDot =
+                        (prefix == null || prefix.trim().isEmpty())
+                                ? ""
+                                : String.format("%s.", prefix);
 
-                while (fieldNames.hasNext()) {
-                    String fieldName = fieldNames.next();
+                for (String fieldName : node.propertyNames()) {
                     JsonNode fieldValue = node.get(fieldName);
                     prop.putAll(getProperties(fieldValue, curPrefixWithDot + fieldName));
                 }
             } else {
-                prop.put(prefix, node.asText());
+                prop.put(prefix, node.asString());
             }
         }
 
@@ -428,8 +432,8 @@ public final class Environment {
 
     private static JsonNode getJsonNode(String json) {
         try {
-            return new ObjectMapper().readTree(json);
-        } catch (IOException e) {
+            return JSON_MAPPER.readTree(json);
+        } catch (JacksonException e) {
             e.printStackTrace();
         }
 

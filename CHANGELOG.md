@@ -1,5 +1,10 @@
 # Журнал изменений (origami-framework-parent)
 
+### 1.5.6
+
+- Обновлены ключевые зависимости, включая Jackson 3, Hibernate 7, Spring Boot 4, Testcontainers 2 и Kafka 4
+- Код адаптирован к изменениям API библиотек
+
 ### 1.5.5
 
 - Core: добавлен вывод названий шагов в лог

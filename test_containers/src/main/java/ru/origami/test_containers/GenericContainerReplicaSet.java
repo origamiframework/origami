@@ -2,8 +2,6 @@ package ru.origami.test_containers;
 
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.model.Bind;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.testcontainers.containers.*;
 import org.testcontainers.containers.output.OutputFrame;
 import org.testcontainers.containers.startupcheck.StartupCheckStrategy;
@@ -226,11 +224,6 @@ public class GenericContainerReplicaSet {
         genericContainers.forEach(c -> c.addExposedPorts(ports));
 
         return this;
-    }
-
-    @Deprecated
-    public List<Statement> apply(Statement base, Description description) {
-        return genericContainers.stream().map(c -> c.apply(base, description)).toList();
     }
 
     public GenericContainerReplicaSet withExposedPorts(Integer... ports) {

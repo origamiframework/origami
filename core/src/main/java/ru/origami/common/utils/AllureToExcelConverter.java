@@ -1,6 +1,6 @@
 package ru.origami.common.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -81,7 +81,7 @@ public class AllureToExcelConverter {
                 throw new RuntimeException(getLangValue("allure.excel.json.error").formatted(allureResultsDir));
             }
 
-            ObjectMapper mapper = new ObjectMapper();
+            JsonMapper mapper = JsonMapper.builder().build();
             int rowNum = 1;
             int caseNum = 1;
 

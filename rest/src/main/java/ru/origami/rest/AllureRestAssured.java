@@ -3,8 +3,6 @@ package ru.origami.rest;
 import io.restassured.filter.FilterContext;
 import io.restassured.filter.OrderedFilter;
 import io.restassured.internal.NameAndValue;
-import io.restassured.internal.RestAssuredResponseImpl;
-import io.restassured.internal.RestAssuredResponseOptionsGroovyImpl;
 import io.restassured.internal.support.Prettifier;
 import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
@@ -232,15 +230,7 @@ public class AllureRestAssured implements OrderedFilter {
             }
         } else {
             String attach = String.format("File attachment.\n\t   File name: %s\n\t   Content-type: %s", fileName, response.getContentType());
-            RestAssuredResponseImpl responsePrintBody = new RestAssuredResponseImpl();
-            RestAssuredResponseOptionsGroovyImpl groovyResponse = new RestAssuredResponseOptionsGroovyImpl();
-            groovyResponse.setResponseHeaders(response.getHeaders());
-            groovyResponse.setCookies(response.getDetailedCookies());
-            groovyResponse.setStatusCode(response.getStatusCode());
-            groovyResponse.setStatusLine(response.getStatusLine());
-            groovyResponse.setContent(attach);
-            responsePrintBody.setGroovyResponse(groovyResponse);
-            printResponse(responsePrintBody, attach);
+            printResponse(response, attach);
             attachDescriptionToTestIT(attach);
         }
     }

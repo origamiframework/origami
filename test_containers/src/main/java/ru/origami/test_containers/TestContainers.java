@@ -4,7 +4,6 @@ import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
-import junit.framework.AssertionFailedError;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -136,7 +135,7 @@ public abstract class TestContainers {
         withIbmMq = true;
     }
 
-    public final void startIfNeeded() throws AssertionFailedError {
+    public final void startIfNeeded() {
         synchronized (this) {
             if (IS_STARTED.getAndSet(true)) {
                 return;
