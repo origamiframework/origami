@@ -16,8 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
@@ -25,7 +24,7 @@ import java.util.Objects;
 /**
  * Model containing options to filter work items
  */
-@ApiModel(description = "Model containing options to filter work items")
+@Schema(description = "Model containing options to filter work items")
 @JsonPropertyOrder({
   WorkItemSelectModel.JSON_PROPERTY_FILTER,
   WorkItemSelectModel.JSON_PROPERTY_EXTRACTION_MODEL
@@ -51,7 +50,7 @@ public class WorkItemSelectModel {
    * @return filter
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_FILTER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -77,7 +76,7 @@ public class WorkItemSelectModel {
    * @return extractionModel
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_EXTRACTION_MODEL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

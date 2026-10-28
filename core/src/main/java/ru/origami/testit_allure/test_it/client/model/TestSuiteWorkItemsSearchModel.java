@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -103,7 +103,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name of work item")
+  @Schema(description = "Name of work item")
   @JsonIgnore
 
   public String getName() {
@@ -149,7 +149,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return globalIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of global (integer) identifiers")
+  @Schema(description = "Collection of global (integer) identifiers")
   @JsonIgnore
 
   public Set<Long> getGlobalIds() {
@@ -195,7 +195,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return sectionIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of section identifiers")
+  @Schema(description = "Collection of section identifiers")
   @JsonIgnore
 
   public Set<UUID> getSectionIds() {
@@ -241,7 +241,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return priorities
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of priorities of work item")
+  @Schema(description = "Collection of priorities of work item")
   @JsonIgnore
 
   public Set<WorkItemPriorityModel> getPriorities() {
@@ -275,7 +275,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return isAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Is result must consist of only manual/automated work items")
+  @Schema(description = "Is result must consist of only manual/automated work items")
   @JsonIgnore
 
   public Boolean getIsAutomated() {
@@ -321,7 +321,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return states
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of states of work item")
+  @Schema(description = "Collection of states of work item")
   @JsonIgnore
 
   public Set<WorkItemStates> getStates() {
@@ -355,7 +355,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -381,7 +381,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -407,7 +407,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_MODIFIED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -445,7 +445,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return createdByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who created work item")
+  @Schema(description = "Collection of identifiers of users who created work item")
   @JsonIgnore
 
   public Set<UUID> getCreatedByIds() {
@@ -491,7 +491,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return modifiedByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who applied last modification to work item")
+  @Schema(description = "Collection of identifiers of users who applied last modification to work item")
   @JsonIgnore
 
   public Set<UUID> getModifiedByIds() {
@@ -537,7 +537,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return attributes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Custom attributes of work item")
+  @Schema(description = "Custom attributes of work item")
   @JsonIgnore
 
   public Map<String, Set<String>> getAttributes() {
@@ -571,7 +571,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Is result must consist of only actual/deleted work items")
+  @Schema(description = "Is result must consist of only actual/deleted work items")
   @JsonIgnore
 
   public Boolean getIsDeleted() {
@@ -617,7 +617,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return tagNames
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of tags")
+  @Schema(description = "Collection of tags")
   @JsonIgnore
 
   public Set<String> getTagNames() {
@@ -663,7 +663,7 @@ public class TestSuiteWorkItemsSearchModel {
    * @return entityTypes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of types of work item  <br>Allowed values: `TestCases`, `CheckLists`, `SharedSteps`")
+  @Schema(description = "Collection of types of work item  <br>Allowed values: `TestCases`, `CheckLists`, `SharedSteps`")
   @JsonIgnore
 
   public Set<String> getEntityTypes() {

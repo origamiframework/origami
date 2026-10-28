@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class TestResultStepCommentPutModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -89,7 +89,7 @@ public class TestResultStepCommentPutModel {
    * @return text
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getText() {
@@ -123,7 +123,7 @@ public class TestResultStepCommentPutModel {
    * @return stepId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_STEP_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -149,7 +149,7 @@ public class TestResultStepCommentPutModel {
    * @return parentStepId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getParentStepId() {
@@ -195,7 +195,7 @@ public class TestResultStepCommentPutModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentPutModel> getAttachments() {

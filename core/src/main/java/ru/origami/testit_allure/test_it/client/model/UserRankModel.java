@@ -16,7 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
@@ -65,7 +65,7 @@ public class UserRankModel {
    * @return score
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SCORE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -91,7 +91,7 @@ public class UserRankModel {
    * @return workItemsCreated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_WORK_ITEMS_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -117,7 +117,7 @@ public class UserRankModel {
    * @return passedTestPoints
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_PASSED_TEST_POINTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -143,7 +143,7 @@ public class UserRankModel {
    * @return failedTestPoints
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_FAILED_TEST_POINTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -169,7 +169,7 @@ public class UserRankModel {
    * @return skippedTestPoints
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SKIPPED_TEST_POINTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -195,7 +195,7 @@ public class UserRankModel {
    * @return blockedTestPoints
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_BLOCKED_TEST_POINTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -57,7 +57,7 @@ public class TestPointChangeViewModel {
    * @return userId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_USER_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -83,7 +83,7 @@ public class TestPointChangeViewModel {
    * @return userName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getUserName() {
@@ -117,7 +117,7 @@ public class TestPointChangeViewModel {
    * @return testPointCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_TEST_POINT_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

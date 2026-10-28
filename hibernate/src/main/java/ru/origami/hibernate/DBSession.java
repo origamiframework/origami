@@ -76,7 +76,10 @@ public class DBSession {
         try {
             beginTransaction();
 
-            return session.save(object);
+            session.persist(object);
+            session.flush();
+
+            return session.getIdentifier(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -90,7 +93,10 @@ public class DBSession {
         try {
             beginTransaction();
 
-            return session.save(entityName, object);
+            session.persist(entityName, object);
+            session.flush();
+
+            return session.getIdentifier(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -103,7 +109,7 @@ public class DBSession {
     private void saveOrUpdate(Object object) {
         try {
             beginTransaction();
-            session.saveOrUpdate(object);
+            session.merge(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -114,7 +120,7 @@ public class DBSession {
     private void saveOrUpdate(String entityName, Object object) {
         try {
             beginTransaction();
-            session.saveOrUpdate(entityName, object);
+            session.merge(entityName, object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -125,7 +131,7 @@ public class DBSession {
     private void update(Object object) {
         try {
             beginTransaction();
-            session.update(object);
+            session.merge(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -136,7 +142,7 @@ public class DBSession {
     private void update(String entityName, Object object) {
         try {
             beginTransaction();
-            session.update(entityName, object);
+            session.merge(entityName, object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -175,7 +181,7 @@ public class DBSession {
     private void delete(Object object) {
         try {
             beginTransaction();
-            session.delete(object);
+            session.remove(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -186,7 +192,7 @@ public class DBSession {
     private void delete(String entityName, Object object) {
         try {
             beginTransaction();
-            session.delete(entityName, object);
+            session.remove(object);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

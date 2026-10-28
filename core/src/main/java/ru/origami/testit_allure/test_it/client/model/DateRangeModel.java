@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -53,7 +53,7 @@ public class DateRangeModel {
    * @return from
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Minimum date and time")
+  @Schema(description = "Minimum date and time")
   @JsonIgnore
 
   public OffsetDateTime getFrom() {
@@ -87,7 +87,7 @@ public class DateRangeModel {
    * @return to
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Maximum date and time")
+  @Schema(description = "Maximum date and time")
   @JsonIgnore
 
   public OffsetDateTime getTo() {

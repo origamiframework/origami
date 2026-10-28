@@ -14,7 +14,7 @@
 package ru.origami.testit_allure.test_it.client.model;
 
 import com.fasterxml.jackson.annotation.*;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -109,7 +109,7 @@ public class AutotestResultHistoricalGetModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -135,7 +135,7 @@ public class AutotestResultHistoricalGetModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -161,7 +161,7 @@ public class AutotestResultHistoricalGetModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -182,7 +182,7 @@ public class AutotestResultHistoricalGetModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -212,7 +212,7 @@ public class AutotestResultHistoricalGetModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -247,7 +247,7 @@ public class AutotestResultHistoricalGetModel {
    * @return testRunId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_TEST_RUN_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -273,7 +273,7 @@ public class AutotestResultHistoricalGetModel {
    * @return testRunName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getTestRunName() {
@@ -307,7 +307,7 @@ public class AutotestResultHistoricalGetModel {
    * @return testPlanId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getTestPlanId() {
@@ -341,7 +341,7 @@ public class AutotestResultHistoricalGetModel {
    * @return testPlanGlobalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Long getTestPlanGlobalId() {
@@ -375,7 +375,7 @@ public class AutotestResultHistoricalGetModel {
    * @return testPlanName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getTestPlanName() {
@@ -409,7 +409,7 @@ public class AutotestResultHistoricalGetModel {
    * @return configurationId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -435,7 +435,7 @@ public class AutotestResultHistoricalGetModel {
    * @return outcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_OUTCOME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -461,7 +461,7 @@ public class AutotestResultHistoricalGetModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Long getDuration() {
@@ -495,7 +495,7 @@ public class AutotestResultHistoricalGetModel {
    * @return launchSource
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getLaunchSource() {

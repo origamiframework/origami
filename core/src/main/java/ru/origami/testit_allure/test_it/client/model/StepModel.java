@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -73,7 +73,7 @@ public class StepModel {
    * @return workItem
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_WORK_ITEM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -99,7 +99,7 @@ public class StepModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -125,7 +125,7 @@ public class StepModel {
    * @return action
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "User press the button", value = "")
+  @Schema(example = "User press the button", description = "")
   @JsonIgnore
 
   public String getAction() {
@@ -159,7 +159,7 @@ public class StepModel {
    * @return expected
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "System makes a beeeep sound", value = "")
+  @Schema(example = "System makes a beeeep sound", description = "")
   @JsonIgnore
 
   public String getExpected() {
@@ -193,7 +193,7 @@ public class StepModel {
    * @return testData
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Some variables values", value = "")
+  @Schema(example = "Some variables values", description = "")
   @JsonIgnore
 
   public String getTestData() {
@@ -227,7 +227,7 @@ public class StepModel {
    * @return comments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Comment on what to look for", value = "")
+  @Schema(example = "Comment on what to look for", description = "")
   @JsonIgnore
 
   public String getComments() {
@@ -261,7 +261,7 @@ public class StepModel {
    * @return workItemId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getWorkItemId() {

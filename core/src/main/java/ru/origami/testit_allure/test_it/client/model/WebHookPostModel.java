@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -99,7 +99,7 @@ public class WebHookPostModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -125,7 +125,7 @@ public class WebHookPostModel {
    * @return eventType
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -151,7 +151,7 @@ public class WebHookPostModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -185,7 +185,7 @@ public class WebHookPostModel {
    * @return url
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -211,7 +211,7 @@ public class WebHookPostModel {
    * @return requestType
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_REQUEST_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -237,7 +237,7 @@ public class WebHookPostModel {
    * @return shouldSendBody
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SHOULD_SEND_BODY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -268,7 +268,7 @@ public class WebHookPostModel {
    * @return headers
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_HEADERS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -299,7 +299,7 @@ public class WebHookPostModel {
    * @return queryParameters
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_QUERY_PARAMETERS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -325,7 +325,7 @@ public class WebHookPostModel {
    * @return isEnabled
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_IS_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -351,7 +351,7 @@ public class WebHookPostModel {
    * @return shouldSendCustomBody
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SHOULD_SEND_CUSTOM_BODY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -377,7 +377,7 @@ public class WebHookPostModel {
    * @return customBody
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getCustomBody() {
@@ -411,7 +411,7 @@ public class WebHookPostModel {
    * @return shouldReplaceParameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SHOULD_REPLACE_PARAMETERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -437,7 +437,7 @@ public class WebHookPostModel {
    * @return shouldEscapeParameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SHOULD_ESCAPE_PARAMETERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -463,7 +463,7 @@ public class WebHookPostModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

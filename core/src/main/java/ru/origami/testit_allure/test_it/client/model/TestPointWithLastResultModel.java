@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -140,7 +140,7 @@ public class TestPointWithLastResultModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -166,7 +166,7 @@ public class TestPointWithLastResultModel {
    * @return workItemName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getWorkItemName() {
@@ -200,7 +200,7 @@ public class TestPointWithLastResultModel {
    * @return isAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_IS_AUTOMATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -226,7 +226,7 @@ public class TestPointWithLastResultModel {
    * @return testerId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getTesterId() {
@@ -260,7 +260,7 @@ public class TestPointWithLastResultModel {
    * @return workItemId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_WORK_ITEM_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -286,7 +286,7 @@ public class TestPointWithLastResultModel {
    * @return configurationId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getConfigurationId() {
@@ -320,7 +320,7 @@ public class TestPointWithLastResultModel {
    * @return testSuiteId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_TEST_SUITE_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -346,7 +346,7 @@ public class TestPointWithLastResultModel {
    * @return lastTestResult
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_LAST_TEST_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -372,7 +372,7 @@ public class TestPointWithLastResultModel {
    * @return status
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getStatus() {
@@ -406,7 +406,7 @@ public class TestPointWithLastResultModel {
    * @return workItemGlobalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Long getWorkItemGlobalId() {
@@ -440,7 +440,7 @@ public class TestPointWithLastResultModel {
    * @return workItemEntityTypeName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getWorkItemEntityTypeName() {
@@ -474,7 +474,7 @@ public class TestPointWithLastResultModel {
    * @return sectionId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_SECTION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -500,7 +500,7 @@ public class TestPointWithLastResultModel {
    * @return sectionName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getSectionName() {
@@ -534,7 +534,7 @@ public class TestPointWithLastResultModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDate() {
@@ -568,7 +568,7 @@ public class TestPointWithLastResultModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -602,7 +602,7 @@ public class TestPointWithLastResultModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -628,7 +628,7 @@ public class TestPointWithLastResultModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -674,7 +674,7 @@ public class TestPointWithLastResultModel {
    * @return attributes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Map<String, Object> getAttributes() {
@@ -720,7 +720,7 @@ public class TestPointWithLastResultModel {
    * @return tagNames
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<String> getTagNames() {
@@ -754,7 +754,7 @@ public class TestPointWithLastResultModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -780,7 +780,7 @@ public class TestPointWithLastResultModel {
    * @return priority
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_PRIORITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -818,7 +818,7 @@ public class TestPointWithLastResultModel {
    * @return testSuiteNameBreadCrumbs
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<String> getTestSuiteNameBreadCrumbs() {
@@ -852,7 +852,7 @@ public class TestPointWithLastResultModel {
    * @return groupCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Integer getGroupCount() {
@@ -886,7 +886,7 @@ public class TestPointWithLastResultModel {
    * @return iteration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_ITERATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

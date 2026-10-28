@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -99,7 +99,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -125,7 +125,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeSection
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_SECTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -151,7 +151,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includePriority
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_PRIORITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -177,7 +177,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_AUTOMATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -203,7 +203,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeStatus
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -229,7 +229,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeDuration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -255,7 +255,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeCreationDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_CREATION_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -281,7 +281,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeAuthor
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_AUTHOR)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -307,7 +307,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeModificationDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_MODIFICATION_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -333,7 +333,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeModifiedBy
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_MODIFIED_BY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -359,7 +359,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeTags
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_TAGS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -385,7 +385,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return includeIterations
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INCLUDE_ITERATIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -423,7 +423,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return customAttributesIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<UUID> getCustomAttributesIds() {
@@ -469,7 +469,7 @@ public class GetXlsxTestPointsByTestPlanModel {
    * @return configurationIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<UUID> getConfigurationIds() {

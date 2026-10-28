@@ -16,7 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -46,7 +46,7 @@ public class AttachmentPutModel {
    * @return id
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the GUID of the attachment.")
+  @Schema(required = true, description = "Specifies the GUID of the attachment.")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

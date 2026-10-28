@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -83,7 +83,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return outcomes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<AutotestResultOutcome> getOutcomes() {
@@ -129,7 +129,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return testPlanIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getTestPlanIds() {
@@ -175,7 +175,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return testRunIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getTestRunIds() {
@@ -221,7 +221,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return configurationIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getConfigurationIds() {
@@ -255,7 +255,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return launchSource
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getLaunchSource() {
@@ -301,7 +301,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return userIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getUserIds() {
@@ -335,7 +335,7 @@ public class AutotestHistoricalResultSelectModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

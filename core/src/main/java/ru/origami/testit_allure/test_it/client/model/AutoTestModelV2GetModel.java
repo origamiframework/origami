@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -112,7 +112,7 @@ public class AutoTestModelV2GetModel {
    * @return externalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "10001", value = "This property is used to set autotest identifier from client system")
+  @Schema(example = "10001", description = "This property is used to set autotest identifier from client system")
   @JsonIgnore
 
   public String getExternalId() {
@@ -158,7 +158,7 @@ public class AutoTestModelV2GetModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<LinkModel> getLinks() {
@@ -192,7 +192,7 @@ public class AutoTestModelV2GetModel {
    * @return projectId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "This property is used to link autotest with project")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "This property is used to link autotest with project")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -218,7 +218,7 @@ public class AutoTestModelV2GetModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "WorkItem valid creation test", value = "")
+  @Schema(example = "WorkItem valid creation test", description = "")
   @JsonIgnore
 
   public String getName() {
@@ -252,7 +252,7 @@ public class AutoTestModelV2GetModel {
    * @return namespace
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "UnitTest.Core", value = "")
+  @Schema(example = "UnitTest.Core", description = "")
   @JsonIgnore
 
   public String getNamespace() {
@@ -286,7 +286,7 @@ public class AutoTestModelV2GetModel {
    * @return classname
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "WorkItemServiceTest.cs", value = "")
+  @Schema(example = "WorkItemServiceTest.cs", description = "")
   @JsonIgnore
 
   public String getClassname() {
@@ -332,7 +332,7 @@ public class AutoTestModelV2GetModel {
    * @return steps
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AutoTestStepModel> getSteps() {
@@ -378,7 +378,7 @@ public class AutoTestModelV2GetModel {
    * @return setup
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AutoTestStepModel> getSetup() {
@@ -424,7 +424,7 @@ public class AutoTestModelV2GetModel {
    * @return teardown
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AutoTestStepModel> getTeardown() {
@@ -458,7 +458,7 @@ public class AutoTestModelV2GetModel {
    * @return globalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "1000", value = "")
+  @Schema(example = "1000", description = "")
   @JsonProperty(JSON_PROPERTY_GLOBAL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -484,7 +484,7 @@ public class AutoTestModelV2GetModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDate() {
@@ -518,7 +518,7 @@ public class AutoTestModelV2GetModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -552,7 +552,7 @@ public class AutoTestModelV2GetModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -578,7 +578,7 @@ public class AutoTestModelV2GetModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -624,7 +624,7 @@ public class AutoTestModelV2GetModel {
    * @return labels
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<LabelShortModel> getLabels() {
@@ -658,7 +658,7 @@ public class AutoTestModelV2GetModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -684,7 +684,7 @@ public class AutoTestModelV2GetModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

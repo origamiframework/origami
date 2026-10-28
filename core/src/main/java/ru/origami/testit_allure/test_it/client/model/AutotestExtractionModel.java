@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class AutotestExtractionModel {
    * @return includeAutotests
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of autotests to be included")
+  @Schema(description = "Identifiers of autotests to be included")
   @JsonIgnore
 
   public Set<UUID> getIncludeAutotests() {
@@ -109,7 +109,7 @@ public class AutotestExtractionModel {
    * @return excludeAutotests
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of autotests to be excluded")
+  @Schema(description = "Identifiers of autotests to be excluded")
   @JsonIgnore
 
   public Set<UUID> getExcludeAutotests() {

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -120,7 +120,7 @@ public class ProjectModel {
    * @return attributesScheme
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<CustomAttributeModel> getAttributesScheme() {
@@ -166,7 +166,7 @@ public class ProjectModel {
    * @return testPlansAttributesScheme
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<CustomAttributeModel> getTestPlansAttributesScheme() {
@@ -200,7 +200,7 @@ public class ProjectModel {
    * @return testCasesCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "1", value = "")
+  @Schema(example = "1", description = "")
   @JsonIgnore
 
   public Integer getTestCasesCount() {
@@ -234,7 +234,7 @@ public class ProjectModel {
    * @return sharedStepsCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2", value = "")
+  @Schema(example = "2", description = "")
   @JsonIgnore
 
   public Integer getSharedStepsCount() {
@@ -268,7 +268,7 @@ public class ProjectModel {
    * @return checkListsCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "5", value = "")
+  @Schema(example = "5", description = "")
   @JsonIgnore
 
   public Integer getCheckListsCount() {
@@ -302,7 +302,7 @@ public class ProjectModel {
    * @return autoTestsCount
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "10", value = "")
+  @Schema(example = "10", description = "")
   @JsonIgnore
 
   public Integer getAutoTestsCount() {
@@ -336,7 +336,7 @@ public class ProjectModel {
    * @return isFavorite
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "Property is used to filter favourite projects")
+  @Schema(example = "true", description = "Property is used to filter favourite projects")
   @JsonProperty(JSON_PROPERTY_IS_FAVORITE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -362,7 +362,7 @@ public class ProjectModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -388,7 +388,7 @@ public class ProjectModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -414,7 +414,7 @@ public class ProjectModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -448,7 +448,7 @@ public class ProjectModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -474,7 +474,7 @@ public class ProjectModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -508,7 +508,7 @@ public class ProjectModel {
    * @return globalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "1000", value = "")
+  @Schema(example = "1000", description = "")
   @JsonProperty(JSON_PROPERTY_GLOBAL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -534,7 +534,7 @@ public class ProjectModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -560,7 +560,7 @@ public class ProjectModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "This project contains core tests", value = "")
+  @Schema(example = "This project contains core tests", description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -594,7 +594,7 @@ public class ProjectModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "Core tests", required = true, value = "")
+  @Schema(example = "Core tests", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

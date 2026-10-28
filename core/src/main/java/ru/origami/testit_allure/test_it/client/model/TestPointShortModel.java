@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -77,7 +77,7 @@ public class TestPointShortModel {
    * @return testSuiteId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_TEST_SUITE_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -103,7 +103,7 @@ public class TestPointShortModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -129,7 +129,7 @@ public class TestPointShortModel {
    * @return testerId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getTesterId() {
@@ -163,7 +163,7 @@ public class TestPointShortModel {
    * @return workItemId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getWorkItemId() {
@@ -197,7 +197,7 @@ public class TestPointShortModel {
    * @return configurationId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getConfigurationId() {
@@ -231,7 +231,7 @@ public class TestPointShortModel {
    * @return status
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "NoResult", value = "Applies one of these values: Blocked, NoResults, Failed, Passed")
+  @Schema(example = "NoResult", description = "Applies one of these values: Blocked, NoResults, Failed, Passed")
   @JsonIgnore
 
   public String getStatus() {
@@ -265,7 +265,7 @@ public class TestPointShortModel {
    * @return lastTestResultId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getLastTestResultId() {
@@ -299,7 +299,7 @@ public class TestPointShortModel {
    * @return iterationId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ITERATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

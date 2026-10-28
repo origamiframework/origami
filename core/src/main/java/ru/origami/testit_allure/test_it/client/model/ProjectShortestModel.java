@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class ProjectShortestModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Unique ID of project")
+  @Schema(description = "Unique ID of project")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -87,7 +87,7 @@ public class ProjectShortestModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the project is deleted")
+  @Schema(description = "Indicates whether the project is deleted")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -113,7 +113,7 @@ public class ProjectShortestModel {
    * @return globalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Global ID of project")
+  @Schema(description = "Global ID of project")
   @JsonProperty(JSON_PROPERTY_GLOBAL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -139,7 +139,7 @@ public class ProjectShortestModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name of project")
+  @Schema(description = "Name of project")
   @JsonIgnore
 
   public String getName() {

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -75,7 +75,7 @@ public class TestPointAnalyticResult {
    * @return countGroupByStatus
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestPlanGroupByStatus> getCountGroupByStatus() {
@@ -121,7 +121,7 @@ public class TestPointAnalyticResult {
    * @return sumGroupByTester
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestPlanGroupByTester> getSumGroupByTester() {
@@ -167,7 +167,7 @@ public class TestPointAnalyticResult {
    * @return countGroupByTester
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestPlanGroupByTester> getCountGroupByTester() {
@@ -213,7 +213,7 @@ public class TestPointAnalyticResult {
    * @return countGroupByTestSuite
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestPlanGroupByTestSuite> getCountGroupByTestSuite() {
@@ -259,7 +259,7 @@ public class TestPointAnalyticResult {
    * @return countGroupByTesterAndStatus
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestPlanGroupByTesterAndStatus> getCountGroupByTesterAndStatus() {

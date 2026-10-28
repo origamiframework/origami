@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -48,7 +48,7 @@ public class WorkItemIdModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "Used for search WorkItem. Internal identifier has a Guid data format. Global identifier has an integer data format")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "Used for search WorkItem. Internal identifier has a Guid data format. Global identifier has an integer data format")
   @JsonIgnore
 
   public String getId() {

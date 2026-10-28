@@ -4,7 +4,7 @@ import jakarta.persistence.TemporalType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.hibernate.query.BindableType;
+import org.hibernate.type.BindableType;
 
 import java.time.Instant;
 import java.util.Calendar;

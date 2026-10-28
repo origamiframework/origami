@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class ProjectExportQueryModel {
    * @return sectionIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the IDs of the sections you want to export.<br />  Use this parameter if you want to export certain parts of the project.<br />  In this parameter, \"<b>string</b>\" values are IDs of the test library sections.")
+  @Schema(description = "Specifies the IDs of the sections you want to export.<br />  Use this parameter if you want to export certain parts of the project.<br />  In this parameter, \"<b>string</b>\" values are IDs of the test library sections.")
   @JsonIgnore
 
   public Set<UUID> getSectionIds() {
@@ -109,7 +109,7 @@ public class ProjectExportQueryModel {
    * @return workItemIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the work items you want to export from a project.<br />  Use this parameter if you want to export certain work items.<br />  In this parameter, \"<b>string</b>\" values are IDs of the work items.")
+  @Schema(description = "Specifies the work items you want to export from a project.<br />  Use this parameter if you want to export certain work items.<br />  In this parameter, \"<b>string</b>\" values are IDs of the work items.")
   @JsonIgnore
 
   public Set<UUID> getWorkItemIds() {

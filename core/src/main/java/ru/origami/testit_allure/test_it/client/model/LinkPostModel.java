@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -64,7 +64,7 @@ public class LinkPostModel {
    * @return title
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Link name.")
+  @Schema(description = "Link name.")
   @JsonIgnore
 
   public String getTitle() {
@@ -98,7 +98,7 @@ public class LinkPostModel {
    * @return url
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Address can be specified without protocol, but necessarily with the domain.")
+  @Schema(required = true, description = "Address can be specified without protocol, but necessarily with the domain.")
   @JsonProperty(JSON_PROPERTY_URL)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -124,7 +124,7 @@ public class LinkPostModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Link description.")
+  @Schema(description = "Link description.")
   @JsonIgnore
 
   public String getDescription() {
@@ -158,7 +158,7 @@ public class LinkPostModel {
    * @return type
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -184,7 +184,7 @@ public class LinkPostModel {
    * @return hasInfo
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_HAS_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

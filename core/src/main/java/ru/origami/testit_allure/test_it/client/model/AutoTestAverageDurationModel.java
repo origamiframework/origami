@@ -16,7 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 
@@ -49,7 +49,7 @@ public class AutoTestAverageDurationModel {
    * @return passedAverageDuration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2.5555", value = "")
+  @Schema(example = "2.5555", description = "")
   @JsonProperty(JSON_PROPERTY_PASSED_AVERAGE_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -75,7 +75,7 @@ public class AutoTestAverageDurationModel {
    * @return failedAverageDuration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2.5555", value = "")
+  @Schema(example = "2.5555", description = "")
   @JsonProperty(JSON_PROPERTY_FAILED_AVERAGE_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

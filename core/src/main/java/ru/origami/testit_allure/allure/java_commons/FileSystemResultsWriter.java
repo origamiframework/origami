@@ -16,7 +16,8 @@
 
 package ru.origami.testit_allure.allure.java_commons;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import ru.origami.testit_allure.allure.java_commons.internal.Allure2ModelJackson;
 import ru.origami.testit_allure.allure.model.TestResult;
 import ru.origami.testit_allure.allure.model.TestResultContainer;
@@ -48,7 +49,7 @@ public class FileSystemResultsWriter implements AllureResultsWriter {
         final Path file = outputDirectory.resolve(testResultName);
         try {
             mapper.writeValue(file.toFile(), testResult);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new AllureResultsWriteException("Could not write Allure test result", e);
         }
     }
@@ -62,7 +63,7 @@ public class FileSystemResultsWriter implements AllureResultsWriter {
         final Path file = outputDirectory.resolve(testResultContainerName);
         try {
             mapper.writeValue(file.toFile(), testResultContainer);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new AllureResultsWriteException("Could not write Allure test result container", e);
         }
     }

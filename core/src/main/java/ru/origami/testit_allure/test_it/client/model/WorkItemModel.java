@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -164,7 +164,7 @@ public class WorkItemModel {
    * @return versionId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "used for versioning changes in workitem")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "used for versioning changes in workitem")
   @JsonProperty(JSON_PROPERTY_VERSION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -190,7 +190,7 @@ public class WorkItemModel {
    * @return medianDuration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "10000", value = "used for getting a median duration of all autotests related to this workitem")
+  @Schema(example = "10000", description = "used for getting a median duration of all autotests related to this workitem")
   @JsonProperty(JSON_PROPERTY_MEDIAN_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -216,7 +216,7 @@ public class WorkItemModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -242,7 +242,7 @@ public class WorkItemModel {
    * @return projectId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -268,7 +268,7 @@ public class WorkItemModel {
    * @return entityTypeName
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ENTITY_TYPE_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -294,7 +294,7 @@ public class WorkItemModel {
    * @return isAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_AUTOMATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -332,7 +332,7 @@ public class WorkItemModel {
    * @return autoTests
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AutoTestModel> getAutoTests() {
@@ -378,7 +378,7 @@ public class WorkItemModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentModel> getAttachments() {
@@ -424,7 +424,7 @@ public class WorkItemModel {
    * @return sectionPreconditionSteps
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<StepModel> getSectionPreconditionSteps() {
@@ -470,7 +470,7 @@ public class WorkItemModel {
    * @return sectionPostconditionSteps
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<StepModel> getSectionPostconditionSteps() {
@@ -504,7 +504,7 @@ public class WorkItemModel {
    * @return versionNumber
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "10", value = "used for define chronology of workitem state in each version")
+  @Schema(example = "10", description = "used for define chronology of workitem state in each version")
   @JsonProperty(JSON_PROPERTY_VERSION_NUMBER)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -542,7 +542,7 @@ public class WorkItemModel {
    * @return iterations
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<IterationModel> getIterations() {
@@ -576,7 +576,7 @@ public class WorkItemModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -602,7 +602,7 @@ public class WorkItemModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -636,7 +636,7 @@ public class WorkItemModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -662,7 +662,7 @@ public class WorkItemModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -696,7 +696,7 @@ public class WorkItemModel {
    * @return globalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "1000", value = "")
+  @Schema(example = "1000", description = "")
   @JsonProperty(JSON_PROPERTY_GLOBAL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -722,7 +722,7 @@ public class WorkItemModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -748,7 +748,7 @@ public class WorkItemModel {
    * @return sectionId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_SECTION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -774,7 +774,7 @@ public class WorkItemModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "This is a basic test template", value = "")
+  @Schema(example = "This is a basic test template", description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -808,7 +808,7 @@ public class WorkItemModel {
    * @return state
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_STATE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -834,7 +834,7 @@ public class WorkItemModel {
    * @return priority
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PRIORITY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -865,7 +865,7 @@ public class WorkItemModel {
    * @return steps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -896,7 +896,7 @@ public class WorkItemModel {
    * @return preconditionSteps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PRECONDITION_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -927,7 +927,7 @@ public class WorkItemModel {
    * @return postconditionSteps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_POSTCONDITION_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -955,7 +955,7 @@ public class WorkItemModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "10000", value = "")
+  @Schema(example = "10000", description = "")
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -986,7 +986,7 @@ public class WorkItemModel {
    * @return attributes
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ATTRIBUTES)
   @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.ALWAYS)
 
@@ -1017,7 +1017,7 @@ public class WorkItemModel {
    * @return tags
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_TAGS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -1048,7 +1048,7 @@ public class WorkItemModel {
    * @return links
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -1074,7 +1074,7 @@ public class WorkItemModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "Basic template", required = true, value = "")
+  @Schema(example = "Basic template", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

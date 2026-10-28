@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -73,7 +73,7 @@ public class WorkItemStepChangeViewModel {
    * @return action
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getAction() {
@@ -107,7 +107,7 @@ public class WorkItemStepChangeViewModel {
    * @return expected
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getExpected() {
@@ -141,7 +141,7 @@ public class WorkItemStepChangeViewModel {
    * @return comments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getComments() {
@@ -175,7 +175,7 @@ public class WorkItemStepChangeViewModel {
    * @return testData
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getTestData() {
@@ -209,7 +209,7 @@ public class WorkItemStepChangeViewModel {
    * @return index
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_INDEX)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -235,7 +235,7 @@ public class WorkItemStepChangeViewModel {
    * @return workItemId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getWorkItemId() {
@@ -269,7 +269,7 @@ public class WorkItemStepChangeViewModel {
    * @return workItem
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_WORK_ITEM)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

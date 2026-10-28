@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -55,7 +55,7 @@ public class AutoTestStepModel {
    * @return title
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Step name.")
+  @Schema(required = true, description = "Step name.")
   @JsonProperty(JSON_PROPERTY_TITLE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -81,7 +81,7 @@ public class AutoTestStepModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Detailed step description. It appears when the step is unfolded.")
+  @Schema(description = "Detailed step description. It appears when the step is unfolded.")
   @JsonIgnore
 
   public String getDescription() {
@@ -127,7 +127,7 @@ public class AutoTestStepModel {
    * @return steps
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Includes a nested step inside another step. The maximum nesting level is 15.")
+  @Schema(description = "Includes a nested step inside another step. The maximum nesting level is 15.")
   @JsonIgnore
 
   public List<AutoTestStepModel> getSteps() {

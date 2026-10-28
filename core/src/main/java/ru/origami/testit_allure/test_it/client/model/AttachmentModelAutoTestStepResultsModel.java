@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -84,7 +84,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return title
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "The name of the step.")
+  @Schema(description = "The name of the step.")
   @JsonIgnore
 
   public String getTitle() {
@@ -118,7 +118,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Description of the step result.")
+  @Schema(description = "Description of the step result.")
   @JsonIgnore
 
   public String getDescription() {
@@ -152,7 +152,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return info
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Extended description of the step result.")
+  @Schema(description = "Extended description of the step result.")
   @JsonIgnore
 
   public String getInfo() {
@@ -186,7 +186,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Step start date.")
+  @Schema(description = "Step start date.")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -220,7 +220,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Step end date.")
+  @Schema(description = "Step end date.")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -255,7 +255,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Expected or actual duration of the test run execution in seconds.")
+  @Schema(description = "Expected or actual duration of the test run execution in seconds.")
   @JsonIgnore
 
   public Long getDuration() {
@@ -289,7 +289,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return outcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the result of the autotest execution.")
+  @Schema(description = "Specifies the result of the autotest execution.")
   @JsonIgnore
 
   public String getOutcome() {
@@ -335,7 +335,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return stepResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Nested step results. The maximum nesting level is 15.")
+  @Schema(description = "Nested step results. The maximum nesting level is 15.")
   @JsonIgnore
 
   public List<AttachmentModelAutoTestStepResultsModel> getStepResults() {
@@ -381,7 +381,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "/// <summary>  Specifies an attachment GUID. Multiple values can be sent.  </summary>")
+  @Schema(description = "/// <summary>  Specifies an attachment GUID. Multiple values can be sent.  </summary>")
   @JsonIgnore
 
   public List<AttachmentModel> getAttachments() {
@@ -427,7 +427,7 @@ public class AttachmentModelAutoTestStepResultsModel {
    * @return parameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "\"<b>parameter</b>\": \"<b>value</b>\" pair with arbitrary custom parameters. Multiple parameters can be sent.")
+  @Schema(description = "\"<b>parameter</b>\": \"<b>value</b>\" pair with arbitrary custom parameters. Multiple parameters can be sent.")
   @JsonIgnore
 
   public Map<String, String> getParameters() {

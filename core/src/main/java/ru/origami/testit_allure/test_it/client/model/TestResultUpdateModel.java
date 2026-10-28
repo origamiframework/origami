@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -95,7 +95,7 @@ public class TestResultUpdateModel {
    * @return setupResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentPutModelAutoTestStepResultsModel> getSetupResults() {
@@ -141,7 +141,7 @@ public class TestResultUpdateModel {
    * @return teardownResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentPutModelAutoTestStepResultsModel> getTeardownResults() {
@@ -176,7 +176,7 @@ public class TestResultUpdateModel {
    * @return durationInMs
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Long getDurationInMs() {
@@ -222,7 +222,7 @@ public class TestResultUpdateModel {
    * @return stepComments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestResultStepCommentPutModel> getStepComments() {
@@ -268,7 +268,7 @@ public class TestResultUpdateModel {
    * @return failureClassIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<UUID> getFailureClassIds() {
@@ -302,7 +302,7 @@ public class TestResultUpdateModel {
    * @return outcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getOutcome() {
@@ -336,7 +336,7 @@ public class TestResultUpdateModel {
    * @return comment
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getComment() {
@@ -382,7 +382,7 @@ public class TestResultUpdateModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<LinkModel> getLinks() {
@@ -428,7 +428,7 @@ public class TestResultUpdateModel {
    * @return stepResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<StepResultModel> getStepResults() {
@@ -474,7 +474,7 @@ public class TestResultUpdateModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentPutModel> getAttachments() {

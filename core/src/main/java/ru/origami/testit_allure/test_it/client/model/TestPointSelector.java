@@ -16,7 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class TestPointSelector {
    * @return configurationId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the configuration GUIDs, from which test points are created. You can specify several GUIDs.")
+  @Schema(required = true, description = "Specifies the configuration GUIDs, from which test points are created. You can specify several GUIDs.")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -83,7 +83,7 @@ public class TestPointSelector {
    * @return workitemIds
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the work item GUIDs, from which test points are created. You can specify several GUIDs.")
+  @Schema(required = true, description = "Specifies the work item GUIDs, from which test points are created. You can specify several GUIDs.")
   @JsonProperty(JSON_PROPERTY_WORKITEM_IDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

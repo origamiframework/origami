@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class SharedStepReferenceSectionsQueryFilterModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name of section")
+  @Schema(description = "Name of section")
   @JsonIgnore
 
   public String getName() {
@@ -109,7 +109,7 @@ public class SharedStepReferenceSectionsQueryFilterModel {
    * @return createdByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who created work item")
+  @Schema(description = "Collection of identifiers of users who created work item")
   @JsonIgnore
 
   public Set<UUID> getCreatedByIds() {
@@ -155,7 +155,7 @@ public class SharedStepReferenceSectionsQueryFilterModel {
    * @return modifiedByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who applied last modification to work item")
+  @Schema(description = "Collection of identifiers of users who applied last modification to work item")
   @JsonIgnore
 
   public Set<UUID> getModifiedByIds() {
@@ -189,7 +189,7 @@ public class SharedStepReferenceSectionsQueryFilterModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -215,7 +215,7 @@ public class SharedStepReferenceSectionsQueryFilterModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_MODIFIED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

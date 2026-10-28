@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -52,7 +52,7 @@ public class CustomAttributeOptionPostModel {
    * @return value
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Value of attribute option")
+  @Schema(description = "Value of attribute option")
   @JsonIgnore
 
   public String getValue() {
@@ -86,7 +86,7 @@ public class CustomAttributeOptionPostModel {
    * @return isDefault
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the option is used by default")
+  @Schema(description = "Indicates whether the option is used by default")
   @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

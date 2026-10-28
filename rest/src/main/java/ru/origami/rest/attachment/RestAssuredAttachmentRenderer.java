@@ -71,19 +71,27 @@ public class RestAssuredAttachmentRenderer implements AttachmentRenderer<Attachm
     }
 
     private String getContent(EContentType contentType, Object value) {
+        if (contentType == EContentType.TEXT) {
+            return value == null ? null : value.toString();
+        }
+
         try {
             return contentType.getMapper()
                     .writerWithDefaultPrettyPrinter()
                     .writeValueAsString(value);
-        } catch (IOException e) {
-            return value.toString();
+        } catch (Exception e) {
+            return value == null ? null : value.toString();
         }
     }
 
     private String getBodyContent(EContentType contentType, String value) {
+        if (contentType == EContentType.TEXT) {
+            return value;
+        }
+
         try {
             return getContent(contentType, contentType.getMapper().readValue(normalizeHtmlSymbols(value), Object.class));
-        } catch (IOException e) {
+        } catch (Exception e) {
             return getContent(contentType, value);
         }
     }

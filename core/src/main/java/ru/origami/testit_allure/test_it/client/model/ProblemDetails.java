@@ -14,7 +14,7 @@
 package ru.origami.testit_allure.test_it.client.model;
 
 import com.fasterxml.jackson.annotation.*;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -63,7 +63,7 @@ public class ProblemDetails {
    * @return type
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getType() {
@@ -97,7 +97,7 @@ public class ProblemDetails {
    * @return title
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getTitle() {
@@ -131,7 +131,7 @@ public class ProblemDetails {
    * @return status
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Integer getStatus() {
@@ -165,7 +165,7 @@ public class ProblemDetails {
    * @return detail
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getDetail() {
@@ -199,7 +199,7 @@ public class ProblemDetails {
    * @return instance
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getInstance() {

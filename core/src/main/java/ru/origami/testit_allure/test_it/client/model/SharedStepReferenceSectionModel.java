@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -82,7 +82,7 @@ public class SharedStepReferenceSectionModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -108,7 +108,7 @@ public class SharedStepReferenceSectionModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Basic template", value = "")
+  @Schema(example = "Basic template", description = "")
   @JsonIgnore
 
   public String getName() {
@@ -142,7 +142,7 @@ public class SharedStepReferenceSectionModel {
    * @return hasThisSharedStepAsPrecondition
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_HAS_THIS_SHARED_STEP_AS_PRECONDITION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -168,7 +168,7 @@ public class SharedStepReferenceSectionModel {
    * @return hasThisSharedStepAsPostcondition
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_HAS_THIS_SHARED_STEP_AS_POSTCONDITION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -194,7 +194,7 @@ public class SharedStepReferenceSectionModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -220,7 +220,7 @@ public class SharedStepReferenceSectionModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -254,7 +254,7 @@ public class SharedStepReferenceSectionModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDate() {
@@ -288,7 +288,7 @@ public class SharedStepReferenceSectionModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -322,7 +322,7 @@ public class SharedStepReferenceSectionModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

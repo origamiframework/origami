@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -79,7 +79,7 @@ public class TestResultsFilterModel {
    * @return testRunIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getTestRunIds() {
@@ -125,7 +125,7 @@ public class TestResultsFilterModel {
    * @return configurationIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getConfigurationIds() {
@@ -171,7 +171,7 @@ public class TestResultsFilterModel {
    * @return outcomes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<TestResultOutcome> getOutcomes() {
@@ -217,7 +217,7 @@ public class TestResultsFilterModel {
    * @return failureCategories
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<FailureCategoryModel> getFailureCategories() {
@@ -251,7 +251,7 @@ public class TestResultsFilterModel {
    * @return namespace
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getNamespace() {
@@ -285,7 +285,7 @@ public class TestResultsFilterModel {
    * @return className
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getClassName() {

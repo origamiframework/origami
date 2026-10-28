@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -59,7 +59,7 @@ public class GlobalCustomAttributeUpdateModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Name of attribute")
+  @Schema(required = true, description = "Name of attribute")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -97,7 +97,7 @@ public class GlobalCustomAttributeUpdateModel {
    * @return options
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of attribute options  <br />  Available for attributes of type `options` and `multiple options` only")
+  @Schema(description = "Collection of attribute options  <br />  Available for attributes of type `options` and `multiple options` only")
   @JsonIgnore
 
   public List<CustomAttributeOptionModel> getOptions() {
@@ -131,7 +131,7 @@ public class GlobalCustomAttributeUpdateModel {
    * @return enabled
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is available")
+  @Schema(description = "Indicates whether the attribute is available")
   @JsonIgnore
 
   public Boolean getEnabled() {
@@ -165,7 +165,7 @@ public class GlobalCustomAttributeUpdateModel {
    * @return required
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute value is mandatory to specify")
+  @Schema(description = "Indicates whether the attribute value is mandatory to specify")
   @JsonIgnore
 
   public Boolean getRequired() {

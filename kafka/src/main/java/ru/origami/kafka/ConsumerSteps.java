@@ -1,8 +1,9 @@
 package ru.origami.kafka;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.datatype.joda.JodaModule;
 import jakarta.xml.bind.JAXB;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,6 @@ import ru.origami.common.environment.Environment;
 import ru.origami.kafka.models.*;
 import ru.origami.testit_allure.annotations.Step;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.time.Duration;
 import java.time.Instant;
@@ -54,6 +54,10 @@ public class ConsumerSteps extends CommonSteps {
     private static final long RETRY_DEFAULT_READ_TIMEOUT = DURATION_350.toMillis();
 
     private static final String FAIL_ON_UNPARSED_KAFKA_RECORDS = "fail.on.unparsed.kafka.records";
+
+    private static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
+            .addModule(new JodaModule())
+            .build();
 
     @Setter
     private Long retryWaitingTime = null;
@@ -1689,17 +1693,15 @@ public class ConsumerSteps extends CommonSteps {
     }
 
     private static <T> KafkaObject<T> getObjectFromJson(String json, Class<T> clazz) {
-        KafkaObject<T> object = new KafkaObject<T>();
+        KafkaObject<T> object = new KafkaObject<>();
 
         if (json == null) {
             return object;
         }
 
         try {
-            return object.setValue(new ObjectMapper().registerModule(new JavaTimeModule())
-                    .registerModule(new JodaModule())
-                    .readValue(json.trim(), clazz));
-        } catch (IOException e) {
+            return object.setValue(JSON_MAPPER.readValue(json.trim(), clazz));
+        } catch (JacksonException e) {
             return object.setException(e);
         }
     }

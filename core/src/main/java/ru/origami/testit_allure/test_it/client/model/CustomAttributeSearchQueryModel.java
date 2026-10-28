@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -67,7 +67,7 @@ public class CustomAttributeSearchQueryModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name of attribute")
+  @Schema(description = "Name of attribute")
   @JsonIgnore
 
   public String getName() {
@@ -113,7 +113,7 @@ public class CustomAttributeSearchQueryModel {
    * @return projectIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Unique IDs of projects where attribute is in use")
+  @Schema(description = "Unique IDs of projects where attribute is in use")
   @JsonIgnore
 
   public Set<UUID> getProjectIds() {
@@ -159,7 +159,7 @@ public class CustomAttributeSearchQueryModel {
    * @return customAttributeIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Unique IDs of attributes for search restriction")
+  @Schema(description = "Unique IDs of attributes for search restriction")
   @JsonIgnore
 
   public Set<UUID> getCustomAttributeIds() {
@@ -205,7 +205,7 @@ public class CustomAttributeSearchQueryModel {
    * @return customAttributeTypes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of attribute types")
+  @Schema(description = "Collection of attribute types")
   @JsonIgnore
 
   public Set<CustomAttributeTypesEnum> getCustomAttributeTypes() {
@@ -239,7 +239,7 @@ public class CustomAttributeSearchQueryModel {
    * @return isGlobal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is available across all projects")
+  @Schema(description = "Indicates whether the attribute is available across all projects")
   @JsonIgnore
 
   public Boolean getIsGlobal() {
@@ -273,7 +273,7 @@ public class CustomAttributeSearchQueryModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is deleted")
+  @Schema(description = "Indicates whether the attribute is deleted")
   @JsonIgnore
 
   public Boolean getIsDeleted() {

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -101,7 +101,7 @@ public class UserWithRankModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -127,7 +127,7 @@ public class UserWithRankModel {
    * @return firstName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getFirstName() {
@@ -161,7 +161,7 @@ public class UserWithRankModel {
    * @return lastName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getLastName() {
@@ -195,7 +195,7 @@ public class UserWithRankModel {
    * @return middleName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getMiddleName() {
@@ -229,7 +229,7 @@ public class UserWithRankModel {
    * @return userName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getUserName() {
@@ -263,7 +263,7 @@ public class UserWithRankModel {
    * @return displayName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getDisplayName() {
@@ -297,7 +297,7 @@ public class UserWithRankModel {
    * @return userType
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getUserType() {
@@ -331,7 +331,7 @@ public class UserWithRankModel {
    * @return avatarUrl
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getAvatarUrl() {
@@ -365,7 +365,7 @@ public class UserWithRankModel {
    * @return avatarMetadata
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getAvatarMetadata() {
@@ -399,7 +399,7 @@ public class UserWithRankModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -425,7 +425,7 @@ public class UserWithRankModel {
    * @return isDisabled
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_IS_DISABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -451,7 +451,7 @@ public class UserWithRankModel {
    * @return providerId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getProviderId() {
@@ -485,7 +485,7 @@ public class UserWithRankModel {
    * @return isActiveStatusByEntity
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_IS_ACTIVE_STATUS_BY_ENTITY)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -511,7 +511,7 @@ public class UserWithRankModel {
    * @return userRank
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_USER_RANK)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

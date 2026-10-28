@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -71,7 +71,7 @@ public class ConfigurationPutModel {
    * @return id
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -97,7 +97,7 @@ public class ConfigurationPutModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Default configuration", value = "")
+  @Schema(example = "Default configuration", description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -131,7 +131,7 @@ public class ConfigurationPutModel {
    * @return isActive
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_ACTIVE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -162,7 +162,7 @@ public class ConfigurationPutModel {
    * @return capabilities
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_CAPABILITIES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -188,7 +188,7 @@ public class ConfigurationPutModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "This property is used to link configuration with project")
+  @Schema(required = true, description = "This property is used to link configuration with project")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -214,7 +214,7 @@ public class ConfigurationPutModel {
    * @return isDefault
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -240,7 +240,7 @@ public class ConfigurationPutModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "Default", required = true, value = "")
+  @Schema(example = "Default", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class ExternalLinkModel {
    * @return url
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getUrl() {
@@ -110,7 +110,7 @@ public class ExternalLinkModel {
    * @return title
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getTitle() {
@@ -144,7 +144,7 @@ public class ExternalLinkModel {
    * @return issueTypeName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getIssueTypeName() {
@@ -178,7 +178,7 @@ public class ExternalLinkModel {
    * @return issueTypeIconUrl
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getIssueTypeIconUrl() {
@@ -212,7 +212,7 @@ public class ExternalLinkModel {
    * @return priorityName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getPriorityName() {
@@ -246,7 +246,7 @@ public class ExternalLinkModel {
    * @return priorityIconUrl
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getPriorityIconUrl() {
@@ -280,7 +280,7 @@ public class ExternalLinkModel {
    * @return statusName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getStatusName() {
@@ -314,7 +314,7 @@ public class ExternalLinkModel {
    * @return assigneeDisplayName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getAssigneeDisplayName() {

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -71,7 +71,7 @@ public class TestPointResultModel {
    * @return testPointId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getTestPointId() {
@@ -105,7 +105,7 @@ public class TestPointResultModel {
    * @return aggregatedOutcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getAggregatedOutcome() {
@@ -139,7 +139,7 @@ public class TestPointResultModel {
    * @return workItemGlobalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Long getWorkItemGlobalId() {
@@ -173,7 +173,7 @@ public class TestPointResultModel {
    * @return workItemName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getWorkItemName() {
@@ -207,7 +207,7 @@ public class TestPointResultModel {
    * @return configurationName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getConfigurationName() {
@@ -253,7 +253,7 @@ public class TestPointResultModel {
    * @return testResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestResultShortModel> getTestResults() {
@@ -299,7 +299,7 @@ public class TestPointResultModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentModel> getAttachments() {

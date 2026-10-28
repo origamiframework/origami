@@ -17,8 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -28,7 +27,7 @@ import java.util.*;
 /**
  * Collection of filters to apply to search
  */
-@ApiModel(description = "Collection of filters to apply to search")
+@Schema(description = "Collection of filters to apply to search")
 @JsonPropertyOrder({
   WorkItemFilterModel.JSON_PROPERTY_NAME_OR_ID,
   WorkItemFilterModel.JSON_PROPERTY_INCLUDE_IDS,
@@ -142,7 +141,7 @@ public class WorkItemFilterModel {
    * @return nameOrId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name or identifier (UUID) of work item")
+  @Schema(description = "Name or identifier (UUID) of work item")
   @JsonIgnore
 
   public String getNameOrId() {
@@ -188,7 +187,7 @@ public class WorkItemFilterModel {
    * @return includeIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of work items which need to be included in result regardless of filtering")
+  @Schema(description = "Collection of identifiers of work items which need to be included in result regardless of filtering")
   @JsonIgnore
 
   public Set<UUID> getIncludeIds() {
@@ -234,7 +233,7 @@ public class WorkItemFilterModel {
    * @return excludeIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of work items which need to be excluded from result regardless of filtering")
+  @Schema(description = "Collection of identifiers of work items which need to be excluded from result regardless of filtering")
   @JsonIgnore
 
   public Set<UUID> getExcludeIds() {
@@ -268,7 +267,7 @@ public class WorkItemFilterModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Name of work item")
+  @Schema(description = "Name of work item")
   @JsonIgnore
 
   public String getName() {
@@ -314,7 +313,7 @@ public class WorkItemFilterModel {
    * @return globalIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of global (integer) identifiers")
+  @Schema(description = "Collection of global (integer) identifiers")
   @JsonIgnore
 
   public Set<Long> getGlobalIds() {
@@ -360,7 +359,7 @@ public class WorkItemFilterModel {
    * @return attributes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Custom attributes of work item")
+  @Schema(description = "Custom attributes of work item")
   @JsonIgnore
 
   public Map<String, Set<String>> getAttributes() {
@@ -394,7 +393,7 @@ public class WorkItemFilterModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Is result must consist of only actual/deleted work items")
+  @Schema(description = "Is result must consist of only actual/deleted work items")
   @JsonIgnore
 
   public Boolean getIsDeleted() {
@@ -440,7 +439,7 @@ public class WorkItemFilterModel {
    * @return projectIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of project identifiers")
+  @Schema(description = "Collection of project identifiers")
   @JsonIgnore
 
   public Set<UUID> getProjectIds() {
@@ -486,7 +485,7 @@ public class WorkItemFilterModel {
    * @return sectionIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of section identifiers")
+  @Schema(description = "Collection of section identifiers")
   @JsonIgnore
 
   public Set<UUID> getSectionIds() {
@@ -532,7 +531,7 @@ public class WorkItemFilterModel {
    * @return createdByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who created work item")
+  @Schema(description = "Collection of identifiers of users who created work item")
   @JsonIgnore
 
   public Set<UUID> getCreatedByIds() {
@@ -578,7 +577,7 @@ public class WorkItemFilterModel {
    * @return modifiedByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of users who applied last modification to work item")
+  @Schema(description = "Collection of identifiers of users who applied last modification to work item")
   @JsonIgnore
 
   public Set<UUID> getModifiedByIds() {
@@ -624,7 +623,7 @@ public class WorkItemFilterModel {
    * @return states
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of states of work item")
+  @Schema(description = "Collection of states of work item")
   @JsonIgnore
 
   public Set<WorkItemStates> getStates() {
@@ -670,7 +669,7 @@ public class WorkItemFilterModel {
    * @return priorities
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of priorities of work item")
+  @Schema(description = "Collection of priorities of work item")
   @JsonIgnore
 
   public Set<WorkItemPriorityModel> getPriorities() {
@@ -716,7 +715,7 @@ public class WorkItemFilterModel {
    * @return entityTypes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of types of work item  <br>Allowed values: `TestCases`, `CheckLists`, `SharedSteps`")
+  @Schema(description = "Collection of types of work item  <br>Allowed values: `TestCases`, `CheckLists`, `SharedSteps`")
   @JsonIgnore
 
   public Set<String> getEntityTypes() {
@@ -750,7 +749,7 @@ public class WorkItemFilterModel {
    * @return createdDateMinimal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Minimum date and time of work item creation")
+  @Schema(description = "Minimum date and time of work item creation")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDateMinimal() {
@@ -784,7 +783,7 @@ public class WorkItemFilterModel {
    * @return createdDateMaximal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Maximum date and time of work item creation")
+  @Schema(description = "Maximum date and time of work item creation")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDateMaximal() {
@@ -818,7 +817,7 @@ public class WorkItemFilterModel {
    * @return modifiedDateMinimal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Minimum date and time of work item last modification")
+  @Schema(description = "Minimum date and time of work item last modification")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDateMinimal() {
@@ -852,7 +851,7 @@ public class WorkItemFilterModel {
    * @return modifiedDateMaximal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Maximum date and time of work item last modification")
+  @Schema(description = "Maximum date and time of work item last modification")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDateMaximal() {
@@ -886,7 +885,7 @@ public class WorkItemFilterModel {
    * @return durationMinimal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Minimum completion time (seconds) of work item")
+  @Schema(description = "Minimum completion time (seconds) of work item")
   @JsonIgnore
 
   public Integer getDurationMinimal() {
@@ -920,7 +919,7 @@ public class WorkItemFilterModel {
    * @return durationMaximal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Maximum completion time (seconds) of work item")
+  @Schema(description = "Maximum completion time (seconds) of work item")
   @JsonIgnore
 
   public Integer getDurationMaximal() {
@@ -954,7 +953,7 @@ public class WorkItemFilterModel {
    * @return isAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Is result must consist of only manual/automated work items")
+  @Schema(description = "Is result must consist of only manual/automated work items")
   @JsonIgnore
 
   public Boolean getIsAutomated() {
@@ -1000,7 +999,7 @@ public class WorkItemFilterModel {
    * @return tagNames
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of tags")
+  @Schema(description = "Collection of tags")
   @JsonIgnore
 
   public Set<String> getTagNames() {
@@ -1046,7 +1045,7 @@ public class WorkItemFilterModel {
    * @return autoTestIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of linked autotests")
+  @Schema(description = "Collection of identifiers of linked autotests")
   @JsonIgnore
 
   public Set<UUID> getAutoTestIds() {
@@ -1094,7 +1093,7 @@ public class WorkItemFilterModel {
   **/
   @Deprecated
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getExceptWorkItemIds() {

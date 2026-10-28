@@ -13,7 +13,7 @@
 package ru.origami.testit_allure.test_it.client.model;
 
 import com.fasterxml.jackson.annotation.*;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -93,7 +93,7 @@ public class TestRunV2GetModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -127,7 +127,7 @@ public class TestRunV2GetModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -161,7 +161,7 @@ public class TestRunV2GetModel {
    * @return stateName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_STATE_NAME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -187,7 +187,7 @@ public class TestRunV2GetModel {
    * @return projectId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "This property is used to link test run with project")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "This property is used to link test run with project")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -213,7 +213,7 @@ public class TestRunV2GetModel {
    * @return testPlanId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "This property is used to link test run with test plan")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "This property is used to link test run with test plan")
   @JsonIgnore
 
   public UUID getTestPlanId() {
@@ -259,7 +259,7 @@ public class TestRunV2GetModel {
    * @return testResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TestResultV2GetModel> getTestResults() {
@@ -293,7 +293,7 @@ public class TestRunV2GetModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -319,7 +319,7 @@ public class TestRunV2GetModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -353,7 +353,7 @@ public class TestRunV2GetModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -379,7 +379,7 @@ public class TestRunV2GetModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -413,7 +413,7 @@ public class TestRunV2GetModel {
    * @return createdByUserName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "example", value = "")
+  @Schema(example = "example", description = "")
   @JsonIgnore
 
   public String getCreatedByUserName() {
@@ -447,7 +447,7 @@ public class TestRunV2GetModel {
    * @return id
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -473,7 +473,7 @@ public class TestRunV2GetModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "First run", required = true, value = "")
+  @Schema(example = "First run", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -499,7 +499,7 @@ public class TestRunV2GetModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -533,7 +533,7 @@ public class TestRunV2GetModel {
    * @return launchSource
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "By user via API", value = "Once launch source is specified it cannot be updated")
+  @Schema(example = "By user via API", description = "Once launch source is specified it cannot be updated")
   @JsonIgnore
 
   public String getLaunchSource() {

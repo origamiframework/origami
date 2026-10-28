@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -67,7 +67,7 @@ public class SearchWebhooksQueryModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getName() {
@@ -113,7 +113,7 @@ public class SearchWebhooksQueryModel {
    * @return eventTypes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<WebHookEventTypeModel> getEventTypes() {
@@ -159,7 +159,7 @@ public class SearchWebhooksQueryModel {
    * @return methods
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<RequestTypeModel> getMethods() {
@@ -205,7 +205,7 @@ public class SearchWebhooksQueryModel {
    * @return projectIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getProjectIds() {
@@ -239,7 +239,7 @@ public class SearchWebhooksQueryModel {
    * @return isEnabled
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIsEnabled() {
@@ -273,7 +273,7 @@ public class SearchWebhooksQueryModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIsDeleted() {

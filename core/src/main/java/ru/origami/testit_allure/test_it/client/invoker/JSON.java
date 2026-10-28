@@ -1,36 +1,46 @@
 package ru.origami.testit_allure.test_it.client.invoker;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jakarta.ws.rs.core.GenericType;
-import jakarta.ws.rs.ext.ContextResolver;
-import org.openapitools.jackson.nullable.JsonNullableModule;
-
 import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.ext.ContextResolver;
+
+import org.openapitools.jackson.nullable.JsonNullableJackson3Module;
+
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.MapperFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.cfg.EnumFeature;
+import tools.jackson.databind.json.JsonMapper;
+
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class JSON implements ContextResolver<ObjectMapper> {
-  private ObjectMapper mapper;
+
+  private JsonMapper mapper;
 
   public JSON() {
-    mapper = new ObjectMapper();
-    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    JsonMapper.builder().configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false);
-    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-    mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, true);
-    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-    mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
-    mapper.setDateFormat(new RFC3339DateFormat());
-    mapper.registerModule(new JavaTimeModule());
-    JsonNullableModule jnm = new JsonNullableModule();
-    mapper.registerModule(jnm);
+    mapper = JsonMapper.builder()
+            .changeDefaultPropertyInclusion(incl ->
+                    incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .changeDefaultPropertyInclusion(incl ->
+                    incl.withContentInclusion(JsonInclude.Include.NON_NULL))
+            .disable(MapperFeature.ALLOW_COERCION_OF_SCALARS)
+            .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .enable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
+            .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .enable(EnumFeature.WRITE_ENUMS_USING_TO_STRING)
+            .enable(EnumFeature.READ_ENUMS_USING_TO_STRING)
+            .defaultDateFormat(new RFC3339DateFormat())
+            .addModule(new JsonNullableJackson3Module())
+            .build();
   }
 
   /**
@@ -38,7 +48,9 @@ public class JSON implements ContextResolver<ObjectMapper> {
    * @param dateFormat Date format
    */
   public void setDateFormat(DateFormat dateFormat) {
-    mapper.setDateFormat(dateFormat);
+    mapper = mapper.rebuild()
+            .defaultDateFormat(dateFormat)
+            .build();
   }
 
   @Override

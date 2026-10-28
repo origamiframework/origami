@@ -17,8 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -29,7 +28,7 @@ import java.util.UUID;
 /**
  * Rules for different level entities inclusion/exclusion
  */
-@ApiModel(description = "Rules for different level entities inclusion/exclusion")
+@Schema(description = "Rules for different level entities inclusion/exclusion")
 @JsonPropertyOrder({
   WorkItemExtractionModel.JSON_PROPERTY_INCLUDE_WORK_ITEMS,
   WorkItemExtractionModel.JSON_PROPERTY_INCLUDE_SECTIONS,
@@ -79,7 +78,7 @@ public class WorkItemExtractionModel {
    * @return includeWorkItems
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of work items to be included")
+  @Schema(description = "Identifiers of work items to be included")
   @JsonProperty(JSON_PROPERTY_INCLUDE_WORK_ITEMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -114,7 +113,7 @@ public class WorkItemExtractionModel {
    * @return includeSections
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of sections to be included")
+  @Schema(description = "Identifiers of sections to be included")
   @JsonProperty(JSON_PROPERTY_INCLUDE_SECTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -149,7 +148,7 @@ public class WorkItemExtractionModel {
    * @return includeProjects
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of projects to be included")
+  @Schema(description = "Identifiers of projects to be included")
   @JsonProperty(JSON_PROPERTY_INCLUDE_PROJECTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -184,7 +183,7 @@ public class WorkItemExtractionModel {
    * @return excludeWorkItems
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of work items to be excluded")
+  @Schema(description = "Identifiers of work items to be excluded")
   @JsonProperty(JSON_PROPERTY_EXCLUDE_WORK_ITEMS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -219,7 +218,7 @@ public class WorkItemExtractionModel {
    * @return excludeSections
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of sections to be excluded")
+  @Schema(description = "Identifiers of sections to be excluded")
   @JsonProperty(JSON_PROPERTY_EXCLUDE_SECTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -254,7 +253,7 @@ public class WorkItemExtractionModel {
    * @return excludeProjects
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Identifiers of projects to be excluded")
+  @Schema(description = "Identifiers of projects to be excluded")
   @JsonProperty(JSON_PROPERTY_EXCLUDE_PROJECTS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

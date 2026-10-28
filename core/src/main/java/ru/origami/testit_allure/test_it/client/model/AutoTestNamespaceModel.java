@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -51,7 +51,7 @@ public class AutoTestNamespaceModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "WebApi.Core.Tests", value = "")
+  @Schema(example = "WebApi.Core.Tests", description = "")
   @JsonIgnore
 
   public String getName() {
@@ -97,7 +97,7 @@ public class AutoTestNamespaceModel {
    * @return classes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<String> getClasses() {

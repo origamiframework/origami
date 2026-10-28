@@ -16,8 +16,9 @@
 
 package ru.origami.testit_allure.allure.testfilter;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,36 +31,26 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * The {@link TestPlanSupplier} that reads test plan from file, specified
- * in {@code ALLURE_TESTPLAN_PATH} environment variable.
- */
 public class FileTestPlanSupplier implements TestPlanSupplier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileTestPlanSupplier.class);
 
-    /**
-     * The possible environment variable names.
-     */
-    private static final String[] ENV_TESTPLAN_PATH = {"ALLURE_TESTPLAN_PATH", "AS_TESTPLAN_PATH"};
+    private static final String[] ENV_TESTPLAN_PATH = {
+            "ALLURE_TESTPLAN_PATH",
+            "AS_TESTPLAN_PATH"
+    };
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    private static final JsonMapper OBJECT_MAPPER = JsonMapper.builder()
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .build();
 
-    /**
-     * Supply test plan.
-     *
-     * @return the test plan.
-     */
     @Override
     public Optional<TestPlan> supply() {
-        final Optional<String> testPlanPath = Arrays.stream(ENV_TESTPLAN_PATH)
+        return Arrays.stream(ENV_TESTPLAN_PATH)
                 .map(System::getenv)
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
-                .findFirst();
-
-        return testPlanPath
+                .findFirst()
                 .flatMap(this::tryGetPath)
                 .filter(Files::exists)
                 .filter(Files::isRegularFile)
@@ -69,7 +60,7 @@ public class FileTestPlanSupplier implements TestPlanSupplier {
     private Optional<TestPlan> readTestPlan(final Path path) {
         try (InputStream stream = Files.newInputStream(path)) {
             return Optional.of(OBJECT_MAPPER.readValue(stream, TestPlan.class));
-        } catch (IOException e) {
+        } catch (IOException | JacksonException e) {
             LOGGER.warn("could not read test plan file {}", path, e);
             return Optional.empty();
         }
@@ -83,5 +74,4 @@ public class FileTestPlanSupplier implements TestPlanSupplier {
             return Optional.empty();
         }
     }
-
 }

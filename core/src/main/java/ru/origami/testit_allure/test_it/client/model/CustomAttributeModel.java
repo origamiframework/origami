@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -75,7 +75,7 @@ public class CustomAttributeModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Unique ID of attribute")
+  @Schema(description = "Unique ID of attribute")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -113,7 +113,7 @@ public class CustomAttributeModel {
    * @return options
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of attribute options  <br />  Available for attributes of type `options` and `multiple options` only")
+  @Schema(description = "Collection of attribute options  <br />  Available for attributes of type `options` and `multiple options` only")
   @JsonIgnore
 
   public List<CustomAttributeOptionModel> getOptions() {
@@ -147,7 +147,7 @@ public class CustomAttributeModel {
    * @return type
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_TYPE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -173,7 +173,7 @@ public class CustomAttributeModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is deleted")
+  @Schema(description = "Indicates whether the attribute is deleted")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -199,7 +199,7 @@ public class CustomAttributeModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Name of attribute")
+  @Schema(required = true, description = "Name of attribute")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -225,7 +225,7 @@ public class CustomAttributeModel {
    * @return enabled
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is available")
+  @Schema(description = "Indicates whether the attribute is available")
   @JsonProperty(JSON_PROPERTY_ENABLED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -251,7 +251,7 @@ public class CustomAttributeModel {
    * @return required
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute value is mandatory to specify")
+  @Schema(description = "Indicates whether the attribute value is mandatory to specify")
   @JsonProperty(JSON_PROPERTY_REQUIRED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -277,7 +277,7 @@ public class CustomAttributeModel {
    * @return isGlobal
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the attribute is available across all projects")
+  @Schema(description = "Indicates whether the attribute is available across all projects")
   @JsonProperty(JSON_PROPERTY_IS_GLOBAL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

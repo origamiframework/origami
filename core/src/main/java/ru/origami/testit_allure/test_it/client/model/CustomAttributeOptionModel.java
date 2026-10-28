@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class CustomAttributeOptionModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Unique ID of attribute option")
+  @Schema(description = "Unique ID of attribute option")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -87,7 +87,7 @@ public class CustomAttributeOptionModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the options is deleted")
+  @Schema(description = "Indicates whether the options is deleted")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -113,7 +113,7 @@ public class CustomAttributeOptionModel {
    * @return value
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Value of attribute option")
+  @Schema(description = "Value of attribute option")
   @JsonIgnore
 
   public String getValue() {
@@ -147,7 +147,7 @@ public class CustomAttributeOptionModel {
    * @return isDefault
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Indicates whether the option is used by default")
+  @Schema(description = "Indicates whether the option is used by default")
   @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

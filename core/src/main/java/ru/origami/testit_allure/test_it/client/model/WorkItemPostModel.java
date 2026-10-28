@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -111,7 +111,7 @@ public class WorkItemPostModel {
    * @return entityTypeName
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ENTITY_TYPE_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -137,7 +137,7 @@ public class WorkItemPostModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "This is a basic test template", value = "")
+  @Schema(example = "This is a basic test template", description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -171,7 +171,7 @@ public class WorkItemPostModel {
    * @return state
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_STATE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -197,7 +197,7 @@ public class WorkItemPostModel {
    * @return priority
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PRIORITY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -228,7 +228,7 @@ public class WorkItemPostModel {
    * @return steps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -259,7 +259,7 @@ public class WorkItemPostModel {
    * @return preconditionSteps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PRECONDITION_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -290,7 +290,7 @@ public class WorkItemPostModel {
    * @return postconditionSteps
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_POSTCONDITION_STEPS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -318,7 +318,7 @@ public class WorkItemPostModel {
    * @return duration
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "10000", required = true, value = "Must be 0 for shared steps and greater than 0 for the other types of work items")
+  @Schema(example = "10000", required = true, description = "Must be 0 for shared steps and greater than 0 for the other types of work items")
   @JsonProperty(JSON_PROPERTY_DURATION)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -349,7 +349,7 @@ public class WorkItemPostModel {
    * @return attributes
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ATTRIBUTES)
   @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.ALWAYS)
 
@@ -380,7 +380,7 @@ public class WorkItemPostModel {
    * @return tags
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_TAGS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -418,7 +418,7 @@ public class WorkItemPostModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentPutModel> getAttachments() {
@@ -464,7 +464,7 @@ public class WorkItemPostModel {
    * @return iterations
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<IterationPutModel> getIterations() {
@@ -503,7 +503,7 @@ public class WorkItemPostModel {
    * @return links
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty(JSON_PROPERTY_LINKS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -529,7 +529,7 @@ public class WorkItemPostModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "Basic template", required = true, value = "")
+  @Schema(example = "Basic template", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -555,7 +555,7 @@ public class WorkItemPostModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "This property is used to link workitem with project")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "This property is used to link workitem with project")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -581,7 +581,7 @@ public class WorkItemPostModel {
    * @return sectionId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_SECTION_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -619,7 +619,7 @@ public class WorkItemPostModel {
    * @return autoTests
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AutoTestIdModel> getAutoTests() {

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -148,7 +148,7 @@ public class TestResultHistoryReportModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -174,7 +174,7 @@ public class TestResultHistoryReportModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -200,7 +200,7 @@ public class TestResultHistoryReportModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonProperty(JSON_PROPERTY_MODIFIED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -226,7 +226,7 @@ public class TestResultHistoryReportModel {
    * @return userId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "If test run was stopped, this property equals identifier of user who stopped it.Otherwise, the property equals identifier of user who created the test result")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "If test run was stopped, this property equals identifier of user who stopped it.Otherwise, the property equals identifier of user who created the test result")
   @JsonProperty(JSON_PROPERTY_USER_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -252,7 +252,7 @@ public class TestResultHistoryReportModel {
    * @return testRunId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getTestRunId() {
@@ -286,7 +286,7 @@ public class TestResultHistoryReportModel {
    * @return testRunName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Core tests", value = "")
+  @Schema(example = "Core tests", description = "")
   @JsonIgnore
 
   public String getTestRunName() {
@@ -320,7 +320,7 @@ public class TestResultHistoryReportModel {
    * @return createdByUserName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "example", value = "")
+  @Schema(example = "example", description = "")
   @JsonIgnore
 
   public String getCreatedByUserName() {
@@ -354,7 +354,7 @@ public class TestResultHistoryReportModel {
    * @return testPlanId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getTestPlanId() {
@@ -388,7 +388,7 @@ public class TestResultHistoryReportModel {
    * @return testPlanGlobalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "100000", value = "")
+  @Schema(example = "100000", description = "")
   @JsonIgnore
 
   public Long getTestPlanGlobalId() {
@@ -422,7 +422,7 @@ public class TestResultHistoryReportModel {
    * @return testPlanName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Release 7.13", value = "")
+  @Schema(example = "Release 7.13", description = "")
   @JsonIgnore
 
   public String getTestPlanName() {
@@ -456,7 +456,7 @@ public class TestResultHistoryReportModel {
    * @return configurationName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Default", value = "If test point related to the test result has configuration, this property will be equal to the test point configuration name. Otherwise, this property will be equal to the test result configuration name")
+  @Schema(example = "Default", description = "If test point related to the test result has configuration, this property will be equal to the test point configuration name. Otherwise, this property will be equal to the test result configuration name")
   @JsonIgnore
 
   public String getConfigurationName() {
@@ -490,7 +490,7 @@ public class TestResultHistoryReportModel {
    * @return isAutomated
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_AUTOMATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -516,7 +516,7 @@ public class TestResultHistoryReportModel {
    * @return outcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Failed", value = "If any test result related to the test run is linked with autotest and the run has an outcome, the outcome value equalsto the worst outcome of the last modified test result.Otherwise, the outcome equals to the outcome of first created test result in the test run")
+  @Schema(example = "Failed", description = "If any test result related to the test run is linked with autotest and the run has an outcome, the outcome value equalsto the worst outcome of the last modified test result.Otherwise, the outcome equals to the outcome of first created test result in the test run")
   @JsonIgnore
 
   public String getOutcome() {
@@ -550,7 +550,7 @@ public class TestResultHistoryReportModel {
    * @return comment
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "my first comment", value = "If any test result related to the test run is linked with autotest, comment will have default valueOtherwise, the comment equals to the comment of first created test result in the test run")
+  @Schema(example = "my first comment", description = "If any test result related to the test run is linked with autotest, comment will have default valueOtherwise, the comment equals to the comment of first created test result in the test run")
   @JsonIgnore
 
   public String getComment() {
@@ -596,7 +596,7 @@ public class TestResultHistoryReportModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "If any test result related to the test run is linked with autotest, link will be equal to the links of last modified test result.Otherwise, the links equals to the links of first created test result in the test run")
+  @Schema(description = "If any test result related to the test run is linked with autotest, link will be equal to the links of last modified test result.Otherwise, the links equals to the links of first created test result in the test run")
   @JsonIgnore
 
   public List<LinkModel> getLinks() {
@@ -630,7 +630,7 @@ public class TestResultHistoryReportModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -664,7 +664,7 @@ public class TestResultHistoryReportModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -698,7 +698,7 @@ public class TestResultHistoryReportModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "100000", value = "")
+  @Schema(example = "100000", description = "")
   @JsonIgnore
 
   public Long getDuration() {
@@ -732,7 +732,7 @@ public class TestResultHistoryReportModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -758,7 +758,7 @@ public class TestResultHistoryReportModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -804,7 +804,7 @@ public class TestResultHistoryReportModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "If any test result related to the test run is linked with autotest, attachments will be equal to the attachments of last modified test result.Otherwise, the attachments equals to the attachments of first created test result in the test run")
+  @Schema(description = "If any test result related to the test run is linked with autotest, attachments will be equal to the attachments of last modified test result.Otherwise, the attachments equals to the attachments of first created test result in the test run")
   @JsonIgnore
 
   public List<AttachmentModel> getAttachments() {
@@ -838,7 +838,7 @@ public class TestResultHistoryReportModel {
    * @return workItemVersionId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getWorkItemVersionId() {
@@ -872,7 +872,7 @@ public class TestResultHistoryReportModel {
    * @return workItemVersionNumber
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Integer getWorkItemVersionNumber() {
@@ -906,7 +906,7 @@ public class TestResultHistoryReportModel {
    * @return launchSource
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getLaunchSource() {
@@ -952,7 +952,7 @@ public class TestResultHistoryReportModel {
    * @return failureClassIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<UUID> getFailureClassIds() {
@@ -998,7 +998,7 @@ public class TestResultHistoryReportModel {
    * @return parameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Map<String, String> getParameters() {

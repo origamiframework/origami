@@ -1,5 +1,6 @@
 package ru.origami.testit_allure.test_it.client.invoker;
 
+import com.fasterxml.jackson.core.util.JacksonFeature;
 import ru.origami.testit_allure.test_it.client.invoker.auth.ApiKeyAuth;
 import ru.origami.testit_allure.test_it.client.invoker.auth.Authentication;
 import ru.origami.testit_allure.test_it.client.invoker.auth.HttpBasicAuth;
@@ -13,7 +14,7 @@ import jakarta.ws.rs.core.Response.Status;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
-import org.glassfish.jersey.jackson.JacksonFeature;
+
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;

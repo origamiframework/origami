@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-hibernate</artifactId>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
 
     <name>Origami Framework Hibernate</name>
     <description>Origami Framework Hibernate</description>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-dependency</artifactId>
-        <version>1.5.5</version>
+        <version>1.5.6</version>
     </parent>
 
     <properties>
@@ -27,17 +27,17 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.6.18.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-63</artifactId>
-            <version>3.10.1</version>
+            <artifactId>hypersistence-utils-hibernate-73</artifactId>
+            <version>${hypersistence.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -55,7 +55,7 @@
             <version>${oracle.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.oracle.ojdbc</groupId>
+            <groupId>com.oracle.database.nls</groupId>
             <artifactId>orai18n</artifactId>
             <version>${oracle.orai18n.version}</version>
         </dependency>
@@ -74,11 +74,6 @@
             <artifactId>log4jdbc</artifactId>
             <version>1.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.3.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -86,7 +81,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.5.1</version>
                 <configuration>
                     <excludes>
                         <exclude>hibernate-**-lib.cfg.xml</exclude>

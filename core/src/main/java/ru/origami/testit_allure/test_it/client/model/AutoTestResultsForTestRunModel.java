@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -108,7 +108,7 @@ public class AutoTestResultsForTestRunModel {
    * @return configurationId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the GUID of the autotest configuration, which was specified when the test run was created.")
+  @Schema(required = true, description = "Specifies the GUID of the autotest configuration, which was specified when the test run was created.")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -146,7 +146,7 @@ public class AutoTestResultsForTestRunModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the links in the autotest.")
+  @Schema(description = "Specifies the links in the autotest.")
   @JsonIgnore
 
   public List<LinkPostModel> getLinks() {
@@ -192,7 +192,7 @@ public class AutoTestResultsForTestRunModel {
    * @return failureReasonNames
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the cause of autotest failure.")
+  @Schema(description = "Specifies the cause of autotest failure.")
   @JsonIgnore
 
   public List<String> getFailureReasonNames() {
@@ -226,7 +226,7 @@ public class AutoTestResultsForTestRunModel {
    * @return autoTestExternalId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the external ID of the autotest, which was specified when the test run was created.")
+  @Schema(required = true, description = "Specifies the external ID of the autotest, which was specified when the test run was created.")
   @JsonProperty(JSON_PROPERTY_AUTO_TEST_EXTERNAL_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -252,7 +252,7 @@ public class AutoTestResultsForTestRunModel {
    * @return outcome
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the result of the autotest execution.")
+  @Schema(required = true, description = "Specifies the result of the autotest execution.")
   @JsonProperty(JSON_PROPERTY_OUTCOME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -278,7 +278,7 @@ public class AutoTestResultsForTestRunModel {
    * @return message
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "A comment for the result.")
+  @Schema(description = "A comment for the result.")
   @JsonIgnore
 
   public String getMessage() {
@@ -312,7 +312,7 @@ public class AutoTestResultsForTestRunModel {
    * @return traces
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "An extended comment or a stack trace.")
+  @Schema(description = "An extended comment or a stack trace.")
   @JsonIgnore
 
   public String getTraces() {
@@ -346,7 +346,7 @@ public class AutoTestResultsForTestRunModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Test run start date.")
+  @Schema(description = "Test run start date.")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -380,7 +380,7 @@ public class AutoTestResultsForTestRunModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Test run end date.")
+  @Schema(description = "Test run end date.")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -415,7 +415,7 @@ public class AutoTestResultsForTestRunModel {
    * @return duration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Expected or actual duration of the test run execution in seconds.")
+  @Schema(description = "Expected or actual duration of the test run execution in seconds.")
   @JsonIgnore
 
   public Long getDuration() {
@@ -461,7 +461,7 @@ public class AutoTestResultsForTestRunModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies an attachment GUID. Multiple values can be sent.")
+  @Schema(description = "Specifies an attachment GUID. Multiple values can be sent.")
   @JsonIgnore
 
   public List<AttachmentPutModel> getAttachments() {
@@ -507,7 +507,7 @@ public class AutoTestResultsForTestRunModel {
    * @return parameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "\"<b>parameter</b>\": \"<b>value</b>\" pair with arbitrary custom parameters. Multiple parameters can be sent.")
+  @Schema(description = "\"<b>parameter</b>\": \"<b>value</b>\" pair with arbitrary custom parameters. Multiple parameters can be sent.")
   @JsonIgnore
 
   public Map<String, String> getParameters() {
@@ -553,7 +553,7 @@ public class AutoTestResultsForTestRunModel {
    * @return properties
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "\"<b>property</b>\": \"<b>value</b>\" pair with arbitrary custom properties. Multiple properties can be sent.")
+  @Schema(description = "\"<b>property</b>\": \"<b>value</b>\" pair with arbitrary custom properties. Multiple properties can be sent.")
   @JsonIgnore
 
   public Map<String, String> getProperties() {
@@ -599,7 +599,7 @@ public class AutoTestResultsForTestRunModel {
    * @return stepResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the results of individual steps.")
+  @Schema(description = "Specifies the results of individual steps.")
   @JsonIgnore
 
   public List<AttachmentPutModelAutoTestStepResultsModel> getStepResults() {
@@ -645,7 +645,7 @@ public class AutoTestResultsForTestRunModel {
    * @return setupResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the results of setup steps. For information on supported values, see the `stepResults` parameter above.")
+  @Schema(description = "Specifies the results of setup steps. For information on supported values, see the `stepResults` parameter above.")
   @JsonIgnore
 
   public List<AttachmentPutModelAutoTestStepResultsModel> getSetupResults() {
@@ -691,7 +691,7 @@ public class AutoTestResultsForTestRunModel {
    * @return teardownResults
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the results of the teardown steps. For information on supported values, see the `stepResults` parameter above.")
+  @Schema(description = "Specifies the results of the teardown steps. For information on supported values, see the `stepResults` parameter above.")
   @JsonIgnore
 
   public List<AttachmentPutModelAutoTestStepResultsModel> getTeardownResults() {

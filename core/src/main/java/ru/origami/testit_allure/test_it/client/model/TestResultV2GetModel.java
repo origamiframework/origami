@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -128,7 +128,7 @@ public class TestResultV2GetModel {
    * @return _configuration
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -154,7 +154,7 @@ public class TestResultV2GetModel {
    * @return autoTest
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_AUTO_TEST)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -180,7 +180,7 @@ public class TestResultV2GetModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -206,7 +206,7 @@ public class TestResultV2GetModel {
    * @return configurationId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -232,7 +232,7 @@ public class TestResultV2GetModel {
    * @return workItemVersionId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_WORK_ITEM_VERSION_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -258,7 +258,7 @@ public class TestResultV2GetModel {
    * @return autoTestId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getAutoTestId() {
@@ -292,7 +292,7 @@ public class TestResultV2GetModel {
    * @return message
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public String getMessage() {
@@ -326,7 +326,7 @@ public class TestResultV2GetModel {
    * @return traces
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Exception in thread main java.lang.NullPointerException at com.example.myproject.MyTest.HealtCheck()", value = "")
+  @Schema(example = "Exception in thread main java.lang.NullPointerException at com.example.myproject.MyTest.HealtCheck()", description = "")
   @JsonIgnore
 
   public String getTraces() {
@@ -360,7 +360,7 @@ public class TestResultV2GetModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -394,7 +394,7 @@ public class TestResultV2GetModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -428,7 +428,7 @@ public class TestResultV2GetModel {
    * @return runByUserId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getRunByUserId() {
@@ -462,7 +462,7 @@ public class TestResultV2GetModel {
    * @return stoppedByUserId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getStoppedByUserId() {
@@ -496,7 +496,7 @@ public class TestResultV2GetModel {
    * @return testPointId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getTestPointId() {
@@ -530,7 +530,7 @@ public class TestResultV2GetModel {
    * @return testPoint
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_TEST_POINT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -556,7 +556,7 @@ public class TestResultV2GetModel {
    * @return testRunId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_TEST_RUN_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -582,7 +582,7 @@ public class TestResultV2GetModel {
    * @return outcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Passed", value = "Property can contain one of these values: Passed, Failed, InProgress, Blocked, Skipped")
+  @Schema(example = "Passed", description = "Property can contain one of these values: Passed, Failed, InProgress, Blocked, Skipped")
   @JsonIgnore
 
   public String getOutcome() {
@@ -616,7 +616,7 @@ public class TestResultV2GetModel {
    * @return comment
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "my first comment", value = "")
+  @Schema(example = "my first comment", description = "")
   @JsonIgnore
 
   public String getComment() {
@@ -662,7 +662,7 @@ public class TestResultV2GetModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<LinkModel> getLinks() {
@@ -708,7 +708,7 @@ public class TestResultV2GetModel {
    * @return attachments
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<AttachmentModel> getAttachments() {
@@ -754,7 +754,7 @@ public class TestResultV2GetModel {
    * @return parameters
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Map<String, String> getParameters() {
@@ -800,7 +800,7 @@ public class TestResultV2GetModel {
    * @return properties
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Map<String, String> getProperties() {

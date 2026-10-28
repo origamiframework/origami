@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.origamiframework</groupId>
     <artifactId>origami-framework-rest</artifactId>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
 
     <name>Origami Framework Rest</name>
     <description>Origami Framework Rest</description>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-dependency</artifactId>
-        <version>1.5.5</version>
+        <version>1.5.6</version>
     </parent>
 
     <properties>
@@ -21,14 +21,13 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <rest.assured.version>5.5.5</rest.assured.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -53,15 +52,15 @@
         <dependency>
             <groupId>net.aholbrook.paseto</groupId>
             <artifactId>meta</artifactId>
-            <version>0.6.1</version>
+            <version>0.8.2</version>
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <name>jcenter</name>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>jcenter</id>-->
+<!--            <name>jcenter</name>-->
+<!--            <url>https://jcenter.bintray.com</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 </project>

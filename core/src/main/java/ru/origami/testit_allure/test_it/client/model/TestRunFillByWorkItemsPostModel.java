@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -76,7 +76,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return configurationIds
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the configuration GUIDs, from which test points are created. You can specify several GUIDs.")
+  @Schema(required = true, description = "Specifies the configuration GUIDs, from which test points are created. You can specify several GUIDs.")
   @JsonProperty(JSON_PROPERTY_CONFIGURATION_IDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -107,7 +107,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return workitemIds
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the work item GUIDs, from which test points are created. You can specify several GUIDs.")
+  @Schema(required = true, description = "Specifies the work item GUIDs, from which test points are created. You can specify several GUIDs.")
   @JsonProperty(JSON_PROPERTY_WORKITEM_IDS)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -133,7 +133,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the GUID of the project, in which a test run will be created.")
+  @Schema(required = true, description = "Specifies the GUID of the project, in which a test run will be created.")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -159,7 +159,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return testPlanId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the GUID of the test plan, within which the test run will be created.")
+  @Schema(required = true, description = "Specifies the GUID of the test plan, within which the test run will be created.")
   @JsonProperty(JSON_PROPERTY_TEST_PLAN_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -185,7 +185,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the name of the test run.")
+  @Schema(description = "Specifies the name of the test run.")
   @JsonIgnore
 
   public String getName() {
@@ -219,7 +219,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the test run description.")
+  @Schema(description = "Specifies the test run description.")
   @JsonIgnore
 
   public String getDescription() {
@@ -253,7 +253,7 @@ public class TestRunFillByWorkItemsPostModel {
    * @return launchSource
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the test run launch source.")
+  @Schema(description = "Specifies the test run launch source.")
   @JsonIgnore
 
   public String getLaunchSource() {

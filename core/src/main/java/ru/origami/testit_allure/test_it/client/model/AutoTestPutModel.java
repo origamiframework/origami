@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -103,7 +103,7 @@ public class AutoTestPutModel {
    * @return id
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "Used for search autotest. If value equals Guid mask filled with zeros, search will be executed using ExternalId")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "Used for search autotest. If value equals Guid mask filled with zeros, search will be executed using ExternalId")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -141,7 +141,7 @@ public class AutoTestPutModel {
    * @return workItemIdsForLinkWithAutoTest
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getWorkItemIdsForLinkWithAutoTest() {
@@ -175,7 +175,7 @@ public class AutoTestPutModel {
    * @return externalId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the ID of your autotest in the external system.<br />  To test the method, you can use any ID.")
+  @Schema(required = true, description = "Specifies the ID of your autotest in the external system.<br />  To test the method, you can use any ID.")
   @JsonProperty(JSON_PROPERTY_EXTERNAL_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -213,7 +213,7 @@ public class AutoTestPutModel {
    * @return links
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the links in the autotest.")
+  @Schema(description = "Specifies the links in the autotest.")
   @JsonIgnore
 
   public List<LinkPutModel> getLinks() {
@@ -247,7 +247,7 @@ public class AutoTestPutModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies the project GUID.<br />  You can get it using the `GET /api/v2/projects` method.")
+  @Schema(required = true, description = "Specifies the project GUID.<br />  You can get it using the `GET /api/v2/projects` method.")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -273,7 +273,7 @@ public class AutoTestPutModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Specifies autotest name in the test management system.")
+  @Schema(required = true, description = "Specifies autotest name in the test management system.")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -299,7 +299,7 @@ public class AutoTestPutModel {
    * @return namespace
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the name of the namespace in the test management system.")
+  @Schema(description = "Specifies the name of the namespace in the test management system.")
   @JsonIgnore
 
   public String getNamespace() {
@@ -333,7 +333,7 @@ public class AutoTestPutModel {
    * @return classname
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the class name in the test management system.")
+  @Schema(description = "Specifies the class name in the test management system.")
   @JsonIgnore
 
   public String getClassname() {
@@ -379,7 +379,7 @@ public class AutoTestPutModel {
    * @return steps
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the steps in the autotest.")
+  @Schema(description = "Specifies the steps in the autotest.")
   @JsonIgnore
 
   public List<AutoTestStepModel> getSteps() {
@@ -425,7 +425,7 @@ public class AutoTestPutModel {
    * @return setup
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the setup steps and relates them to the autotest. Supported values are the same as in the `steps` parameter.")
+  @Schema(description = "Specifies the setup steps and relates them to the autotest. Supported values are the same as in the `steps` parameter.")
   @JsonIgnore
 
   public List<AutoTestStepModel> getSetup() {
@@ -471,7 +471,7 @@ public class AutoTestPutModel {
    * @return teardown
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the teardown steps and relates them to the autotest. Supported values are the same as in the `steps` parameter.")
+  @Schema(description = "Specifies the teardown steps and relates them to the autotest. Supported values are the same as in the `steps` parameter.")
   @JsonIgnore
 
   public List<AutoTestStepModel> getTeardown() {
@@ -505,7 +505,7 @@ public class AutoTestPutModel {
    * @return title
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the name of the autotest in the autotest card.   The `Name` parameter is responsible for the name in the table.")
+  @Schema(description = "Specifies the name of the autotest in the autotest card.   The `Name` parameter is responsible for the name in the table.")
   @JsonIgnore
 
   public String getTitle() {
@@ -539,7 +539,7 @@ public class AutoTestPutModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the autotest description in the test management system.")
+  @Schema(description = "Specifies the autotest description in the test management system.")
   @JsonIgnore
 
   public String getDescription() {
@@ -585,7 +585,7 @@ public class AutoTestPutModel {
    * @return labels
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Specifies autotest labels.")
+  @Schema(description = "Specifies autotest labels.")
   @JsonIgnore
 
   public List<LabelPostModel> getLabels() {
@@ -619,7 +619,7 @@ public class AutoTestPutModel {
    * @return isFlaky
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Marks the autotest as flaky.")
+  @Schema(description = "Marks the autotest as flaky.")
   @JsonIgnore
 
   public Boolean getIsFlaky() {

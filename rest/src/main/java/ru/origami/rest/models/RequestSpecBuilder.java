@@ -1,7 +1,7 @@
 package ru.origami.rest.models;
 
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.ser.std.SimpleFilterProvider;
 import io.restassured.authentication.AuthenticationScheme;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -911,12 +911,13 @@ public class RequestSpecBuilder {
 
     public RequestSpecBuilder withSkipFields(String... fieldsToSkip) {
         Set<String> skipSet = new HashSet<>(Arrays.asList(fieldsToSkip));
-        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .setFilterProvider(new SimpleFilterProvider().addFilter(SKIP_FIELD_FILTER, new PathTrackingFilter(skipSet)));
+
+        tools.jackson.databind.ObjectMapper mapper = JsonMapper.builder()
+                .filterProvider(new SimpleFilterProvider().addFilter(SKIP_FIELD_FILTER, new PathTrackingFilter(skipSet)))
+                .build();
 
         RestAssuredConfig config = RestAssuredConfig.config()
-                .objectMapperConfig(new ObjectMapperConfig().jackson2ObjectMapperFactory((type, s) -> mapper));
+                .objectMapperConfig(new ObjectMapperConfig().jackson3ObjectMapperFactory((type, charset) -> mapper));
 
         requestSpecBuilder.setConfig(config);
 

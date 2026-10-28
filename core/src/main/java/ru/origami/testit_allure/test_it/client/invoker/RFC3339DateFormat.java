@@ -12,46 +12,73 @@
 
 package ru.origami.testit_allure.test_it.client.invoker;
 
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class RFC3339DateFormat extends DateFormat {
-  private static final long serialVersionUID = 1L;
-  private static final TimeZone TIMEZONE_Z = TimeZone.getTimeZone("UTC");
 
-  private final StdDateFormat fmt = new StdDateFormat()
-          .withTimeZone(TIMEZONE_Z)
-          .withColonInTimeZone(true);
+  private static final long serialVersionUID = 1L;
+
+  private static final DateTimeFormatter FORMATTER =
+          DateTimeFormatter.ofPattern(
+                  "uuuu-MM-dd'T'HH:mm:ss.SSSXXX",
+                  Locale.ROOT
+          ).withZone(ZoneOffset.UTC);
+
+  private static final DateTimeFormatter PARSER =
+          DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
   public RFC3339DateFormat() {
-    this.calendar = new GregorianCalendar();
+    this.calendar = new GregorianCalendar(
+            TimeZone.getTimeZone("UTC")
+    );
     this.numberFormat = new DecimalFormat();
   }
 
   @Override
-  public Date parse(String source) {
-    return parse(source, new ParsePosition(0));
+  public StringBuffer format(
+          Date date,
+          StringBuffer toAppendTo,
+          FieldPosition fieldPosition
+  ) {
+    return toAppendTo.append(FORMATTER.format(date.toInstant()));
   }
 
   @Override
   public Date parse(String source, ParsePosition pos) {
-    return fmt.parse(source, pos);
-  }
+    int start = pos.getIndex();
 
-  @Override
-  public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
-    return fmt.format(date, toAppendTo, fieldPosition);
-  }
+    if (start < 0 || start > source.length()) {
+      pos.setErrorIndex(Math.max(0, start));
+      return null;
+    }
 
-  @Override
-  public Object clone() {
-    return super.clone();
+    try {
+      OffsetDateTime parsed = OffsetDateTime.parse(
+              source.substring(start),
+              PARSER
+      );
+
+      pos.setIndex(source.length());
+      pos.setErrorIndex(-1);
+
+      return Date.from(parsed.toInstant());
+    } catch (DateTimeParseException e) {
+      int errorIndex = e.getErrorIndex();
+      pos.setErrorIndex(
+              start + Math.max(errorIndex, 0)
+      );
+      return null;
+    }
   }
 }

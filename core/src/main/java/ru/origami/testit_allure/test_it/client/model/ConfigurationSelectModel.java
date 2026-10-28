@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -71,7 +71,7 @@ public class ConfigurationSelectModel {
    * @return projectIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of identifiers of projects from which configurations will be taken")
+  @Schema(description = "Collection of identifiers of projects from which configurations will be taken")
   @JsonIgnore
 
   public Set<UUID> getProjectIds() {
@@ -105,7 +105,7 @@ public class ConfigurationSelectModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Filter to search by name (case-insensitive, partial match)")
+  @Schema(description = "Filter to search by name (case-insensitive, partial match)")
   @JsonIgnore
 
   public String getName() {
@@ -139,7 +139,7 @@ public class ConfigurationSelectModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Is configurations deleted or existing")
+  @Schema(description = "Is configurations deleted or existing")
   @JsonIgnore
 
   public Boolean getIsDeleted() {
@@ -185,7 +185,7 @@ public class ConfigurationSelectModel {
    * @return globalIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "Collection of global (integer) identifiers to filter configurations")
+  @Schema(description = "Collection of global (integer) identifiers to filter configurations")
   @JsonIgnore
 
   public Set<Long> getGlobalIds() {

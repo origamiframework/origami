@@ -16,7 +16,7 @@ package ru.origami.testit_allure.test_it.client.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -54,7 +54,7 @@ public class CustomAttributeTestPlanProjectRelationPutModel {
    * @return id
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -80,7 +80,7 @@ public class CustomAttributeTestPlanProjectRelationPutModel {
    * @return enabled
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "true", required = true, value = "")
+  @Schema(example = "true", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ENABLED)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -106,7 +106,7 @@ public class CustomAttributeTestPlanProjectRelationPutModel {
    * @return required
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "true", required = true, value = "")
+  @Schema(example = "true", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_REQUIRED)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 

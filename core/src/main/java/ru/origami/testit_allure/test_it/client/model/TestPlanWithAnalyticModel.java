@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.OffsetDateTime;
@@ -136,7 +136,7 @@ public class TestPlanWithAnalyticModel {
    * @return analytic
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_ANALYTIC)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -162,7 +162,7 @@ public class TestPlanWithAnalyticModel {
    * @return status
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_STATUS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -188,7 +188,7 @@ public class TestPlanWithAnalyticModel {
    * @return startedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "Set when test plan is starter (status changed to: In Progress)")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "Set when test plan is starter (status changed to: In Progress)")
   @JsonIgnore
 
   public OffsetDateTime getStartedOn() {
@@ -222,7 +222,7 @@ public class TestPlanWithAnalyticModel {
    * @return completedOn
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "set when test plan status is completed (status changed to: Completed)")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "set when test plan status is completed (status changed to: Completed)")
   @JsonIgnore
 
   public OffsetDateTime getCompletedOn() {
@@ -256,7 +256,7 @@ public class TestPlanWithAnalyticModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getCreatedDate() {
@@ -290,7 +290,7 @@ public class TestPlanWithAnalyticModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getModifiedDate() {
@@ -324,7 +324,7 @@ public class TestPlanWithAnalyticModel {
    * @return createdById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_BY_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -350,7 +350,7 @@ public class TestPlanWithAnalyticModel {
    * @return modifiedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", description = "")
   @JsonIgnore
 
   public UUID getModifiedById() {
@@ -384,7 +384,7 @@ public class TestPlanWithAnalyticModel {
    * @return globalId
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "100000", value = "Used for search Test plan")
+  @Schema(example = "100000", description = "Used for search Test plan")
   @JsonProperty(JSON_PROPERTY_GLOBAL_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -410,7 +410,7 @@ public class TestPlanWithAnalyticModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonProperty(JSON_PROPERTY_IS_DELETED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -436,7 +436,7 @@ public class TestPlanWithAnalyticModel {
    * @return lockedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "")
   @JsonIgnore
 
   public OffsetDateTime getLockedDate() {
@@ -470,7 +470,7 @@ public class TestPlanWithAnalyticModel {
    * @return id
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -496,7 +496,7 @@ public class TestPlanWithAnalyticModel {
    * @return lockedById
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public UUID getLockedById() {
@@ -542,7 +542,7 @@ public class TestPlanWithAnalyticModel {
    * @return tags
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public List<TagShortModel> getTags() {
@@ -576,7 +576,7 @@ public class TestPlanWithAnalyticModel {
    * @return name
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "Base test plan", required = true, value = "")
+  @Schema(example = "Base test plan", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -602,7 +602,7 @@ public class TestPlanWithAnalyticModel {
    * @return startDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "Used for analytics")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "Used for analytics")
   @JsonIgnore
 
   public OffsetDateTime getStartDate() {
@@ -636,7 +636,7 @@ public class TestPlanWithAnalyticModel {
    * @return endDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "2022-10-03T10:29:25.447304600Z", value = "Used for analytics")
+  @Schema(example = "2022-10-03T10:29:25.447304600Z", description = "Used for analytics")
   @JsonIgnore
 
   public OffsetDateTime getEndDate() {
@@ -670,7 +670,7 @@ public class TestPlanWithAnalyticModel {
    * @return description
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "This is a base test plan", value = "")
+  @Schema(example = "This is a base test plan", description = "")
   @JsonIgnore
 
   public String getDescription() {
@@ -704,7 +704,7 @@ public class TestPlanWithAnalyticModel {
    * @return build
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "v.3.0.0-b94f3055", value = "")
+  @Schema(example = "v.3.0.0-b94f3055", description = "")
   @JsonIgnore
 
   public String getBuild() {
@@ -738,7 +738,7 @@ public class TestPlanWithAnalyticModel {
    * @return projectId
   **/
   @jakarta.annotation.Nonnull
-  @ApiModelProperty(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, value = "")
+  @Schema(example = "3ffdc45d-64c4-4b68-9a42-1744f46625b6", required = true, description = "")
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
@@ -764,7 +764,7 @@ public class TestPlanWithAnalyticModel {
    * @return productName
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "Billing service", value = "")
+  @Schema(example = "Billing service", description = "")
   @JsonIgnore
 
   public String getProductName() {
@@ -798,7 +798,7 @@ public class TestPlanWithAnalyticModel {
    * @return hasAutomaticDurationTimer
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "")
+  @Schema(example = "true", description = "")
   @JsonIgnore
 
   public Boolean getHasAutomaticDurationTimer() {
@@ -844,7 +844,7 @@ public class TestPlanWithAnalyticModel {
    * @return attributes
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Map<String, Object> getAttributes() {

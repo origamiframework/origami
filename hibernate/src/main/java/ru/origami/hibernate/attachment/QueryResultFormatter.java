@@ -2,7 +2,7 @@ package ru.origami.hibernate.attachment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

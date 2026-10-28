@@ -1,7 +1,8 @@
 package ru.origami.rest.models;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.xml.XmlMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,9 +14,9 @@ import java.util.stream.Collectors;
 @Getter
 public enum EContentType {
 
-    TEXT("text/plain", ".txt", new ObjectMapper(), false),
-    JSON("application/json", ".json", new ObjectMapper(), false),
-    XML("application/xml", ".xml", new XmlMapper(), false),
+    TEXT("text/plain", ".txt", null, false),
+    JSON("application/json", ".json", JsonMapper.builder().build(), false),
+    XML("application/xml", ".xml", XmlMapper.builder().build(), false),
     EXCEL("application/vnd.ms-excel", ".xls", null, true),
     OPEN_EXCEL("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx", null, true),
     DOC("application/msword", ".doc", null, true),

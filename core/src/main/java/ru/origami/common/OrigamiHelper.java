@@ -1,8 +1,5 @@
 package ru.origami.common;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.xml.bind.*;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.experimental.UtilityClass;
@@ -16,6 +13,9 @@ import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 import ru.origami.common.models.IDateFormat;
 import ru.origami.testit_allure.annotations.Step;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.datatype.joda.JodaModule;
 
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -266,10 +266,11 @@ public class OrigamiHelper {
         }
 
         try {
-            return new ObjectMapper().registerModule(new JavaTimeModule())
-                    .registerModule(new JodaModule())
+            return JsonMapper.builder()
+                    .addModule(new JodaModule())
+                    .build()
                     .readValue(json.trim(), clazz);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             if (withFail) {
                 fail(getLangValue("common.string.not.parsed").formatted(e.getMessage(), json.trim()));
             }
@@ -288,8 +289,9 @@ public class OrigamiHelper {
         }
 
         try {
-            return new ObjectMapper().registerModule(new JavaTimeModule())
-                    .registerModule(new JodaModule())
+            return JsonMapper.builder()
+                    .addModule(new JodaModule())
+                    .build()
                     .writerWithDefaultPrettyPrinter()
                     .writeValueAsString(value);
         } catch (Exception e) {
@@ -309,8 +311,9 @@ public class OrigamiHelper {
         }
 
         try {
-            return new ObjectMapper().registerModule(new JavaTimeModule())
-                    .registerModule(new JodaModule())
+            return JsonMapper.builder()
+                    .addModule(new JodaModule())
+                    .build()
                     .writeValueAsString(value);
         } catch (Exception e) {
             fail(getLangValue("json.object.not.parsed").formatted(e.getMessage()));

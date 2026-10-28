@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.*;
@@ -123,7 +123,7 @@ public class AutotestFilterModel {
    * @return projectIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getProjectIds() {
@@ -169,7 +169,7 @@ public class AutotestFilterModel {
    * @return externalIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<String> getExternalIds() {
@@ -215,7 +215,7 @@ public class AutotestFilterModel {
    * @return globalIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<Long> getGlobalIds() {
@@ -249,7 +249,7 @@ public class AutotestFilterModel {
    * @return name
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getName() {
@@ -283,7 +283,7 @@ public class AutotestFilterModel {
    * @return isFlaky
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIsFlaky() {
@@ -317,7 +317,7 @@ public class AutotestFilterModel {
    * @return mustBeApproved
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getMustBeApproved() {
@@ -351,7 +351,7 @@ public class AutotestFilterModel {
    * @return stabilityPercentage
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_STABILITY_PERCENTAGE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -389,7 +389,7 @@ public class AutotestFilterModel {
    * @return createdByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getCreatedByIds() {
@@ -435,7 +435,7 @@ public class AutotestFilterModel {
    * @return modifiedByIds
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Set<UUID> getModifiedByIds() {
@@ -469,7 +469,7 @@ public class AutotestFilterModel {
    * @return createdDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_CREATED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -495,7 +495,7 @@ public class AutotestFilterModel {
    * @return modifiedDate
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_MODIFIED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
@@ -521,7 +521,7 @@ public class AutotestFilterModel {
    * @return isDeleted
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIsDeleted() {
@@ -555,7 +555,7 @@ public class AutotestFilterModel {
    * @return namespace
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getNamespace() {
@@ -589,7 +589,7 @@ public class AutotestFilterModel {
    * @return includeEmptyNamespaces
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIncludeEmptyNamespaces() {
@@ -623,7 +623,7 @@ public class AutotestFilterModel {
    * @return className
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public String getClassName() {
@@ -657,7 +657,7 @@ public class AutotestFilterModel {
    * @return includeEmptyClassNames
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonIgnore
 
   public Boolean getIncludeEmptyClassNames() {
@@ -691,7 +691,7 @@ public class AutotestFilterModel {
    * @return resultOutcome
   **/
   @jakarta.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty(JSON_PROPERTY_RESULT_OUTCOME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 

@@ -43,7 +43,7 @@ Hibernate, Selenide, Testcontainers and Allure.
     <parent>
         <groupId>ru.origamiframework</groupId>
         <artifactId>origami-framework-parent</artifactId>
-        <version>1.5.5</version>
+        <version>1.5.6</version>
         <relativePath/>
     </parent>
 ```

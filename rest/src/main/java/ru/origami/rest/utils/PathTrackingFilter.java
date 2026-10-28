@@ -1,9 +1,9 @@
 package ru.origami.rest.utils;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.PropertyWriter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ser.PropertyWriter;
+import tools.jackson.databind.ser.std.SimpleBeanPropertyFilter;
 
 import java.util.Objects;
 import java.util.Set;
@@ -22,10 +22,9 @@ public class PathTrackingFilter extends SimpleBeanPropertyFilter {
     }
 
     @Override
-    public void serializeAsField(Object pojo, JsonGenerator gen, SerializerProvider prov,
-                                 PropertyWriter writer) {
+    public void serializeAsProperty(Object pojo, JsonGenerator gen, SerializationContext ctxt, PropertyWriter writer) {
         try {
-            String currentPath = getCurrentPath(prov);
+            String currentPath = getCurrentPath(ctxt);
             String fullPath = buildFullPath(currentPath, writer.getName());
 
             if (pathsToSkip.contains(fullPath)) {
@@ -34,13 +33,13 @@ public class PathTrackingFilter extends SimpleBeanPropertyFilter {
 
             if (isComplexType(writer)) {
                 try {
-                    setCurrentPath(prov, fullPath);
-                    writer.serializeAsField(pojo, gen, prov);
+                    setCurrentPath(ctxt, fullPath);
+                    writer.serializeAsProperty(pojo, gen, ctxt);
                 } finally {
-                    setCurrentPath(prov, currentPath);
+                    setCurrentPath(ctxt, currentPath);
                 }
             } else {
-                writer.serializeAsField(pojo, gen, prov);
+                writer.serializeAsProperty(pojo, gen, ctxt);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,19 +48,19 @@ public class PathTrackingFilter extends SimpleBeanPropertyFilter {
     }
 
     @Override
-    public void serializeAsElement(Object elementValue, JsonGenerator gen, SerializerProvider prov,
+    public void serializeAsElement(Object elementValue, JsonGenerator gen, SerializationContext ctxt,
                                    PropertyWriter writer) throws Exception {
-        writer.serializeAsElement(elementValue, gen, prov);
+        writer.serializeAsElement(elementValue, gen, ctxt);
     }
 
-    private String getCurrentPath(SerializerProvider prov) {
-        Object path = prov.getAttribute(CURRENT_PATH_KEY);
+    private String getCurrentPath(SerializationContext ctxt) {
+        Object path = ctxt.getAttribute(CURRENT_PATH_KEY);
 
         return Objects.nonNull(path) ? path.toString() : "";
     }
 
-    private void setCurrentPath(SerializerProvider prov, String path) {
-        prov.setAttribute(CURRENT_PATH_KEY, path.isEmpty() ? null : path);
+    private void setCurrentPath(SerializationContext ctxt, String path) {
+        ctxt.setAttribute(CURRENT_PATH_KEY, path.isEmpty() ? null : path);
     }
 
     private String buildFullPath(String currentPath, String fieldName) {
@@ -75,7 +74,11 @@ public class PathTrackingFilter extends SimpleBeanPropertyFilter {
     private boolean isComplexType(PropertyWriter writer) {
         Class<?> type = writer.getType().getRawClass();
 
-        return (type != null && !type.isPrimitive() && type != String.class && !Number.class.isAssignableFrom(type)
-                && Boolean.class != type && Character.class != type);
+        return type != null
+                && !type.isPrimitive()
+                && type != String.class
+                && !Number.class.isAssignableFrom(type)
+                && Boolean.class != type
+                && Character.class != type;
     }
 }
