@@ -27,7 +27,7 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.5.6</version>
+            <version>${origami-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.ibm.mq</groupId>

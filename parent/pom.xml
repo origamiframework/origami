@@ -33,7 +33,7 @@
         <dependency>
             <groupId>ru.origamiframework</groupId>
             <artifactId>origami-framework-core</artifactId>
-            <version>1.5.6</version>
+            <version>${origami-framework.version}</version>
         </dependency>
     </dependencies>
 
@@ -42,37 +42,37 @@
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-hibernate</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-rest</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-kafka</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-websocket</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-ibm-mq</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-selenide</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>ru.origamiframework</groupId>
                 <artifactId>origami-framework-test-containers</artifactId>
-                <version>1.5.6</version>
+                <version>${origami-framework.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

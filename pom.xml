@@ -74,9 +74,13 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <origami-framework.version>1.5.6</origami-framework.version>
+
         <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+
         <aspectj.version>1.9.26</aspectj.version>
         <allure-maven.version>3.1.0</allure-maven.version>
         <jackson2.version>2.22.4</jackson2.version>
