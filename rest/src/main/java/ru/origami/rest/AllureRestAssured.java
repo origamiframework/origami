@@ -82,8 +82,8 @@ public class AllureRestAssured implements OrderedFilter {
         return Integer.MAX_VALUE;
     }
 
-    @Step("{logStep}")
-    protected void createRequest(String logStep, final FilterableRequestSpecification requestSpec) {
+    @Step("{logStepRestAssuredRequest}")
+    protected void createRequest(String logStepRestAssuredRequest, final FilterableRequestSpecification requestSpec) {
         getLifecycle().updateStep(step -> {
             step.getParameters().remove(0);
         });
@@ -161,8 +161,8 @@ public class AllureRestAssured implements OrderedFilter {
         }
     }
 
-    @Step("{logStep}")
-    protected void createResponse(String logStep, final Response response) {
+    @Step("{logStepRestAssuredResponse}")
+    protected void createResponse(String logStepRestAssuredResponse, final Response response) {
         getLifecycle().updateStep(step -> {
             step.getParameters().remove(0);
         });

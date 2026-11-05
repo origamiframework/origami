@@ -82,7 +82,9 @@ public class StepsAspects {
 
             getLifecycle().startStep(uuid, result);
 
-            if (step.value() != null && !step.value().startsWith("getLangValue:asserts")) {
+            if (step.value() != null && !step.value().startsWith("getLangValue:asserts")
+                    && !"{logStepRestAssuredResponse}".equals(step.value())
+                    && !"{logStepRestAssuredRequest}".equals(step.value())) {
                 log.info(name);
             }
         } else {
