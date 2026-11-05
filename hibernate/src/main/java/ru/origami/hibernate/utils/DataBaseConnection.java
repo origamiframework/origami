@@ -7,6 +7,7 @@ import ru.origami.hibernate.models.DataBaseSessionProperties;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static ru.origami.common.environment.Language.getLangValue;
 
 public class DataBaseConnection {
 
@@ -28,7 +29,7 @@ public class DataBaseConnection {
             }
 
             if (configUrl == null) {
-                fail("Hibernate configuration resource not found: " + resource);
+                fail(getLangValue("hibernate.configuration.resource.not.found").formatted(resource));
             }
 
             final Configuration configuration = new Configuration()
