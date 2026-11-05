@@ -49,6 +49,7 @@ public class Connection {
         if (!properties.isDisabled()) {
             try {
                 final java.util.Properties props = new java.util.Properties();
+                int maxPollIntervalMs = 15 * 60 * 1000;
 
                 props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, isEarliest ? "earliest" : "latest");
                 // props.put("enable.partition.eof", "false");
@@ -57,7 +58,8 @@ public class Connection {
                 // props.put("consumer.timeout.ms", "3000"); для старых версий consumer
                 props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, properties.getSecurityProtocol());
                 props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.MAX_VALUE);
-                props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 15 * 60 * 1000);
+                props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, maxPollIntervalMs);
+                props.put(ConsumerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG, maxPollIntervalMs + 60 * 1000);
                 props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, Integer.MAX_VALUE);
                 props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
                 props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());

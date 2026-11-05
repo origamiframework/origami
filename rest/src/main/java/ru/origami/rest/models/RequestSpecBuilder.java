@@ -1,6 +1,7 @@
 package ru.origami.rest.models;
 
 import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.ser.std.SimpleBeanPropertyFilter;
 import tools.jackson.databind.ser.std.SimpleFilterProvider;
 import io.restassured.authentication.AuthenticationScheme;
 import io.restassured.config.ObjectMapperConfig;
@@ -38,7 +39,10 @@ public class RequestSpecBuilder {
     private io.restassured.builder.RequestSpecBuilder requestSpecBuilder;
 
     public RequestSpecBuilder(AllureRestAssured allureRestAssured) {
-        requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder().addFilter(allureRestAssured);
+        requestSpecBuilder = new io.restassured.builder.RequestSpecBuilder()
+                .addFilter(allureRestAssured);
+
+        requestSpecBuilder.setConfig(createJacksonConfig(null));
     }
 
     public RequestSpecBuilder setBody(String body) {
@@ -912,15 +916,34 @@ public class RequestSpecBuilder {
     public RequestSpecBuilder withSkipFields(String... fieldsToSkip) {
         Set<String> skipSet = new HashSet<>(Arrays.asList(fieldsToSkip));
 
-        tools.jackson.databind.ObjectMapper mapper = JsonMapper.builder()
-                .filterProvider(new SimpleFilterProvider().addFilter(SKIP_FIELD_FILTER, new PathTrackingFilter(skipSet)))
-                .build();
-
-        RestAssuredConfig config = RestAssuredConfig.config()
-                .objectMapperConfig(new ObjectMapperConfig().jackson3ObjectMapperFactory((type, charset) -> mapper));
-
-        requestSpecBuilder.setConfig(config);
+        requestSpecBuilder.setConfig(createJacksonConfig(skipSet));
 
         return this;
+    }
+
+    private RestAssuredConfig createJacksonConfig(Set<String> skipFields) {
+        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+
+        if (skipFields == null) {
+            filterProvider.addFilter(
+                    SKIP_FIELD_FILTER,
+                    SimpleBeanPropertyFilter.serializeAll()
+            );
+        } else {
+            filterProvider.addFilter(
+                    SKIP_FIELD_FILTER,
+                    new PathTrackingFilter(skipFields)
+            );
+        }
+
+        tools.jackson.databind.ObjectMapper mapper = JsonMapper.builder()
+                .filterProvider(filterProvider)
+                .build();
+
+        return RestAssuredConfig.config()
+                .objectMapperConfig(
+                        new ObjectMapperConfig()
+                                .jackson3ObjectMapperFactory((type, charset) -> mapper)
+                );
     }
 }
